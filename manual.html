@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>사용 매뉴얼 · 3D 마블 룰렛 (QR 멀티 참여 가이드)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;700;800;900&family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #070913;
+      --card: rgba(16, 22, 44, 0.92);
+      --border: rgba(110, 145, 255, 0.28);
+      --accent: #00f0ff;
+      --accent-2: #ff2e93;
+      --accent-3: #ffd166;
+      --success: #2ee59d;
+      --text: #eef3ff;
+      --muted: #9aa7c7;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      padding: 0;
+      background: radial-gradient(circle at 50% 0%, #17214a 0%, #070913 70%);
+      color: var(--text);
+      font-family: 'Outfit', 'Noto Sans KR', sans-serif;
+      line-height: 1.65;
+    }
+
+    .container {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 28px 20px 60px;
+    }
+
+    .hero {
+      background: linear-gradient(135deg, rgba(0, 240, 255, 0.14), rgba(255, 46, 147, 0.12));
+      border: 1px solid rgba(0, 240, 255, 0.38);
+      border-radius: 22px;
+      padding: 28px 28px 24px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      margin-bottom: 22px;
+      box-shadow: 0 18px 45px rgba(0, 0, 0, 0.45);
+    }
+
+    .hero h1 {
+      margin: 4px 0 6px;
+      font-size: 1.75rem;
+      font-weight: 900;
+      color: #fff;
+    }
+
+    .hero-tag {
+      display: inline-block;
+      background: rgba(255, 209, 102, 0.16);
+      border: 1px solid rgba(255, 209, 102, 0.45);
+      color: var(--accent-3);
+      font-size: 0.78rem;
+      font-weight: 800;
+      padding: 3px 10px;
+      border-radius: 999px;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .btn-go {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: linear-gradient(135deg, #00f0ff, #0080ff);
+      color: #030916;
+      font-weight: 900;
+      text-decoration: none;
+      padding: 11px 20px;
+      border-radius: 12px;
+      box-shadow: 0 8px 22px rgba(0, 224, 255, 0.35);
+      border: none;
+      cursor: pointer;
+      font-family: inherit;
+      font-size: 0.94rem;
+    }
+
+    .btn-print {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      color: #fff;
+      font-weight: 700;
+      padding: 11px 18px;
+      border-radius: 12px;
+      cursor: pointer;
+      font-family: inherit;
+      font-size: 0.92rem;
+    }
+
+    .answer-callout {
+      background: linear-gradient(135deg, rgba(255, 209, 102, 0.16), rgba(46, 229, 157, 0.14));
+      border: 1px solid rgba(255, 209, 102, 0.55);
+      border-radius: 18px;
+      padding: 18px 22px;
+      margin-bottom: 22px;
+    }
+
+    .answer-callout h2 {
+      margin: 0 0 6px;
+      font-size: 1.15rem;
+      color: var(--accent-3);
+    }
+
+    .flow-steps {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .flow-step {
+      background: rgba(8, 12, 26, 0.72);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      border-radius: 14px;
+      padding: 12px 10px;
+      text-align: center;
+      font-size: 0.82rem;
+    }
+
+    .flow-step .step-num {
+      display: inline-block;
+      background: var(--accent);
+      color: #030916;
+      font-weight: 900;
+      font-size: 0.74rem;
+      padding: 2px 8px;
+      border-radius: 999px;
+      margin-bottom: 6px;
+    }
+
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 22px;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 20px 22px;
+      margin-bottom: 20px;
+    }
+
+    .two-col .card {
+      margin-bottom: 0;
+    }
+
+    .card h2 {
+      margin: 0 0 12px;
+      font-size: 1.15rem;
+      font-weight: 900;
+      color: var(--accent);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .card ol, .card ul {
+      margin: 0;
+      padding-left: 20px;
+    }
+
+    .card li {
+      margin-bottom: 8px;
+      color: #dce4fb;
+    }
+
+    .badge-host {
+      background: rgba(46, 229, 157, 0.18);
+      color: var(--success);
+      border: 1px solid rgba(46, 229, 157, 0.45);
+      padding: 2px 10px;
+      border-radius: 999px;
+      font-size: 0.74rem;
+    }
+
+    .badge-guest {
+      background: rgba(0, 240, 255, 0.16);
+      color: var(--accent);
+      border: 1px solid rgba(0, 240, 255, 0.45);
+      padding: 2px 10px;
+      border-radius: 999px;
+      font-size: 0.74rem;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 8px;
+      font-size: 0.88rem;
+    }
+
+    th, td {
+      padding: 10px 12px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      text-align: left;
+    }
+
+    th {
+      color: var(--accent-3);
+      font-weight: 800;
+      background: rgba(255, 255, 255, 0.04);
+    }
+
+    code {
+      background: rgba(255, 255, 255, 0.1);
+      color: var(--accent-3);
+      padding: 2px 6px;
+      border-radius: 5px;
+      font-family: monospace;
+    }
+
+    footer {
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.82rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      padding-top: 20px;
+      margin-top: 16px;
+    }
+
+    footer a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    @media (max-width: 780px) {
+      .two-col { grid-template-columns: 1fr; }
+      .flow-steps { grid-template-columns: 1fr 1fr; }
+    }
+
+    @media print {
+      body { background: #fff; color: #111; }
+      .card, .answer-callout, .hero {
+        background: #fff;
+        color: #111;
+        border: 1px solid #cbd5e1;
+        box-shadow: none;
+      }
+      .hero h1, .card h2, .answer-callout h2 { color: #111; }
+      .card li, th, td { color: #222; }
+      .flow-step { background: #f8fafc; border-color: #cbd5e1; color: #111; }
+      .hero-actions { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <section class="hero">
+      <div>
+        <span class="hero-tag">USER MANUAL · © 2026 math-tong</span>
+        <h1>🐾 3D 마블 룰렛 완벽 사용 &amp; QR 참여 매뉴얼</h1>
+        <div style="color: var(--muted); font-size: 0.92rem;">
+          일반 PC 단독 추첨부터 스마트폰 QR 실시간 멀티 레이스까지 한눈에 익히는 공식 가이드
+        </div>
+      </div>
+      <div class="hero-actions">
+        <a class="btn-go" href="./index.html">🚀 게임으로 돌아가기</a>
+        <button class="btn-print" onclick="window.print()">🖨️ 매뉴얼 인쇄 / PDF 저장</button>
+      </div>
+    </section>
+
+    <section class="answer-callout">
+      <h2>👑 핵심 Q&amp;A: QR로 여러 명이 참여할 때, 경기 시작은 누가 하나요?</h2>
+      <div>
+        <strong>👉 진행자(호스트 · PC / 대형 화면)가 시작합니다!</strong><br />
+        스마트폰으로 QR을 찍고 들어온 참여자는 <strong>닉네임·동물 선택 후 대기</strong>하며, 모든 참여자가 출발선에 모이면 <strong>진행자 화면의 [🚀 입장 완료! 지금 레이스 시작]</strong>(또는 하단 <strong>[🚀 바로 레이스 시작!]</strong>) 버튼을 눌러 일제히 출발시킵니다.
+      </div>
+      <div class="flow-steps">
+        <div class="flow-step">
+          <div class="step-num">STEP 1</div>
+          <div><strong>진행자(PC)</strong><br /><code>📱 QR 참여방</code> 열기</div>
+        </div>
+        <div class="flow-step">
+          <div class="step-num">STEP 2</div>
+          <div><strong>참여자(폰)</strong><br />QR 스캔 · 닉네임/동물 입장</div>
+        </div>
+        <div class="flow-step">
+          <div class="step-num">STEP 3</div>
+          <div><strong>진행자(PC)</strong><br />인원 확인 후 <code>🚀 시작</code> 클릭!</div>
+        </div>
+        <div class="flow-step">
+          <div class="step-num">STEP 4</div>
+          <div><strong>참여자(폰)</strong><br />스킬·부스트·응원 연타!</div>
+        </div>
+        <div class="flow-step">
+          <div class="step-num">STEP 5</div>
+          <div><strong>모두</strong><br />30초 3D 결승 &amp; 순위 확인!</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="two-col">
+      <article class="card">
+        <h2>👑 진행자(호스트 · PC) 매뉴얼 <span class="badge-host">HOST</span></h2>
+        <ol>
+          <li>게임을 열고 상단 또는 하단의 <strong>📱 QR 참여방</strong> 버튼을 눌러 화면에 QR 코드와 4자리 방 번호(<code>ROOM XXXX</code>)를 띄웁니다.</li>
+          <li>수업·모임에 모인 사람들에게 QR 코드를 보여주고 입장하도록 안내합니다.</li>
+          <li>기존 샘플 명단(짱구, 철수 등)을 빼고 <strong>QR 참여자만</strong> 추첨하고 싶다면 QR 창 안의 <strong>🧹 기존 목록 비우고 QR만 받기</strong> 버튼을 클릭합니다.</li>
+          <li>참여자 칩과 출발선의 3D 동물들이 모두 모인 것을 확인합니다.</li>
+          <li><strong>진행자가 직접 QR 창 안의 [🚀 입장 완료! 지금 레이스 시작] 버튼</strong>을 누르면 모든 스마트폰 화면이 "🏁 레이스 진행 중!" 상태로 전환되며 경기가 출발합니다.</li>
+        </ol>
+      </article>
+
+      <article class="card">
+        <h2>🙋 참여자(스마트폰 QR 접속) 매뉴얼 <span class="badge-guest">GUEST</span></h2>
+        <ol>
+          <li>스마트폰 기본 카메라(또는 QR 앱)로 호스트 화면의 <strong>QR 코드를 스캔</strong>해 링크를 엽니다. (별도 앱 설치 필요 없음)</li>
+          <li>컨트롤러 화면이 열리면 <strong>닉네임</strong>을 입력하고, 16종의 <strong>동물 아이콘 중 마음에 드는 캐릭터</strong>를 고른 뒤 <strong>[🎮 레이스 입장하기!]</strong>를 누릅니다.</li>
+          <li>호스트 화면 출발선에 내 닉네임과 3D 동물이 생성되며, 상단 배지에 <code>⏳ 진행자 시작 대기 중</code>이 표시됩니다.</li>
+          <li>진행자가 경기를 시작해 <code>🏁 레이스 진행 중!</code>으로 바뀌면 아래 <strong>4가지 실시간 버튼</strong>으로 내 캐릭터를 밀어주고 점수를 얻으세요!</li>
+        </ol>
+      </article>
+    </section>
+
+    <section class="card">
+      <h2>🎮 스마트폰 컨트롤러 스킬 &amp; 점수표</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>버튼 이름</th>
+            <th>재사용 대기시간</th>
+            <th>발동 효과 및 보너스 점수</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>🎲 랜덤 럭키박스 뽑기!</strong></td>
+            <td>3.5초</td>
+            <td>🌟 대박 터보(+40P) / 🚀 슈퍼 점프(+30P) / 💥 팡팡 바운스(+25P) / 🍀 럭키(+50P) 중 1개 랜덤 발동!</td>
+          </tr>
+          <tr>
+            <td><strong>⚡ 대시 부스트!</strong></td>
+            <td>3.0초</td>
+            <td>전방 속도를 즉시 가속하고 <strong>+15P</strong> 획득</td>
+          </tr>
+          <tr>
+            <td><strong>🦘 슈퍼 점프!</strong></td>
+            <td>2.5초</td>
+            <td>장애물을 뛰어넘는 큰 점프와 함께 <strong>+20P</strong> 획득</td>
+          </tr>
+          <tr>
+            <td><strong>📣 실시간 응원 (🔥 💖 ⚡ 👑)</strong></td>
+            <td>제한 없음</td>
+            <td>내 3D 캐릭터 머리 위 이름표에 응원 이모지 팝업 + <strong>+5P</strong> 적립</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="two-col">
+      <article class="card">
+        <h2>⚡ PC 단독 빠른 추첨 (QR 없이 사용 시)</h2>
+        <ol>
+          <li>게임을 열면 복잡한 대시보드 대신 깔끔한 3D 출발선 화면이 나타납니다.</li>
+          <li>바로 추첨하려면 하단 중앙의 <strong>🚀 바로 레이스 시작!</strong> 버튼을 누르세요.</li>
+          <li>명단 수정, 코스(4종) 선택, 당첨 등수(1등·꼴찌·지정·무작위) 변경은 상단 <strong>⚙️ 명단·코스 설정</strong> 버튼을 눌러 열 수 있습니다.</li>
+        </ol>
+      </article>
+
+      <article class="card">
+        <h2>📄 참여자 명단 서식 &amp; 추첨 방식</h2>
+        <ul>
+          <li><strong>기본 문법</strong>: <code>홍길동*2, 김철수*1, 이영희*3</code> — 쉼표(<code>,</code>) 또는 줄바꿈으로 구분하며 <code>*숫자</code>는 가중치(출전 동물 수)입니다.</li>
+          <li><strong>파일 불러오기</strong>: <code>.txt</code>, <code>.csv</code>, <code>.json</code> 파일을 드래그 앤 드롭하거나 불러오기 버튼으로 즉시 적용할 수 있습니다.</li>
+          <li><strong>🏁 골인 순위</strong>: 580유닛 코스를 약 30초 동안 달려 목표 순위(기본 1등)로 결승선을 통과하면 당첨!</li>
+          <li><strong>⚡ 바운스 점수</strong>: 핀·범퍼·풍차 충돌(+10~25P), 점프대(+30P), 부스트(+20P), 스마트폰 스킬 점수를 모두 합산해 최종 순위를 결정합니다.</li>
+        </ul>
+      </article>
+    </section>
+
+    <section class="card">
+      <h2>❓ 자주 묻는 질문 (FAQ)</h2>
+      <ul>
+        <li><strong>Q. QR 코드를 스캔했는데 입장이 안 떠요.</strong><br />A. QR 참여방 상단에 <code>🟢 실시간 멀티 서버 연결됨</code>이 표시되어 있는지 확인해 주세요. 회사/학교 방화벽이 WSS(8084 포트)를 차단하는 경우 같은 PC 브라우저 탭 간 테스트(<code>BroadcastChannel</code>)만 동작할 수 있습니다.</li>
+        <li><strong>Q. 한 명이 여러 번 입장할 수 있나요?</strong><br />A. 같은 닉네임으로 다시 입장하면 중복 추가되지 않고 동물 캐릭터만 새로 고른 캐릭터로 변경됩니다.</li>
+        <li><strong>Q. 1등이 뽑힐 때까지 얼마나 걸리나요?</strong><br />A. 580유닛 메가 코스 기준 약 30초 내외로 역전과 추월이 펼쳐지도록 설계되어 있으며, 급할 때는 하단 <strong>⏩ 2x 배속</strong>(또는 <code>Space</code> 키)을 길게 눌러 빠르게 진행할 수 있습니다.</li>
+      </ul>
+    </section>
+
+    <footer>
+      <div>© 2026 <strong>math-tong</strong> · 3D Marble Roulette</div>
+      <div>참고자료 · 원작: <a href="https://lazygyu.github.io/roulette/" target="_blank" rel="noopener noreferrer">lazygyu / Marble Roulette</a></div>
+    </footer>
+  </div>
+</body>
+</html>

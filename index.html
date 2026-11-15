@@ -283,6 +283,12 @@
       color: #fff;
     }
 
+    .mini-btn.active {
+      background: rgba(0, 240, 255, 0.18);
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
     .winner-group {
       display: flex;
       gap: 6px;
@@ -466,12 +472,25 @@
       flex-shrink: 0;
     }
 
+    .lb-avatar {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1.5px solid rgba(255, 255, 255, 0.25);
+    }
+
     .lb-name {
       flex: 1;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
-      font-weight: 600;
+      font-weight: 700;
+      color: #ffffff;
     }
 
     .lb-status {
@@ -479,28 +498,77 @@
       color: var(--muted);
     }
 
-    /* Bottom Floating Action Bar */
+    /* Bottom Floating Main Arcade Control Bar */
     .bottom-hud {
       position: fixed;
-      bottom: 18px;
+      bottom: 16px;
       left: 50%;
       transform: translateX(-50%);
-      z-index: 20;
+      z-index: 25;
       display: flex;
       align-items: center;
       gap: 10px;
-      background: var(--panel);
-      backdrop-filter: blur(14px);
-      border: 1px solid var(--panel-border);
-      padding: 8px 16px;
+      background: rgba(11, 15, 32, 0.88);
+      backdrop-filter: blur(16px);
+      border: 1px solid rgba(0, 240, 255, 0.35);
+      padding: 9px 14px;
       border-radius: 999px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+      box-shadow: 0 12px 36px rgba(0, 0, 0, 0.65), 0 0 24px rgba(0, 240, 255, 0.14);
+      max-width: calc(100vw - 24px);
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .quick-start-btn {
+      background: linear-gradient(135deg, #00f0ff, #0080ff);
+      border: none;
+      color: #030916;
+      font-weight: 900;
+      font-size: 0.98rem;
+      padding: 10px 22px;
+      border-radius: 999px;
+      cursor: pointer;
+      letter-spacing: 0.02em;
+      box-shadow: 0 6px 22px rgba(0, 224, 255, 0.45);
+      transition: transform 0.15s, box-shadow 0.15s, opacity 0.15s;
+      font-family: inherit;
+      white-space: nowrap;
+    }
+
+    .quick-start-btn:hover:not(:disabled) {
+      transform: translateY(-2px) scale(1.02);
+      box-shadow: 0 10px 28px rgba(0, 240, 255, 0.65);
+    }
+
+    .quick-start-btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .arcade-btn {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      color: #fff;
+      font-weight: 700;
+      font-size: 0.82rem;
+      padding: 9px 13px;
+      border-radius: 999px;
+      cursor: pointer;
+      font-family: inherit;
+      white-space: nowrap;
+      transition: all 0.16s ease;
+    }
+
+    .arcade-btn:hover {
+      border-color: var(--accent);
+      background: rgba(0, 240, 255, 0.16);
     }
 
     .speed-indicator {
       font-size: 0.8rem;
       color: var(--muted);
       font-weight: 600;
+      white-space: nowrap;
     }
 
     .speed-indicator strong {
@@ -519,17 +587,20 @@
     .marble-label {
       position: absolute;
       transform: translate(-50%, -140%);
-      background: rgba(8, 12, 26, 0.78);
-      border: 1px solid rgba(255, 255, 255, 0.25);
+      background: rgba(8, 12, 26, 0.82);
+      border: 1px solid rgba(255, 255, 255, 0.28);
       color: #fff;
       font-size: 11px;
       font-weight: 700;
-      padding: 2px 7px;
+      padding: 2px 8px 2px 5px;
       border-radius: 999px;
       white-space: nowrap;
       text-shadow: 0 1px 2px #000;
       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.45);
       will-change: transform;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
     }
 
     /* Winner Modal */
@@ -559,8 +630,8 @@
       background: linear-gradient(160deg, rgba(20, 26, 54, 0.96), rgba(10, 13, 28, 0.98));
       border: 1px solid rgba(0, 240, 255, 0.45);
       border-radius: 24px;
-      padding: 30px 34px;
-      max-width: 420px;
+      padding: 26px 30px;
+      max-width: 440px;
       width: 100%;
       text-align: center;
       box-shadow: 0 24px 70px rgba(0, 240, 255, 0.25), 0 0 0 1px rgba(255, 46, 147, 0.2);
@@ -573,28 +644,47 @@
     }
 
     .winner-crown {
-      font-size: 3rem;
+      font-size: 2.5rem;
       line-height: 1;
-      margin-bottom: 8px;
+      margin-bottom: 6px;
       filter: drop-shadow(0 0 16px rgba(255, 209, 102, 0.7));
+    }
+
+    .winner-animal-avatar {
+      width: 104px;
+      height: 104px;
+      margin: 10px auto 6px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 35% 30%, rgba(255, 255, 255, 0.22), rgba(0, 240, 255, 0.14) 55%, rgba(255, 46, 147, 0.22));
+      border: 2px solid rgba(255, 209, 102, 0.75);
+      box-shadow: 0 0 32px rgba(255, 209, 102, 0.35), 0 0 48px rgba(0, 240, 255, 0.22);
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
     .winner-subtitle {
       font-size: 0.85rem;
       text-transform: uppercase;
-      letter-spacing: 0.12em;
+      letter-spacing: 0.1em;
       color: var(--accent);
       font-weight: 800;
     }
 
     .winner-name {
-      margin: 10px 0 6px;
-      font-size: 2.2rem;
+      margin: 6px 0 6px;
+      font-size: 2.1rem;
       font-weight: 900;
-      background: linear-gradient(90deg, #fff, var(--accent-3), var(--accent));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
+      color: #ffffff;
+      text-shadow: 0 2px 16px rgba(0, 240, 255, 0.45), 0 0 28px rgba(255, 209, 102, 0.35);
       word-break: break-word;
+    }
+
+    .winner-rank-row {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 3px 0;
     }
 
     .winner-meta {
@@ -657,31 +747,130 @@
       }
     }
 
-    /* QR Lobby & Mobile Controller */
-    .qr-card {
+    /* QR Lobby & Manual Modal & Mobile Controller */
+    .qr-card, .manual-card {
       background: linear-gradient(160deg, rgba(20, 26, 54, 0.98), rgba(10, 13, 28, 0.99));
       border: 1px solid rgba(0, 240, 255, 0.45);
       border-radius: 22px;
-      padding: 24px 26px;
-      max-width: 440px;
+      padding: 22px 24px;
+      max-width: 470px;
       width: 100%;
       text-align: center;
       box-shadow: 0 24px 70px rgba(0, 240, 255, 0.22);
+      max-height: 92vh;
+      overflow-y: auto;
+    }
+
+    .manual-card {
+      max-width: 680px;
+      text-align: left;
+    }
+
+    .qr-role-banner {
+      background: linear-gradient(135deg, rgba(255, 209, 102, 0.16), rgba(0, 240, 255, 0.12));
+      border: 1px solid rgba(255, 209, 102, 0.45);
+      border-radius: 12px;
+      padding: 10px 12px;
+      font-size: 0.8rem;
+      line-height: 1.5;
+      color: #fff;
+      margin: 8px 0 10px;
+      text-align: left;
+    }
+
+    .qr-role-banner strong {
+      color: var(--accent-3);
+    }
+
+    .qr-start-btn {
+      width: 100%;
+      background: linear-gradient(135deg, #2ee59d, #00c6ff);
+      border: none;
+      color: #031512;
+      font-weight: 900;
+      font-size: 1.02rem;
+      padding: 13px 16px;
+      border-radius: 14px;
+      cursor: pointer;
+      font-family: inherit;
+      box-shadow: 0 8px 24px rgba(46, 229, 157, 0.38);
+      margin-bottom: 10px;
+      transition: transform 0.15s, box-shadow 0.15s;
+    }
+
+    .qr-start-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 28px rgba(46, 229, 157, 0.55);
+    }
+
+    .manual-section {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(130, 160, 255, 0.2);
+      border-radius: 14px;
+      padding: 14px 16px;
+      margin-bottom: 12px;
+    }
+
+    .manual-section h3 {
+      margin: 0 0 8px;
+      font-size: 0.98rem;
+      font-weight: 800;
+      color: var(--accent);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .manual-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    @media (max-width: 640px) {
+      .manual-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .manual-role-box {
+      background: rgba(6, 10, 24, 0.65);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 12px;
+      padding: 11px 12px;
+      font-size: 0.8rem;
+      line-height: 1.55;
+    }
+
+    .manual-role-box h4 {
+      margin: 0 0 6px;
+      font-size: 0.88rem;
+      color: var(--accent-3);
+    }
+
+    .manual-role-box ol, .manual-section ul {
+      margin: 0;
+      padding-left: 18px;
+      color: #dbe4ff;
+    }
+
+    .manual-role-box li, .manual-section li {
+      margin-bottom: 4px;
     }
 
     .qr-img-wrap {
       background: #ffffff;
       border-radius: 16px;
-      padding: 12px;
+      padding: 10px;
       display: inline-block;
-      margin: 12px 0;
+      margin: 6px 0;
       box-shadow: 0 0 28px rgba(0, 240, 255, 0.25);
     }
 
     .qr-img-wrap img {
       display: block;
-      width: 200px;
-      height: 200px;
+      width: 184px;
+      height: 184px;
     }
 
     .qr-code-pill {
@@ -690,9 +879,9 @@
       border: 1px solid var(--accent);
       color: var(--accent);
       font-weight: 900;
-      font-size: 1.15rem;
+      font-size: 1.1rem;
       letter-spacing: 0.14em;
-      padding: 5px 16px;
+      padding: 4px 16px;
       border-radius: 999px;
       margin-bottom: 6px;
     }
@@ -702,12 +891,15 @@
       flex-wrap: wrap;
       gap: 6px;
       justify-content: center;
-      max-height: 100px;
+      max-height: 92px;
       overflow-y: auto;
-      margin: 10px 0 14px;
+      margin: 8px 0 12px;
     }
 
     .qr-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
       background: rgba(46, 229, 157, 0.15);
       border: 1px solid rgba(46, 229, 157, 0.4);
       color: #fff;
@@ -772,8 +964,10 @@
       border: 1px solid rgba(255, 255, 255, 0.14);
       border-radius: 12px;
       padding: 8px 4px;
-      font-size: 1.45rem;
       cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       transition: all 0.15s;
     }
 
@@ -856,15 +1050,15 @@
     </div>
 
     <div class="top-controls">
+      <button class="pill-btn" id="open-manual-btn" style="background: rgba(255, 209, 102, 0.18); border-color: rgba(255, 209, 102, 0.55); color: var(--accent-3);">📖 사용 매뉴얼</button>
       <button class="pill-btn active" id="qr-lobby-btn">📱 QR 참여방 (0명)</button>
-      <button class="pill-btn active" id="toggle-settings-btn">⚙️ 설정 패널</button>
-      <button class="pill-btn active" id="cam-mode-btn">🎥 카메라: 자동 추적</button>
-      <button class="pill-btn active" id="labels-toggle-btn">🏷️ 이름표</button>
+      <button class="pill-btn" id="toggle-settings-btn">⚙️ 명단·코스 설정</button>
+      <button class="pill-btn active" id="cam-mode-btn">🎥 시점: 자동 추적</button>
       <button class="pill-btn active" id="sound-toggle-btn">🔊 사운드 ON</button>
     </div>
   </header>
 
-  <aside class="settings-panel" id="settings-panel">
+  <aside class="settings-panel collapsed" id="settings-panel">
     <div>
       <div class="section-label">
         <span>참여자 목록 (기존 서식 호환)</span>
@@ -936,6 +1130,10 @@
       </div>
     </div>
 
+    <div class="btn-row">
+      <button class="mini-btn active" id="labels-toggle-btn">🏷️ 이름표 표시 ON/OFF</button>
+    </div>
+
     <div class="action-grid">
       <button class="btn-secondary" id="shuffle-btn">🔀 섞기 (Shuffle)</button>
       <button class="btn-secondary" id="reset-btn">🔄 초기화 (Reset)</button>
@@ -960,7 +1158,10 @@
   </aside>
 
   <div class="bottom-hud">
-    <button class="mini-btn" id="fast-forward-btn" style="flex: 0 0 auto; padding: 6px 14px;">⏩ 2x 배속 (길게 누르기 / Space)</button>
+    <button class="quick-start-btn" id="quick-start-btn">🚀 바로 레이스 시작!</button>
+    <button class="arcade-btn" id="quick-shuffle-btn">🔀 섞기</button>
+    <button class="arcade-btn" id="quick-qr-btn">📱 QR 참여</button>
+    <button class="arcade-btn" id="fast-forward-btn">⏩ 2x 배속</button>
     <span class="speed-indicator">속도: <strong id="speed-val">1.0x</strong></span>
     <span class="speed-indicator">⏱️ <strong id="race-timer">0.0s</strong></span>
   </div>
@@ -969,6 +1170,7 @@
     <div class="winner-card">
       <div class="winner-crown">👑</div>
       <div class="winner-subtitle" id="winner-rank-subtitle">1ST PLACE WINNER</div>
+      <div class="winner-animal-avatar" id="winner-animal-avatar"></div>
       <div class="winner-name" id="winner-name-display">-</div>
       <div class="winner-meta" id="winner-meta-display">축하합니다!</div>
       <div id="winner-summary-box" style="background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.12); border-radius:12px; padding:10px 12px; margin-bottom:18px; text-align:left; font-size:0.8rem; line-height:1.55;"></div>
@@ -986,21 +1188,85 @@
     <div class="qr-card">
       <div class="winner-subtitle" style="margin-bottom: 6px;">📱 QR 실시간 멀티 참여방</div>
       <div class="qr-code-pill">ROOM <span id="qr-room-code">----</span></div>
-      <div class="hint-text" style="margin-top: 2px;">
-        스마트폰으로 QR을 스캔해 닉네임을 입력하고,<br />레이스 중 스킬 버튼으로 직접 개입하세요!
+      <div class="qr-role-banner">
+        <strong>👑 시작은 누가 하나요?</strong><br />
+        참여자들이 스마트폰으로 QR을 스캔해 닉네임과 동물을 골라 입장한 뒤, <strong>진행자(이 PC 화면)</strong>가 아래의 <strong>[🚀 지금 레이스 시작]</strong> 버튼을 누르면 경기가 시작됩니다!
       </div>
       <div class="qr-img-wrap">
         <img id="qr-code-img" alt="QR Code" src="" />
       </div>
-      <div class="hint-text" id="qr-conn-status" style="margin: 2px 0 8px; color: var(--accent-3);">연결 중...</div>
+      <div class="hint-text" id="qr-conn-status" style="margin: 2px 0 6px; color: var(--accent-3);">연결 중...</div>
       <div class="qr-joined-chips" id="qr-joined-list">
         <span class="hint-text">아직 QR로 입장한 참여자가 없습니다.</span>
       </div>
+      <button class="qr-start-btn" id="qr-start-race-btn">🚀 입장 완료! 지금 레이스 시작 (진행자 시작)</button>
       <div class="btn-row" style="margin-bottom: 8px;">
         <button class="mini-btn" id="qr-copy-link-btn">🔗 참여 링크 복사</button>
         <button class="mini-btn" id="qr-clear-list-btn">🧹 기존 목록 비우고 QR만 받기</button>
       </div>
-      <button class="btn-secondary" id="qr-close-btn" style="width: 100%;">닫기</button>
+      <div class="btn-row">
+        <button class="mini-btn" id="qr-open-manual-btn" style="color: var(--accent-3);">📖 QR 참여 매뉴얼 보기</button>
+        <button class="btn-secondary" id="qr-close-btn" style="flex: 1;">닫기</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Built-in Game & QR Manual Modal -->
+  <div class="modal-backdrop" id="manual-modal">
+    <div class="manual-card">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+        <div>
+          <div class="winner-subtitle">USER MANUAL · math-tong</div>
+          <h2 style="margin:2px 0 0; font-size:1.3rem; font-weight:900; color:#fff;">🐾 3D 마블 룰렛 사용 & QR 참여 매뉴얼</h2>
+        </div>
+        <button class="pill-btn" id="manual-top-close-btn" style="padding:6px 12px;">✕ 닫기</button>
+      </div>
+
+      <div class="manual-section">
+        <h3>⚡ 1. 빠른 시작 (PC 혼자 · 일반 추첨)</h3>
+        <ul>
+          <li>화면 하단 중앙의 <strong>[🚀 바로 레이스 시작!]</strong> 버튼만 누르면 즉시 3D 동물들이 출발합니다.</li>
+          <li>명단 편집, 3D 코스(4종), 추첨 방식(골인 순위 / 바운스 점수), 당첨 순위 변경은 상단 <strong>[⚙️ 명단·코스 설정]</strong>에서 열 수 있습니다.</li>
+        </ul>
+      </div>
+
+      <div class="manual-section">
+        <h3>📱 2. QR 실시간 참여 매뉴얼 (Q. 시작은 누가 하나요? → 진행자!)</h3>
+        <div class="manual-grid">
+          <div class="manual-role-box">
+            <h4>👑 진행자 (PC · 대형화면) 매뉴얼</h4>
+            <ol>
+              <li>상단 또는 하단의 <strong>[📱 QR 참여방]</strong>을 눌러 화면에 QR 코드를 띄웁니다.</li>
+              <li>QR 참여자만 추첨하려면 <strong>[🧹 기존 목록 비우고 QR만 받기]</strong>를 클릭합니다.</li>
+              <li>참여자들이 입장해 출발선에 동물이 생성되는 것을 확인합니다.</li>
+              <li>입장이 끝나면 <strong>진행자가 [🚀 지금 레이스 시작] 버튼</strong>을 눌러 경기를 출발시킵니다!</li>
+            </ol>
+          </div>
+          <div class="manual-role-box">
+            <h4>🙋 참여자 (스마트폰 QR) 매뉴얼</h4>
+            <ol>
+              <li>스마트폰 기본 카메라로 화면의 <strong>QR 코드를 스캔</strong>해 접속합니다.</li>
+              <li><strong>닉네임 입력</strong> + 원하는 <strong>동물 캐릭터 선택</strong> 후 <strong>[🎮 레이스 입장하기!]</strong>를 누릅니다.</li>
+              <li>진행자(PC)가 시작 버튼을 누를 때까지 잠시 대기합니다.</li>
+              <li>레이스 시작 후 스마트폰의 <strong>랜덤 럭키박스 / 대시 / 점프 / 응원</strong> 버튼으로 직접 캐릭터를 조종·지원하세요!</li>
+            </ol>
+          </div>
+        </div>
+      </div>
+
+      <div class="manual-section">
+        <h3>🏆 3. 추첨 방식 & 명단 서식 규칙</h3>
+        <ul>
+          <li><strong>🏁 골인 순위 추첨</strong>: 약 30초 코스를 달려 결승선에 목표 순위(기본 1등)로 통과한 동물이 당첨됩니다.</li>
+          <li><strong>⚡ 바운스 점수 추첨</strong>: 핀·범퍼·풍차 충돌(+10~25P), 점프(+30P), 부스트(+20P) 및 스마트폰 스킬 점수를 합산해 최고 점수 동물이 당첨됩니다.</li>
+          <li><strong>📄 서식 입력법</strong>: <code>짱구*2, 철수*1, 유리*3</code> 처럼 쉼표(<code>,</code>)나 줄바꿈으로 구분하고 <code>*숫자</code>로 가중치(출전 마리 수)를 지정합니다.</li>
+        </ul>
+      </div>
+
+      <div class="btn-row">
+        <a href="./manual.html" target="_blank" rel="noopener noreferrer" class="mini-btn" style="text-decoration:none; color:var(--accent); border-color:rgba(0,240,255,0.4); padding:10px;">📄 전체·인쇄용 매뉴얼 페이지 열기 (manual.html)</a>
+        <button class="btn-primary" id="manual-close-btn" style="flex:1; grid-column:auto; padding:10px;">확인하고 게임하기</button>
+      </div>
     </div>
   </div>
 
@@ -1013,19 +1279,19 @@
       </div>
 
       <div id="mc-join-view" style="display:flex; flex-direction:column; gap:12px;">
-        <div class="hint-text" style="margin:0;">닉네임과 3D 동물 캐릭터를 선택해 레이스에 입장하세요!</div>
+        <div class="hint-text" style="margin:0;">닉네임과 3D 동물 캐릭터를 선택해 레이스에 입장하세요! (경기는 진행자가 시작합니다)</div>
         <input type="text" id="mc-name-input" class="mc-input" maxlength="16" placeholder="닉네임을 입력하세요 (예: 홍길동)" />
         <div class="mc-animal-grid" id="mc-animal-grid"></div>
         <button class="btn-primary" id="mc-join-btn">🎮 레이스 입장하기!</button>
       </div>
 
       <div id="mc-pad-view" style="display:none; flex-direction:column; gap:12px;">
-        <div style="background:rgba(0,240,255,0.1); border:1px solid rgba(0,240,255,0.35); border-radius:14px; padding:12px; display:flex; align-items:center; justify-content:space-between;">
+        <div style="background:rgba(0,240,255,0.1); border:1px solid rgba(0,240,255,0.35); border-radius:14px; padding:12px; display:flex; align-items:center; justify-content:space-between; gap:8px;">
           <div>
             <div style="font-size:0.75rem; color:var(--muted);">참가 캐릭터</div>
-            <div id="mc-player-label" style="font-size:1.2rem; font-weight:900;">🐶 -</div>
+            <div id="mc-player-label" style="font-size:1.15rem; font-weight:900; display:flex; align-items:center; gap:6px;">-</div>
           </div>
-          <span class="badge" id="mc-status-badge">대기/진행 중</span>
+          <span class="badge" id="mc-status-badge" style="text-align:right;">⏳ 진행자 시작 대기 중</span>
         </div>
 
         <button class="mc-skill-btn" id="mc-btn-random" style="background:linear-gradient(135deg,#ff2e93,#ff8a00);">
@@ -1316,17 +1582,20 @@
     controls.minDistance = 8;
     controls.maxDistance = 240;
 
-    // Vibrant Arcade Lighting
+    // Vibrant Front-Lit Arcade Lighting
     const ambientLight = new THREE.AmbientLight(0x9bb8ff, 0.85);
     scene.add(ambientLight);
 
+    const hemiLight = new THREE.HemisphereLight(0xffffff, 0x4466aa, 0.95);
+    scene.add(hemiLight);
+
     const dirLight = new THREE.DirectionalLight(0xffffff, 1.9);
-    dirLight.position.set(35, 95, -20);
+    dirLight.position.set(45, 110, 180);
     dirLight.castShadow = true;
     dirLight.shadow.mapSize.set(2048, 2048);
     dirLight.shadow.camera.near = 10;
-    dirLight.shadow.camera.far = 260;
-    const d = 115;
+    dirLight.shadow.camera.far = 480;
+    const d = 160;
     dirLight.shadow.camera.left = -d;
     dirLight.shadow.camera.right = d;
     dirLight.shadow.camera.top = d;
@@ -2003,8 +2272,214 @@
       return group;
     }
 
+    function getAnimalSvg(emoji, size = 24) {
+      const wrap = (inner) =>
+        `<svg class="animal-svg-inline" width="${size}" height="${size}" viewBox="0 0 64 64" aria-hidden="true" style="display:inline-block;vertical-align:middle;flex-shrink:0;overflow:visible;">${inner}</svg>`;
+      const eyesAndBlush = (ey = 33, dx = 11, cheekY = 39) => `
+        <circle cx="${32 - dx}" cy="${ey}" r="4.2" fill="#111827"/>
+        <circle cx="${32 + dx}" cy="${ey}" r="4.2" fill="#111827"/>
+        <circle cx="${30.5 - dx}" cy="${ey - 1.5}" r="1.6" fill="#ffffff"/>
+        <circle cx="${30.5 + dx}" cy="${ey - 1.5}" r="1.6" fill="#ffffff"/>
+        <ellipse cx="${22 - (dx - 11)}" cy="${cheekY}" rx="4.5" ry="2.6" fill="#ff7aa8" opacity="0.72"/>
+        <ellipse cx="${42 + (dx - 11)}" cy="${cheekY}" rx="4.5" ry="2.6" fill="#ff7aa8" opacity="0.72"/>
+      `;
+
+      switch (emoji) {
+        case '🐶':
+          return wrap(`
+            <ellipse cx="12" cy="34" rx="7.5" ry="15" transform="rotate(14 12 34)" fill="#7a4424"/>
+            <ellipse cx="52" cy="34" rx="7.5" ry="15" transform="rotate(-14 52 34)" fill="#7a4424"/>
+            <circle cx="32" cy="34" r="21" fill="#d99b66" stroke="#7a4424" stroke-width="1.5"/>
+            <ellipse cx="32" cy="41" rx="11.5" ry="8.5" fill="#fff0db"/>
+            <ellipse cx="32" cy="37" rx="5.2" ry="3.8" fill="#1e1b18"/>
+            <path d="M27 42 Q32 47 37 42" fill="none" stroke="#4a2c18" stroke-width="2.2" stroke-linecap="round"/>
+            ${eyesAndBlush(30, 9.5, 36)}
+          `);
+        case '🐱':
+          return wrap(`
+            <polygon points="11,28 14,9 29,20" fill="#ff9f43" stroke="#d97706" stroke-width="1.2"/>
+            <polygon points="53,28 50,9 35,20" fill="#ff9f43" stroke="#d97706" stroke-width="1.2"/>
+            <polygon points="14,25 16,13 26,20" fill="#ff9bb8"/>
+            <polygon points="50,25 48,13 38,20" fill="#ff9bb8"/>
+            <ellipse cx="32" cy="35" rx="21" ry="19" fill="#ffb366" stroke="#d97706" stroke-width="1.2"/>
+            <rect x="30.5" y="16" width="3" height="7" rx="1.5" fill="#d97706"/>
+            <rect x="25" y="17.5" width="2.6" height="5.5" rx="1.3" fill="#d97706"/>
+            <rect x="36.4" y="17.5" width="2.6" height="5.5" rx="1.3" fill="#d97706"/>
+            <ellipse cx="32" cy="42" rx="10" ry="7" fill="#fff5eb"/>
+            <polygon points="28.5,38 35.5,38 32,42" fill="#ff5e96"/>
+            <line x1="9" y1="37" x2="21" y2="39" stroke="#7c2d12" stroke-width="1.6" stroke-linecap="round"/>
+            <line x1="9" y1="42" x2="21" y2="42" stroke="#7c2d12" stroke-width="1.6" stroke-linecap="round"/>
+            <line x1="55" y1="37" x2="43" y2="39" stroke="#7c2d12" stroke-width="1.6" stroke-linecap="round"/>
+            <line x1="55" y1="42" x2="43" y2="42" stroke="#7c2d12" stroke-width="1.6" stroke-linecap="round"/>
+            ${eyesAndBlush(32, 9.5, 38)}
+          `);
+        case '🐰':
+          return wrap(`
+            <ellipse cx="22" cy="17" rx="6.2" ry="15" transform="rotate(-8 22 17)" fill="#f8faff" stroke="#cbd5e1" stroke-width="1.4"/>
+            <ellipse cx="42" cy="17" rx="6.2" ry="15" transform="rotate(8 42 17)" fill="#f8faff" stroke="#cbd5e1" stroke-width="1.4"/>
+            <ellipse cx="22" cy="18" rx="3.2" ry="10.5" transform="rotate(-8 22 18)" fill="#ff9ebb"/>
+            <ellipse cx="42" cy="18" rx="3.2" ry="10.5" transform="rotate(8 42 18)" fill="#ff9ebb"/>
+            <ellipse cx="32" cy="40" rx="20.5" ry="18" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.4"/>
+            <ellipse cx="32" cy="42" rx="4" ry="2.8" fill="#ff6b9e"/>
+            <path d="M27.5 46.5 Q32 50 36.5 46.5" fill="none" stroke="#64748b" stroke-width="2" stroke-linecap="round"/>
+            ${eyesAndBlush(36, 9, 41)}
+          `);
+        case '🦊':
+          return wrap(`
+            <polygon points="10,30 14,8 29,21" fill="#ff6b2b"/>
+            <polygon points="54,30 50,8 35,21" fill="#ff6b2b"/>
+            <polygon points="13.5,24 16,12 25,20" fill="#3a1f10"/>
+            <polygon points="50.5,24 48,12 39,20" fill="#3a1f10"/>
+            <ellipse cx="32" cy="36" rx="21.5" ry="19" fill="#ff6b2b"/>
+            <path d="M11,36 Q20,33 32,45 Q44,33 53,36 Q48,54 32,55 Q16,54 11,36 Z" fill="#ffffff"/>
+            <ellipse cx="32" cy="44" rx="4.8" ry="3.6" fill="#18181b"/>
+            ${eyesAndBlush(33, 9.5, 40)}
+          `);
+        case '🐻':
+          return wrap(`
+            <circle cx="15" cy="19" r="8" fill="#8b5a2b"/>
+            <circle cx="49" cy="19" r="8" fill="#8b5a2b"/>
+            <circle cx="15" cy="19" r="4.2" fill="#ffd8b0"/>
+            <circle cx="49" cy="19" r="4.2" fill="#ffd8b0"/>
+            <circle cx="32" cy="35" r="21" fill="#8b5a2b"/>
+            <ellipse cx="32" cy="42" rx="10.5" ry="8" fill="#ffe6c7"/>
+            <ellipse cx="32" cy="38.5" rx="5" ry="3.6" fill="#18181b"/>
+            <path d="M27.5 44 Q32 48 36.5 44" fill="none" stroke="#4a2c18" stroke-width="2" stroke-linecap="round"/>
+            ${eyesAndBlush(31, 9.5, 37)}
+          `);
+        case '🐼':
+          return wrap(`
+            <circle cx="14" cy="18" r="8" fill="#18181b"/>
+            <circle cx="50" cy="18" r="8" fill="#18181b"/>
+            <circle cx="32" cy="35" r="21" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.4"/>
+            <ellipse cx="22" cy="33" rx="6.8" ry="8.2" transform="rotate(-18 22 33)" fill="#18181b"/>
+            <ellipse cx="42" cy="33" rx="6.8" ry="8.2" transform="rotate(18 42 33)" fill="#18181b"/>
+            <circle cx="22.5" cy="32.5" r="3" fill="#ffffff"/>
+            <circle cx="41.5" cy="32.5" r="3" fill="#ffffff"/>
+            <circle cx="22.5" cy="32.5" r="1.6" fill="#111827"/>
+            <circle cx="41.5" cy="32.5" r="1.6" fill="#111827"/>
+            <ellipse cx="32" cy="42" rx="4.8" ry="3.2" fill="#18181b"/>
+            <ellipse cx="17" cy="42" rx="4.2" ry="2.4" fill="#ff7aa8" opacity="0.7"/>
+            <ellipse cx="47" cy="42" rx="4.2" ry="2.4" fill="#ff7aa8" opacity="0.7"/>
+          `);
+        case '🐨':
+          return wrap(`
+            <circle cx="12" cy="30" r="10.5" fill="#94a3b8"/>
+            <circle cx="52" cy="30" r="10.5" fill="#94a3b8"/>
+            <circle cx="12" cy="30" r="6" fill="#f1f5f9"/>
+            <circle cx="52" cy="30" r="6" fill="#f1f5f9"/>
+            <circle cx="32" cy="36" r="19.5" fill="#9aa4b2"/>
+            <ellipse cx="32" cy="38" rx="5.2" ry="7.8" fill="#1e293b"/>
+            ${eyesAndBlush(33, 10.5, 41)}
+          `);
+        case '🐯':
+          return wrap(`
+            <circle cx="15" cy="18" r="7.5" fill="#ff8c24"/>
+            <circle cx="49" cy="18" r="7.5" fill="#ff8c24"/>
+            <circle cx="15" cy="18" r="4" fill="#ffe0b2"/>
+            <circle cx="49" cy="18" r="4" fill="#ffe0b2"/>
+            <ellipse cx="32" cy="35" rx="21" ry="19.5" fill="#ff8c24"/>
+            <rect x="26" y="19" width="12" height="2.6" rx="1.3" fill="#18181b"/>
+            <rect x="28" y="23.5" width="8" height="2.6" rx="1.3" fill="#18181b"/>
+            <rect x="30.6" y="17.5" width="2.8" height="10.5" rx="1.4" fill="#18181b"/>
+            <rect x="12" y="34" width="6" height="2.5" rx="1.2" fill="#18181b"/>
+            <rect x="46" y="34" width="6" height="2.5" rx="1.2" fill="#18181b"/>
+            <ellipse cx="32" cy="43" rx="10" ry="7.5" fill="#fff7ed"/>
+            <polygon points="28,39 36,39 32,43" fill="#18181b"/>
+            ${eyesAndBlush(33, 9.5, 39)}
+          `);
+        case '🦁':
+          return wrap(`
+            <circle cx="32" cy="35" r="25" fill="#7c3f16"/>
+            <circle cx="15" cy="19" r="6" fill="#f5a623"/>
+            <circle cx="49" cy="19" r="6" fill="#f5a623"/>
+            <circle cx="32" cy="36" r="18" fill="#f5a623"/>
+            <ellipse cx="32" cy="42.5" rx="9.5" ry="7" fill="#ffe6c7"/>
+            <polygon points="28,38.5 36,38.5 32,42.5" fill="#18181b"/>
+            ${eyesAndBlush(33, 8.5, 39)}
+          `);
+        case '🐮':
+          return wrap(`
+            <path d="M16,22 Q11,11 20,14 Z" fill="#fef3c7" stroke="#d97706" stroke-width="1.2"/>
+            <path d="M48,22 Q53,11 44,14 Z" fill="#fef3c7" stroke="#d97706" stroke-width="1.2"/>
+            <ellipse cx="11" cy="28" rx="6.5" ry="3.8" transform="rotate(-18 11 28)" fill="#f8fafc" stroke="#94a3b8" stroke-width="1"/>
+            <ellipse cx="53" cy="28" rx="6.5" ry="3.8" transform="rotate(18 53 28)" fill="#f8fafc" stroke="#94a3b8" stroke-width="1"/>
+            <circle cx="32" cy="35" r="20" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.4"/>
+            <ellipse cx="22" cy="26" rx="7" ry="6" fill="#1e293b"/>
+            <ellipse cx="32" cy="44" rx="14.5" ry="9" fill="#ff9ec4"/>
+            <circle cx="26.5" cy="43.5" r="2.2" fill="#4a1d32"/>
+            <circle cx="37.5" cy="43.5" r="2.2" fill="#4a1d32"/>
+            ${eyesAndBlush(31, 9.5, 37)}
+          `);
+        case '🐷':
+          return wrap(`
+            <polygon points="11,26 14,10 27,19" fill="#ff70a6"/>
+            <polygon points="53,26 50,10 37,19" fill="#ff70a6"/>
+            <circle cx="32" cy="36" r="20.5" fill="#ff9ec4"/>
+            <ellipse cx="32" cy="41.5" rx="10" ry="7" fill="#ff70a6"/>
+            <ellipse cx="28" cy="41.5" rx="2.2" ry="3" fill="#4a1d32"/>
+            <ellipse cx="36" cy="41.5" rx="2.2" ry="3" fill="#4a1d32"/>
+            ${eyesAndBlush(31, 9.5, 37)}
+          `);
+        case '🐸':
+          return wrap(`
+            <circle cx="20" cy="21" r="9.5" fill="#38d96c"/>
+            <circle cx="44" cy="21" r="9.5" fill="#38d96c"/>
+            <circle cx="20" cy="21" r="5.5" fill="#ffffff"/>
+            <circle cx="44" cy="21" r="5.5" fill="#ffffff"/>
+            <circle cx="20" cy="21" r="3" fill="#111827"/>
+            <circle cx="44" cy="21" r="3" fill="#111827"/>
+            <ellipse cx="32" cy="39" rx="22" ry="16" fill="#38d96c"/>
+            <path d="M21 40 Q32 48 43 40" fill="none" stroke="#14532d" stroke-width="2.6" stroke-linecap="round"/>
+            <ellipse cx="16" cy="40" rx="4.5" ry="2.6" fill="#ff7aa8" opacity="0.72"/>
+            <ellipse cx="48" cy="40" rx="4.5" ry="2.6" fill="#ff7aa8" opacity="0.72"/>
+          `);
+        case '🐵':
+          return wrap(`
+            <circle cx="11" cy="34" r="8" fill="#a46636"/>
+            <circle cx="53" cy="34" r="8" fill="#a46636"/>
+            <circle cx="11" cy="34" r="4.6" fill="#ffd9b3"/>
+            <circle cx="53" cy="34" r="4.6" fill="#ffd9b3"/>
+            <circle cx="32" cy="35" r="20" fill="#a46636"/>
+            <circle cx="25" cy="30" r="9.5" fill="#ffd9b3"/>
+            <circle cx="39" cy="30" r="9.5" fill="#ffd9b3"/>
+            <ellipse cx="32" cy="42" rx="14.5" ry="10.5" fill="#ffd9b3"/>
+            <path d="M24 44 Q32 50 40 44" fill="none" stroke="#5c3317" stroke-width="2.3" stroke-linecap="round"/>
+            ${eyesAndBlush(31, 8.5, 38)}
+          `);
+        case '🦄':
+          return wrap(`
+            <polygon points="15,28 16,13 27,21" fill="#ffffff" stroke="#c4b5fd" stroke-width="1.2"/>
+            <polygon points="49,28 48,13 37,21" fill="#ffffff" stroke="#c4b5fd" stroke-width="1.2"/>
+            <polygon points="27,22 37,22 32,4" fill="#ffd166" stroke="#f59e0b" stroke-width="1.2"/>
+            <ellipse cx="32" cy="38" rx="19.5" ry="18" fill="#fdf8ff" stroke="#d8b4fe" stroke-width="1.4"/>
+            <ellipse cx="32" cy="45" rx="11" ry="7.5" fill="#fbcfe8"/>
+            <path d="M20 20 Q32 14 44 20" fill="#f472b6"/>
+            ${eyesAndBlush(34, 9, 39)}
+          `);
+        case '🐧':
+          return wrap(`
+            <circle cx="32" cy="35" r="21" fill="#263248"/>
+            <circle cx="25" cy="34" r="10.5" fill="#ffffff"/>
+            <circle cx="39" cy="34" r="10.5" fill="#ffffff"/>
+            <ellipse cx="32" cy="44" rx="14" ry="10" fill="#ffffff"/>
+            <polygon points="26,39 38,39 32,46" fill="#ff9f1c"/>
+            ${eyesAndBlush(33, 8.5, 39)}
+          `);
+        case '🐥':
+        default:
+          return wrap(`
+            <ellipse cx="32" cy="13" rx="4.5" ry="6.5" fill="#fde047"/>
+            <circle cx="32" cy="36" r="20.5" fill="#ffde38" stroke="#eab308" stroke-width="1.2"/>
+            <polygon points="26,38 38,38 32,45" fill="#ff8800"/>
+            ${eyesAndBlush(32, 9.5, 38)}
+          `);
+      }
+    }
+
     let marbles = [];
     const customAnimalMap = new Map();
+    let hostRoomChannel = null;
     let raceState = 'idle';
     let finishedCount = 0;
     let targetRank = 1;
@@ -2024,6 +2499,15 @@
     const raceProgressFill = document.getElementById('race-progress-fill');
     const slowmoBanner = document.getElementById('slowmo-banner');
     const speedValEl = document.getElementById('speed-val');
+
+    function setStartButtonsDisabled(disabled) {
+      const sBtn = document.getElementById('start-btn');
+      const qBtn = document.getElementById('quick-start-btn');
+      const qrBtn = document.getElementById('qr-start-race-btn');
+      if (sBtn) sBtn.disabled = disabled;
+      if (qBtn) qBtn.disabled = disabled;
+      if (qrBtn) qrBtn.disabled = disabled;
+    }
 
     function clearMarbles() {
       for (const m of marbles) {
@@ -2058,6 +2542,7 @@
     function spawnMarbles(shuffleOrder = false) {
       clearMarbles();
       raceState = 'idle';
+      if (hostRoomChannel) hostRoomChannel.send({ type: 'race_state', state: 'idle' });
       finishedCount = 0;
       raceElapsed = 0;
       document.getElementById('race-timer').textContent = '0.0s';
@@ -2166,7 +2651,7 @@
 
         const labelEl = document.createElement('div');
         labelEl.className = 'marble-label';
-        labelEl.textContent = item.name;
+        labelEl.innerHTML = `${getAnimalSvg(item.animal, 16)}<span>${escapeHtml(item.name)}</span>`;
         labelEl.style.borderColor = `#${item.colorHex.toString(16).padStart(6, '0')}`;
         labelsLayer.appendChild(labelEl);
 
@@ -2209,8 +2694,8 @@
         return `
           <div class="lb-item ${m.finished ? 'finished' : ''} ${isTarget ? 'target-winner' : ''}">
             <span class="lb-rank">${m.finished && winMode === 'finish' ? `🏁${rankNum}` : rankNum}</span>
-            <span class="lb-color" style="background:${hex}; box-shadow:0 0 8px ${hex}"></span>
-            <span class="lb-name">${m.animal} ${escapeHtml(m.name)}</span>
+            <span class="lb-avatar" style="border-color:${hex}; box-shadow:0 0 8px ${hex}">${getAnimalSvg(m.animal, 20)}</span>
+            <span class="lb-name">${escapeHtml(m.name)}</span>
             <span class="lb-status">${rightText}</span>
           </div>
         `;
@@ -2237,7 +2722,10 @@
       }
 
       raceState = 'running';
-      document.getElementById('start-btn').disabled = true;
+      setStartButtonsDisabled(true);
+      if (hostRoomChannel) {
+        hostRoomChannel.send({ type: 'race_state', state: 'running', targetRank, winMode });
+      }
       for (const m of marbles) {
         m.body.wakeUp();
         m.body.velocity.set((Math.random() - 0.5) * 3.5, 0, 4.5 + Math.random() * 2.5);
@@ -2251,6 +2739,14 @@
       slowmoBanner.classList.remove('active');
       sfx.playWinFanfare();
       spawnConfetti(winnerMarble.mesh.position);
+      if (hostRoomChannel) {
+        hostRoomChannel.send({
+          type: 'race_state',
+          state: 'finished',
+          winner: winnerMarble.name,
+          animal: winnerMarble.animal
+        });
+      }
 
       const byFinish = [...marbles].sort((a, b) => (a.finishRank || 9999) - (b.finishRank || 9999));
       const byScore = [...marbles].sort((a, b) => b.score - a.score);
@@ -2261,25 +2757,28 @@
         winMode === 'score'
           ? `⚡ 바운스 점수 ${targetRank}등 당첨자 (SCORE RANK #${targetRank})`
           : `🏁 골인 순위 ${targetRank}등 당첨자 (FINISH RANK #${targetRank})`;
-      document.getElementById('winner-name-display').textContent = `${winnerMarble.animal} ${winnerMarble.name}`;
+      document.getElementById('winner-animal-avatar').innerHTML = getAnimalSvg(winnerMarble.animal, 84);
+      document.getElementById('winner-name-display').textContent = winnerMarble.name;
       document.getElementById('winner-meta-display').textContent =
         winMode === 'score'
           ? `총 ${winnerMarble.score}P (바운스 ${winnerMarble.bounces}회)로 점수 ${targetRank}등을 차지했습니다!`
           : `결승선 ${targetRank}번째 통과 · 획득 점수 ${winnerMarble.score}P (바운스 ${winnerMarble.bounces}회)`;
 
       const topRows = byScore.slice(0, 5).map((m, idx) =>
-        `<div>${idx + 1}. <b>${escapeHtml(m.name)}</b> — ${m.score}P (바운스 ${m.bounces}회${m.finishRank ? ` · 🏁${m.finishRank}등` : ''})</div>`
+        `<div class="winner-rank-row"><span>${idx + 1}.</span>${getAnimalSvg(m.animal, 20)}<b>${escapeHtml(m.name)}</b><span>— ${m.score}P (바운스 ${m.bounces}회${m.finishRank ? ` · 🏁${m.finishRank}등` : ''})</span></div>`
       ).join('');
       document.getElementById('winner-summary-box').innerHTML = `
-        <div style="margin-bottom:6px; color:var(--accent-3); font-weight:700;">
-          🏁 골인 1등: ${escapeHtml(finishChamp.name)} &nbsp;|&nbsp; ⚡ 점수 1등: ${escapeHtml(scoreChamp.name)} (${scoreChamp.score}P)
+        <div style="margin-bottom:6px; color:var(--accent-3); font-weight:700; display:flex; align-items:center; flex-wrap:wrap; gap:6px;">
+          <span>🏁 골인 1등:</span> ${getAnimalSvg(finishChamp.animal, 18)} <span>${escapeHtml(finishChamp.name)}</span>
+          <span style="opacity:0.5;">|</span>
+          <span>⚡ 점수 1등:</span> ${getAnimalSvg(scoreChamp.animal, 18)} <span>${escapeHtml(scoreChamp.name)} (${scoreChamp.score}P)</span>
         </div>
         <div style="color:var(--muted); font-size:0.75rem; margin-bottom:4px;">종합 점수 TOP 5</div>
         ${topRows}
       `;
 
       document.getElementById('winner-modal').classList.add('open');
-      document.getElementById('start-btn').disabled = false;
+      setStartButtonsDisabled(false);
     }
 
     // =========================================================================
@@ -2492,7 +2991,7 @@
           if (tempVec.z < 1) {
             const x = (tempVec.x * 0.5 + 0.5) * window.innerWidth;
             const y = (-tempVec.y * 0.5 + 0.5) * window.innerHeight;
-            m.labelEl.style.display = 'block';
+            m.labelEl.style.display = 'inline-flex';
             m.labelEl.style.left = `${x}px`;
             m.labelEl.style.top = `${y}px`;
           } else {
@@ -2529,7 +3028,7 @@
     mapSelect.addEventListener('change', () => {
       buildCourse(mapSelect.value);
       spawnMarbles(false);
-      document.getElementById('start-btn').disabled = false;
+      setStartButtonsDisabled(false);
     });
 
     document.querySelectorAll('[data-win-mode]').forEach(btn => {
@@ -2576,7 +3075,7 @@
           participantsInput.value = formatted;
           localStorage.setItem('marble_roulette_3d_participants', formatted);
           spawnMarbles(false);
-          document.getElementById('start-btn').disabled = false;
+          setStartButtonsDisabled(false);
           showToast(`"${file.name}" 불러오기 완료!`);
         } else {
           showToast('파일에서 참여자를 찾지 못했습니다.');
@@ -2628,14 +3127,20 @@
     });
 
     document.getElementById('start-btn').addEventListener('click', startRace);
+    document.getElementById('quick-start-btn').addEventListener('click', startRace);
     document.getElementById('shuffle-btn').addEventListener('click', () => {
       spawnMarbles(true);
-      document.getElementById('start-btn').disabled = false;
-      showToast('구슬 순서를 무작위로 섞었습니다.');
+      setStartButtonsDisabled(false);
+      showToast('동물 순서를 무작위로 섞었습니다.');
+    });
+    document.getElementById('quick-shuffle-btn').addEventListener('click', () => {
+      spawnMarbles(true);
+      setStartButtonsDisabled(false);
+      showToast('동물 순서를 무작위로 섞었습니다.');
     });
     document.getElementById('reset-btn').addEventListener('click', () => {
       spawnMarbles(false);
-      document.getElementById('start-btn').disabled = false;
+      setStartButtonsDisabled(false);
     });
 
     document.getElementById('modal-close-btn').addEventListener('click', () => {
@@ -2645,6 +3150,21 @@
       document.getElementById('winner-modal').classList.remove('open');
       spawnMarbles(true);
       startRace();
+    });
+
+    const manualModal = document.getElementById('manual-modal');
+    document.getElementById('open-manual-btn').addEventListener('click', () => {
+      manualModal.classList.add('open');
+    });
+    document.getElementById('manual-close-btn').addEventListener('click', () => {
+      manualModal.classList.remove('open');
+    });
+    document.getElementById('manual-top-close-btn').addEventListener('click', () => {
+      manualModal.classList.remove('open');
+    });
+    document.getElementById('qr-open-manual-btn').addEventListener('click', () => {
+      document.getElementById('qr-modal').classList.remove('open');
+      manualModal.classList.add('open');
     });
 
     document.getElementById('toggle-settings-btn').addEventListener('click', (e) => {
@@ -2657,13 +3177,13 @@
     camBtn.addEventListener('click', () => {
       if (camMode === 'auto') {
         camMode = 'overview';
-        camBtn.textContent = '🎥 카메라: 전체 뷰';
+        camBtn.textContent = '🎥 시점: 전체 뷰';
       } else if (camMode === 'overview') {
         camMode = 'free';
-        camBtn.textContent = '🎥 카메라: 자유 시점';
+        camBtn.textContent = '🎥 시점: 자유 시점';
       } else {
         camMode = 'auto';
-        camBtn.textContent = '🎥 카메라: 자동 추적';
+        camBtn.textContent = '🎥 시점: 자동 추적';
       }
     });
 
@@ -2793,7 +3313,8 @@
         const btn = document.createElement('button');
         btn.type = 'button';
         btn.className = `mc-animal-btn ${emoji === selectedAnimal ? 'selected' : ''}`;
-        btn.textContent = emoji;
+        btn.innerHTML = getAnimalSvg(emoji, 30);
+        btn.setAttribute('aria-label', emoji);
         btn.addEventListener('click', () => {
           selectedAnimal = emoji;
           grid.querySelectorAll('.mc-animal-btn').forEach(b => b.classList.remove('selected'));
@@ -2802,7 +3323,30 @@
         grid.appendChild(btn);
       });
 
-      const channel = createRoomChannel(joinRoomCode, () => {});
+      const statusBadge = document.getElementById('mc-status-badge');
+      const feedbackEl = document.getElementById('mc-action-feedback');
+
+      const channel = createRoomChannel(joinRoomCode, (msg) => {
+        if (msg.type === 'race_state') {
+          if (msg.state === 'running') {
+            statusBadge.textContent = '🏁 레이스 진행 중!';
+            statusBadge.style.background = 'rgba(46, 229, 157, 0.25)';
+            statusBadge.style.color = '#2ee59d';
+            feedbackEl.textContent = '🔥 진행자가 경기를 시작했습니다! 지금 버튼을 연타하세요!';
+          } else if (msg.state === 'finished') {
+            statusBadge.textContent = '🎉 레이스 종료!';
+            statusBadge.style.background = 'rgba(255, 209, 102, 0.25)';
+            statusBadge.style.color = '#ffd166';
+            if (msg.winner) {
+              feedbackEl.innerHTML = `👑 우승: ${getAnimalSvg(msg.animal || '🐶', 18)} <b>${escapeHtml(msg.winner)}</b>!`;
+            }
+          } else {
+            statusBadge.textContent = '⏳ 진행자 시작 대기 중';
+            statusBadge.style.background = '';
+            statusBadge.style.color = '';
+          }
+        }
+      });
       let myNick = '';
 
       document.getElementById('mc-join-btn').addEventListener('click', () => {
@@ -2815,8 +3359,8 @@
         channel.send({ type: 'join', name: myNick, animal: selectedAnimal });
         document.getElementById('mc-join-view').style.display = 'none';
         document.getElementById('mc-pad-view').style.display = 'flex';
-        document.getElementById('mc-player-label').textContent = `${selectedAnimal} ${myNick}`;
-        showToast('입장 완료! 레이스가 시작되면 버튼을 눌러보세요!');
+        document.getElementById('mc-player-label').innerHTML = `${getAnimalSvg(selectedAnimal, 26)} <span>${escapeHtml(myNick)}</span>`;
+        showToast('입장 완료! 진행자(PC)가 시작하면 버튼을 눌러보세요!');
       });
 
       function bindSkillBtn(btnId, kind, cooldownSec, label) {
@@ -2825,7 +3369,7 @@
         btn.addEventListener('click', () => {
           if (!myNick || btn.disabled) return;
           channel.send({ type: 'action', name: myNick, kind });
-          document.getElementById('mc-action-feedback').textContent = `✨ "${label}" 발동 전송됨!`;
+          feedbackEl.textContent = `✨ "${label}" 발동 전송됨!`;
           btn.disabled = true;
           let left = cooldownSec;
           cdSpan.textContent = `${left.toFixed(1)}s`;
@@ -2851,7 +3395,7 @@
           if (!myNick) return;
           const emoji = btn.dataset.cheer;
           channel.send({ type: 'action', name: myNick, kind: 'cheer', emoji });
-          document.getElementById('mc-action-feedback').textContent = `${emoji} 응원 전송! (+5P)`;
+          feedbackEl.textContent = `${emoji} 응원 전송! (+5P)`;
         });
       });
     } else {
@@ -2875,11 +3419,11 @@
           return;
         }
         listEl.innerHTML = [...qrJoinedMap.entries()]
-          .map(([name, animal]) => `<span class="qr-chip">${animal} ${escapeHtml(name)}</span>`)
+          .map(([name, animal]) => `<span class="qr-chip">${getAnimalSvg(animal, 18)} ${escapeHtml(name)}</span>`)
           .join('');
       }
 
-      createRoomChannel(roomCode, (msg) => {
+      hostRoomChannel = createRoomChannel(roomCode, (msg) => {
         if (msg.type === 'join' && msg.name) {
           const name = String(msg.name).trim();
           const animal = ANIMALS.includes(msg.animal) ? msg.animal : ANIMALS[0];
@@ -2895,7 +3439,11 @@
             participantsInput.value = entriesToLazygyuText(existing);
             localStorage.setItem('marble_roulette_3d_participants', participantsInput.value);
           }
-          if (raceState !== 'running') spawnMarbles(false);
+          if (raceState !== 'running') {
+            spawnMarbles(false);
+          } else if (hostRoomChannel) {
+            hostRoomChannel.send({ type: 'race_state', state: 'running', targetRank, winMode });
+          }
           showToast(`📱 ${animal} ${name}님이 QR로 입장했습니다!`);
         } else if (msg.type === 'action' && msg.name) {
           const targets = marbles.filter(m => m.name === msg.name && !m.finished);
@@ -2952,6 +3500,13 @@
 
       document.getElementById('qr-lobby-btn').addEventListener('click', () => {
         qrModal.classList.add('open');
+      });
+      document.getElementById('quick-qr-btn').addEventListener('click', () => {
+        qrModal.classList.add('open');
+      });
+      document.getElementById('qr-start-race-btn').addEventListener('click', () => {
+        qrModal.classList.remove('open');
+        startRace();
       });
       document.getElementById('qr-close-btn').addEventListener('click', () => {
         qrModal.classList.remove('open');
