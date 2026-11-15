@@ -1033,7 +1033,7 @@
     scene.fog = new THREE.FogExp2(0x060a18, 0.002);
 
     const camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.1, 1000);
-    camera.position.set(36, 90, -265);
+    camera.position.set(0, 105, -285);
 
     const renderer = new THREE.WebGLRenderer({ antialias: true, powerPreference: 'high-performance' });
     renderer.setSize(window.innerWidth, window.innerHeight);
@@ -1550,12 +1550,41 @@
     // =========================================================================
     // 6. MARBLES, LABELS & RACE STATE
     // =========================================================================
-    const MARBLE_RADIUS = 0.68;
+    const MARBLE_RADIUS = 0.72;
     const PALETTE = [
       0x00f0ff, 0xff2e93, 0xffd166, 0x2ee59d, 0xa855f7,
       0xff6b35, 0x38bdf8, 0xf43f5e, 0x84cc16, 0xfacc15,
       0xec4899, 0x22d3ee, 0xfb923c, 0xc084fc
     ];
+    const ANIMALS = ['🐶', '🐱', '🐰', '🦊', '🐻', '🐼', '🐨', '🐯', '🦁', '🐮', '🐷', '🐸', '🐵', '🦄', '🐧', '🐥'];
+
+    function createAnimalSprite(emoji, colorHex) {
+      const canvas = document.createElement('canvas');
+      canvas.width = 256;
+      canvas.height = 256;
+      const ctx = canvas.getContext('2d');
+
+      const hex = `#${colorHex.toString(16).padStart(6, '0')}`;
+      ctx.beginPath();
+      ctx.arc(128, 128, 114, 0, Math.PI * 2);
+      ctx.fillStyle = 'rgba(10, 16, 36, 0.85)';
+      ctx.fill();
+      ctx.lineWidth = 14;
+      ctx.strokeStyle = hex;
+      ctx.stroke();
+
+      ctx.font = '140px "Segoe UI Emoji", "Apple Color Emoji", "Noto Color Emoji", sans-serif';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillText(emoji, 128, 136);
+
+      const tex = new THREE.CanvasTexture(canvas);
+      tex.colorSpace = THREE.SRGBColorSpace;
+      const mat = new THREE.SpriteMaterial({ map: tex, transparent: true, depthTest: true });
+      const sprite = new THREE.Sprite(mat);
+      sprite.scale.set(2.35, 2.35, 1);
+      return sprite;
+    }
 
     let marbles = [];
     let raceState = 'idle';
@@ -1584,6 +1613,11 @@
         scene.remove(m.mesh);
         m.mesh.geometry.dispose();
         m.mesh.material.dispose();
+        if (m.sprite) {
+          scene.remove(m.sprite);
+          if (m.sprite.material.map) m.sprite.material.map.dispose();
+          m.sprite.material.dispose();
+        }
         if (m.labelEl && m.labelEl.parentNode) m.labelEl.parentNode.removeChild(m.labelEl);
       }
       marbles = [];
@@ -1617,8 +1651,9 @@
       const expanded = [];
       entries.forEach((entry, pIdx) => {
         const colorHex = PALETTE[pIdx % PALETTE.length];
+        const animal = ANIMALS[pIdx % ANIMALS.length];
         for (let k = 0; k < entry.weight; k++) {
-          expanded.push({ name: entry.name, colorHex });
+          expanded.push({ name: entry.name, colorHex, animal });
         }
       });
 
@@ -1651,18 +1686,24 @@
         const z = spawnOrigin.z - row * 1.7;
         const y = trackY(z) + 2.6 + (row % 2) * 0.35;
 
-        const geo = new THREE.SphereGeometry(MARBLE_RADIUS, 24, 24);
+        const geo = new THREE.SphereGeometry(MARBLE_RADIUS, 20, 20);
         const mat = new THREE.MeshStandardMaterial({
           color: item.colorHex,
           emissive: item.colorHex,
-          emissiveIntensity: 0.28,
-          roughness: 0.14,
-          metalness: 0.7
+          emissiveIntensity: 0.45,
+          roughness: 0.2,
+          metalness: 0.5,
+          transparent: true,
+          opacity: 0.35
         });
         const mesh = new THREE.Mesh(geo, mat);
         mesh.castShadow = true;
         mesh.position.set(x, y, z);
         scene.add(mesh);
+
+        const sprite = createAnimalSprite(item.animal, item.colorHex);
+        sprite.position.set(x, y + 0.35, z);
+        scene.add(sprite);
 
         const body = new CANNON.Body({
           mass: 1.6,
@@ -1677,8 +1718,10 @@
         const mData = {
           id: idx,
           name: item.name,
+          animal: item.animal,
           colorHex: item.colorHex,
           mesh,
+          sprite,
           body,
           labelEl: null,
           finished: false,
@@ -1765,7 +1808,7 @@
           <div class="lb-item ${m.finished ? 'finished' : ''} ${isTarget ? 'target-winner' : ''}">
             <span class="lb-rank">${m.finished && winMode === 'finish' ? `🏁${rankNum}` : rankNum}</span>
             <span class="lb-color" style="background:${hex}; box-shadow:0 0 8px ${hex}"></span>
-            <span class="lb-name">${escapeHtml(m.name)}</span>
+            <span class="lb-name">${m.animal} ${escapeHtml(m.name)}</span>
             <span class="lb-status">${rightText}</span>
           </div>
         `;
@@ -1816,7 +1859,7 @@
         winMode === 'score'
           ? `⚡ 바운스 점수 ${targetRank}등 당첨자 (SCORE RANK #${targetRank})`
           : `🏁 골인 순위 ${targetRank}등 당첨자 (FINISH RANK #${targetRank})`;
-      document.getElementById('winner-name-display').textContent = winnerMarble.name;
+      document.getElementById('winner-name-display').textContent = `${winnerMarble.animal} ${winnerMarble.name}`;
       document.getElementById('winner-meta-display').textContent =
         winMode === 'score'
           ? `총 ${winnerMarble.score}P (바운스 ${winnerMarble.bounces}회)로 점수 ${targetRank}등을 차지했습니다!`
@@ -1873,6 +1916,7 @@
         for (const m of marbles) {
           m.mesh.position.copy(m.body.position);
           m.mesh.quaternion.copy(m.body.quaternion);
+          if (m.sprite) m.sprite.position.set(m.body.position.x, m.body.position.y + 0.35, m.body.position.z);
           if (m.padCooldown > 0) m.padCooldown -= simDt;
 
           if (!m.finished) {
@@ -1973,10 +2017,11 @@
         for (const m of marbles) {
           m.mesh.position.copy(m.body.position);
           m.mesh.quaternion.copy(m.body.quaternion);
+          if (m.sprite) m.sprite.position.set(m.body.position.x, m.body.position.y + 0.35, m.body.position.z);
         }
       }
 
-      // Side-3D Chase Camera (Side view with rich 3D depth!)
+      // Aerial 3D Chase Camera (90 deg rotated top-down aerial view!)
       if (camMode === 'auto' && marbles.length > 0) {
         const activeMarbles = marbles.filter(m => !m.finished);
         const focusList = activeMarbles.length > 0 ? activeMarbles : marbles;
@@ -1989,14 +2034,14 @@
         }
         const targetPos = focusMarble.mesh.position;
         const offset = slowMoActive
-          ? new THREE.Vector3(22, 6, 3)
-          : new THREE.Vector3(34, 11, 4);
+          ? new THREE.Vector3(0, 22, -8)
+          : new THREE.Vector3(0, 44, -14);
         const desiredCam = targetPos.clone().add(offset);
         camera.position.lerp(desiredCam, 0.065);
-        const lookAhead = targetPos.clone().add(new THREE.Vector3(0, -1.5, 8));
+        const lookAhead = targetPos.clone().add(new THREE.Vector3(0, -1, 10));
         controls.target.lerp(lookAhead, 0.09);
       } else if (camMode === 'overview') {
-        camera.position.lerp(new THREE.Vector3(200, 105, 0), 0.04);
+        camera.position.lerp(new THREE.Vector3(0, 215, -20), 0.04);
         controls.target.lerp(new THREE.Vector3(0, -10, 0), 0.04);
       }
 
