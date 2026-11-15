@@ -656,7 +656,182 @@
         width: calc(100vw - 32px);
       }
     }
+
+    /* QR Lobby & Mobile Controller */
+    .qr-card {
+      background: linear-gradient(160deg, rgba(20, 26, 54, 0.98), rgba(10, 13, 28, 0.99));
+      border: 1px solid rgba(0, 240, 255, 0.45);
+      border-radius: 22px;
+      padding: 24px 26px;
+      max-width: 440px;
+      width: 100%;
+      text-align: center;
+      box-shadow: 0 24px 70px rgba(0, 240, 255, 0.22);
+    }
+
+    .qr-img-wrap {
+      background: #ffffff;
+      border-radius: 16px;
+      padding: 12px;
+      display: inline-block;
+      margin: 12px 0;
+      box-shadow: 0 0 28px rgba(0, 240, 255, 0.25);
+    }
+
+    .qr-img-wrap img {
+      display: block;
+      width: 200px;
+      height: 200px;
+    }
+
+    .qr-code-pill {
+      display: inline-block;
+      background: rgba(0, 240, 255, 0.14);
+      border: 1px solid var(--accent);
+      color: var(--accent);
+      font-weight: 900;
+      font-size: 1.15rem;
+      letter-spacing: 0.14em;
+      padding: 5px 16px;
+      border-radius: 999px;
+      margin-bottom: 6px;
+    }
+
+    .qr-joined-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      justify-content: center;
+      max-height: 100px;
+      overflow-y: auto;
+      margin: 10px 0 14px;
+    }
+
+    .qr-chip {
+      background: rgba(46, 229, 157, 0.15);
+      border: 1px solid rgba(46, 229, 157, 0.4);
+      color: #fff;
+      font-size: 0.78rem;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 999px;
+    }
+
+    #mobile-controller-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 100;
+      background: radial-gradient(circle at 50% 10%, #192452 0%, #070913 85%);
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      overflow-y: auto;
+    }
+
+    #mobile-controller-overlay.active {
+      display: flex;
+    }
+
+    .mc-card {
+      width: 100%;
+      max-width: 420px;
+      background: rgba(15, 20, 42, 0.92);
+      border: 1px solid rgba(0, 240, 255, 0.35);
+      border-radius: 22px;
+      padding: 22px 20px;
+      box-shadow: 0 20px 55px rgba(0, 0, 0, 0.65);
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .mc-input {
+      width: 100%;
+      background: rgba(6, 9, 20, 0.85);
+      border: 1px solid rgba(0, 240, 255, 0.35);
+      border-radius: 12px;
+      padding: 12px 14px;
+      color: #fff;
+      font-size: 1rem;
+      font-weight: 700;
+      font-family: inherit;
+      outline: none;
+      user-select: text;
+    }
+
+    .mc-animal-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+    }
+
+    .mc-animal-btn {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      border-radius: 12px;
+      padding: 8px 4px;
+      font-size: 1.45rem;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    .mc-animal-btn.selected {
+      background: rgba(0, 240, 255, 0.22);
+      border-color: var(--accent);
+      box-shadow: 0 0 14px rgba(0, 240, 255, 0.35);
+      transform: scale(1.06);
+    }
+
+    .mc-skill-btn {
+      width: 100%;
+      border: none;
+      border-radius: 16px;
+      padding: 16px 14px;
+      font-size: 1.05rem;
+      font-weight: 900;
+      color: #fff;
+      cursor: pointer;
+      font-family: inherit;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 8px 22px rgba(0, 0, 0, 0.35);
+      transition: transform 0.12s, opacity 0.2s;
+    }
+
+    .mc-skill-btn:active:not(:disabled) {
+      transform: scale(0.97);
+    }
+
+    .mc-skill-btn:disabled {
+      opacity: 0.48;
+      cursor: not-allowed;
+    }
+
+    .mc-cheer-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+    }
+
+    .mc-cheer-btn {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      border-radius: 12px;
+      padding: 10px 4px;
+      font-size: 1.35rem;
+      cursor: pointer;
+    }
+
+    .marble-label .cheer-pop {
+      margin-left: 5px;
+      color: var(--accent-3);
+      font-weight: 900;
+    }
   </style>
+  <script src="https://cdn.jsdelivr.net/npm/mqtt@5.3.4/dist/mqtt.min.js"></script>
   <script type="importmap">
     {
       "imports": {
@@ -677,10 +852,11 @@
     <div class="brand">
       <div class="brand-dot"></div>
       <h1>3D MARBLE ROULETTE</h1>
-      <span>MEGA OBBY EDITION</span>
+      <span>© math-tong</span>
     </div>
 
     <div class="top-controls">
+      <button class="pill-btn active" id="qr-lobby-btn">📱 QR 참여방 (0명)</button>
       <button class="pill-btn active" id="toggle-settings-btn">⚙️ 설정 패널</button>
       <button class="pill-btn active" id="cam-mode-btn">🎥 카메라: 자동 추적</button>
       <button class="pill-btn active" id="labels-toggle-btn">🏷️ 이름표</button>
@@ -766,8 +942,9 @@
       <button class="btn-primary" id="start-btn">🚀 출발! (START)</button>
     </div>
 
-    <div class="hint-text" style="border-top: 1px solid rgba(255,255,255,0.08); padding-top: 8px; margin-top: 2px; font-size: 0.72rem;">
-      참고자료 · 원작: <a href="https://lazygyu.github.io/roulette/" target="_blank" rel="noopener noreferrer" style="color: var(--accent); text-decoration: none;">lazygyu / Marble Roulette</a>
+    <div class="hint-text" style="border-top: 1px solid rgba(255,255,255,0.08); padding-top: 8px; margin-top: 2px; font-size: 0.72rem; line-height: 1.5;">
+      <div>© 2026 <strong>math-tong</strong> · 3D Marble Roulette</div>
+      <div>참고자료 · 원작: <a href="https://lazygyu.github.io/roulette/" target="_blank" rel="noopener noreferrer" style="color: var(--accent); text-decoration: none;">lazygyu / Marble Roulette</a></div>
     </div>
   </aside>
 
@@ -803,6 +980,84 @@
   </div>
 
   <div class="toast" id="toast"></div>
+
+  <!-- Host QR Lobby Modal -->
+  <div class="modal-backdrop" id="qr-modal">
+    <div class="qr-card">
+      <div class="winner-subtitle" style="margin-bottom: 6px;">📱 QR 실시간 멀티 참여방</div>
+      <div class="qr-code-pill">ROOM <span id="qr-room-code">----</span></div>
+      <div class="hint-text" style="margin-top: 2px;">
+        스마트폰으로 QR을 스캔해 닉네임을 입력하고,<br />레이스 중 스킬 버튼으로 직접 개입하세요!
+      </div>
+      <div class="qr-img-wrap">
+        <img id="qr-code-img" alt="QR Code" src="" />
+      </div>
+      <div class="hint-text" id="qr-conn-status" style="margin: 2px 0 8px; color: var(--accent-3);">연결 중...</div>
+      <div class="qr-joined-chips" id="qr-joined-list">
+        <span class="hint-text">아직 QR로 입장한 참여자가 없습니다.</span>
+      </div>
+      <div class="btn-row" style="margin-bottom: 8px;">
+        <button class="mini-btn" id="qr-copy-link-btn">🔗 참여 링크 복사</button>
+        <button class="mini-btn" id="qr-clear-list-btn">🧹 기존 목록 비우고 QR만 받기</button>
+      </div>
+      <button class="btn-secondary" id="qr-close-btn" style="width: 100%;">닫기</button>
+    </div>
+  </div>
+
+  <!-- Mobile QR Participant Controller Screen (?room=XXXX) -->
+  <div id="mobile-controller-overlay">
+    <div class="mc-card">
+      <div style="display:flex; justify-content:space-between; align-items:center;">
+        <span style="font-weight:900; color:var(--accent); font-size:0.95rem;">🐾 3D 마블 룰렛 컨트롤러</span>
+        <span class="badge" id="mc-room-badge">ROOM ----</span>
+      </div>
+
+      <div id="mc-join-view" style="display:flex; flex-direction:column; gap:12px;">
+        <div class="hint-text" style="margin:0;">닉네임과 3D 동물 캐릭터를 선택해 레이스에 입장하세요!</div>
+        <input type="text" id="mc-name-input" class="mc-input" maxlength="16" placeholder="닉네임을 입력하세요 (예: 홍길동)" />
+        <div class="mc-animal-grid" id="mc-animal-grid"></div>
+        <button class="btn-primary" id="mc-join-btn">🎮 레이스 입장하기!</button>
+      </div>
+
+      <div id="mc-pad-view" style="display:none; flex-direction:column; gap:12px;">
+        <div style="background:rgba(0,240,255,0.1); border:1px solid rgba(0,240,255,0.35); border-radius:14px; padding:12px; display:flex; align-items:center; justify-content:space-between;">
+          <div>
+            <div style="font-size:0.75rem; color:var(--muted);">참가 캐릭터</div>
+            <div id="mc-player-label" style="font-size:1.2rem; font-weight:900;">🐶 -</div>
+          </div>
+          <span class="badge" id="mc-status-badge">대기/진행 중</span>
+        </div>
+
+        <button class="mc-skill-btn" id="mc-btn-random" style="background:linear-gradient(135deg,#ff2e93,#ff8a00);">
+          <span>🎲 랜덤 럭키박스 뽑기!</span>
+          <span class="mc-cd" style="font-size:0.82rem;">READY</span>
+        </button>
+        <button class="mc-skill-btn" id="mc-btn-boost" style="background:linear-gradient(135deg,#00c6ff,#0072ff);">
+          <span>⚡ 대시 부스트! (+15P)</span>
+          <span class="mc-cd" style="font-size:0.82rem;">READY</span>
+        </button>
+        <button class="mc-skill-btn" id="mc-btn-jump" style="background:linear-gradient(135deg,#11998e,#38ef7d); color:#041614;">
+          <span>🦘 슈퍼 점프! (+20P)</span>
+          <span class="mc-cd" style="font-size:0.82rem;">READY</span>
+        </button>
+
+        <div>
+          <div class="section-label" style="margin-bottom:6px;"><span>📣 실시간 응원 (+5P)</span></div>
+          <div class="mc-cheer-row">
+            <button class="mc-cheer-btn" data-cheer="🔥">🔥</button>
+            <button class="mc-cheer-btn" data-cheer="💖">💖</button>
+            <button class="mc-cheer-btn" data-cheer="⚡">⚡</button>
+            <button class="mc-cheer-btn" data-cheer="👑">👑</button>
+          </div>
+        </div>
+        <div id="mc-action-feedback" class="hint-text" style="text-align:center; color:var(--accent-3); min-height:18px;"></div>
+      </div>
+
+      <div class="hint-text" style="text-align:center; border-top:1px solid rgba(255,255,255,0.08); padding-top:8px;">
+        © 2026 <strong>math-tong</strong> · 원작: lazygyu / Marble Roulette
+      </div>
+    </div>
+  </div>
 
   <script type="module">
     import * as THREE from 'three';
@@ -1749,6 +2004,7 @@
     }
 
     let marbles = [];
+    const customAnimalMap = new Map();
     let raceState = 'idle';
     let finishedCount = 0;
     let targetRank = 1;
@@ -1813,7 +2069,7 @@
       const expanded = [];
       entries.forEach((entry, pIdx) => {
         const colorHex = PALETTE[pIdx % PALETTE.length];
-        const animal = ANIMALS[pIdx % ANIMALS.length];
+        const animal = customAnimalMap.get(entry.name) || ANIMALS[pIdx % ANIMALS.length];
         for (let k = 0; k < entry.weight; k++) {
           expanded.push({ name: entry.name, colorHex, animal });
         }
@@ -2189,15 +2445,15 @@
         }
       }
 
-      // Starting Showcase & Top-to-Bottom Aerial 3D Chase Camera
+      // Starting Showcase & Side-Aerial 3/4 Chase Camera (slightly angled side-aerial view!)
       if (camMode === 'auto' && marbles.length > 0) {
         if (raceState === 'idle') {
           const showcaseCam = new THREE.Vector3(
-            Math.sin(now * 0.0006) * 7,
-            trackY(startLineZ) + 10.5,
-            startLineZ + 15.5
+            11 + Math.sin(now * 0.0006) * 4,
+            trackY(startLineZ) + 8.5,
+            startLineZ + 14.5
           );
-          const showcaseTarget = new THREE.Vector3(0, trackY(startLineZ) + 2.2, startLineZ - 2.5);
+          const showcaseTarget = new THREE.Vector3(0, trackY(startLineZ) + 2.0, startLineZ - 2.0);
           camera.position.lerp(showcaseCam, 0.08);
           controls.target.lerp(showcaseTarget, 0.1);
         } else {
@@ -2212,15 +2468,15 @@
           }
           const targetPos = focusMarble.mesh.position;
           const offset = slowMoActive
-            ? new THREE.Vector3(0, 16, 14)
-            : new THREE.Vector3(0, 30, 22);
+            ? new THREE.Vector3(10, 11, 13)
+            : new THREE.Vector3(16, 20, 22);
           const desiredCam = targetPos.clone().add(offset);
           camera.position.lerp(desiredCam, 0.07);
           const lookTarget = targetPos.clone().add(new THREE.Vector3(0, -1.5, -6));
           controls.target.lerp(lookTarget, 0.1);
         }
       } else if (camMode === 'overview') {
-        camera.position.lerp(new THREE.Vector3(0, 195, 145), 0.04);
+        camera.position.lerp(new THREE.Vector3(95, 165, 135), 0.04);
         controls.target.lerp(new THREE.Vector3(0, -10, 0), 0.04);
       }
 
@@ -2441,6 +2697,281 @@
       renderer.setSize(window.innerWidth, window.innerHeight);
       composer.setSize(window.innerWidth, window.innerHeight);
     });
+
+    // =========================================================================
+    // 9. QR REAL-TIME MULTIPLAYER ROOM & MOBILE CONTROLLER (MQTT + BroadcastChannel)
+    // =========================================================================
+    function createRoomChannel(roomId, onMessage) {
+      const topic = `mathtong/marble3d/room/${roomId}`;
+      let bc = null;
+      let client = null;
+      const seenIds = new Set();
+
+      const handleRaw = (raw) => {
+        try {
+          const msg = typeof raw === 'string' ? JSON.parse(raw) : raw;
+          if (!msg || (msg.msgId && seenIds.has(msg.msgId))) return;
+          if (msg.msgId) {
+            seenIds.add(msg.msgId);
+            if (seenIds.size > 300) {
+              const first = seenIds.values().next().value;
+              seenIds.delete(first);
+            }
+          }
+          onMessage(msg);
+        } catch (_) {}
+      };
+
+      try {
+        bc = new BroadcastChannel(topic);
+        bc.onmessage = (e) => handleRaw(e.data);
+      } catch (_) {}
+
+      const statusEl = document.getElementById('qr-conn-status');
+      try {
+        if (window.mqtt) {
+          client = window.mqtt.connect('wss://broker.emqx.io:8084/mqtt', {
+            clientId: `mt_${roomId}_${Math.random().toString(16).slice(2, 8)}`,
+            clean: true,
+            reconnectPeriod: 3000
+          });
+          client.on('connect', () => {
+            client.subscribe(topic);
+            if (statusEl) {
+              statusEl.textContent = '🟢 실시간 멀티 서버 연결됨 (QR 접속 가능)';
+              statusEl.style.color = 'var(--success)';
+            }
+          });
+          client.on('error', () => {
+            if (statusEl) {
+              statusEl.textContent = '🟡 로컬 브로드캐스트 모드 (외부 MQTT 연결 대기)';
+              statusEl.style.color = 'var(--accent-3)';
+            }
+          });
+          client.on('message', (_t, payload) => handleRaw(payload.toString()));
+        }
+      } catch (_) {}
+
+      return {
+        send(payload) {
+          const msg = { ...payload, msgId: `${Date.now()}_${Math.random().toString(36).slice(2, 7)}` };
+          if (bc) bc.postMessage(msg);
+          if (client && client.connected) {
+            client.publish(topic, JSON.stringify(msg));
+          }
+        }
+      };
+    }
+
+    function flashLabelBadge(marble, text) {
+      if (!marble || !marble.labelEl) return;
+      let pop = marble.labelEl.querySelector('.cheer-pop');
+      if (!pop) {
+        pop = document.createElement('span');
+        pop.className = 'cheer-pop';
+        marble.labelEl.appendChild(pop);
+      }
+      pop.textContent = text;
+      clearTimeout(marble._popTimer);
+      marble._popTimer = setTimeout(() => {
+        if (pop.parentNode) pop.parentNode.removeChild(pop);
+      }, 2200);
+    }
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const joinRoomCode = urlParams.get('room');
+
+    if (joinRoomCode) {
+      // ----- MOBILE PARTICIPANT CONTROLLER MODE -----
+      const overlay = document.getElementById('mobile-controller-overlay');
+      overlay.classList.add('active');
+      document.getElementById('mc-room-badge').textContent = `ROOM ${joinRoomCode}`;
+
+      const grid = document.getElementById('mc-animal-grid');
+      let selectedAnimal = ANIMALS[Math.floor(Math.random() * ANIMALS.length)];
+      ANIMALS.forEach(emoji => {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = `mc-animal-btn ${emoji === selectedAnimal ? 'selected' : ''}`;
+        btn.textContent = emoji;
+        btn.addEventListener('click', () => {
+          selectedAnimal = emoji;
+          grid.querySelectorAll('.mc-animal-btn').forEach(b => b.classList.remove('selected'));
+          btn.classList.add('selected');
+        });
+        grid.appendChild(btn);
+      });
+
+      const channel = createRoomChannel(joinRoomCode, () => {});
+      let myNick = '';
+
+      document.getElementById('mc-join-btn').addEventListener('click', () => {
+        const rawName = document.getElementById('mc-name-input').value.trim().replace(/[,*\n]/g, '');
+        if (!rawName) {
+          showToast('닉네임을 입력해주세요!');
+          return;
+        }
+        myNick = rawName;
+        channel.send({ type: 'join', name: myNick, animal: selectedAnimal });
+        document.getElementById('mc-join-view').style.display = 'none';
+        document.getElementById('mc-pad-view').style.display = 'flex';
+        document.getElementById('mc-player-label').textContent = `${selectedAnimal} ${myNick}`;
+        showToast('입장 완료! 레이스가 시작되면 버튼을 눌러보세요!');
+      });
+
+      function bindSkillBtn(btnId, kind, cooldownSec, label) {
+        const btn = document.getElementById(btnId);
+        const cdSpan = btn.querySelector('.mc-cd');
+        btn.addEventListener('click', () => {
+          if (!myNick || btn.disabled) return;
+          channel.send({ type: 'action', name: myNick, kind });
+          document.getElementById('mc-action-feedback').textContent = `✨ "${label}" 발동 전송됨!`;
+          btn.disabled = true;
+          let left = cooldownSec;
+          cdSpan.textContent = `${left.toFixed(1)}s`;
+          const timer = setInterval(() => {
+            left -= 0.2;
+            if (left <= 0) {
+              clearInterval(timer);
+              btn.disabled = false;
+              cdSpan.textContent = 'READY';
+            } else {
+              cdSpan.textContent = `${left.toFixed(1)}s`;
+            }
+          }, 200);
+        });
+      }
+
+      bindSkillBtn('mc-btn-random', 'random_box', 3.5, '랜덤 럭키박스');
+      bindSkillBtn('mc-btn-boost', 'boost', 3.0, '대시 부스트');
+      bindSkillBtn('mc-btn-jump', 'jump', 2.5, '슈퍼 점프');
+
+      document.querySelectorAll('[data-cheer]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          if (!myNick) return;
+          const emoji = btn.dataset.cheer;
+          channel.send({ type: 'action', name: myNick, kind: 'cheer', emoji });
+          document.getElementById('mc-action-feedback').textContent = `${emoji} 응원 전송! (+5P)`;
+        });
+      });
+    } else {
+      // ----- HOST DESKTOP / SCREEN MODE -----
+      const roomCode = String(Math.floor(1000 + Math.random() * 9000));
+      const qrModal = document.getElementById('qr-modal');
+      const qrJoinedMap = new Map();
+
+      const baseUrl = window.location.href.split('?')[0].split('#')[0];
+      const joinUrl = `${baseUrl}?room=${roomCode}`;
+      document.getElementById('qr-room-code').textContent = roomCode;
+      document.getElementById('qr-code-img').src =
+        `https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=${encodeURIComponent(joinUrl)}`;
+
+      function renderQrJoinedList() {
+        const btn = document.getElementById('qr-lobby-btn');
+        btn.textContent = `📱 QR 참여방 (${qrJoinedMap.size}명)`;
+        const listEl = document.getElementById('qr-joined-list');
+        if (qrJoinedMap.size === 0) {
+          listEl.innerHTML = '<span class="hint-text">아직 QR로 입장한 참여자가 없습니다.</span>';
+          return;
+        }
+        listEl.innerHTML = [...qrJoinedMap.entries()]
+          .map(([name, animal]) => `<span class="qr-chip">${animal} ${escapeHtml(name)}</span>`)
+          .join('');
+      }
+
+      createRoomChannel(roomCode, (msg) => {
+        if (msg.type === 'join' && msg.name) {
+          const name = String(msg.name).trim();
+          const animal = ANIMALS.includes(msg.animal) ? msg.animal : ANIMALS[0];
+          if (!name) return;
+
+          qrJoinedMap.set(name, animal);
+          customAnimalMap.set(name, animal);
+          renderQrJoinedList();
+
+          const existing = parseParticipantsText(participantsInput.value);
+          if (!existing.some(e => e.name === name)) {
+            existing.push({ name, weight: 1 });
+            participantsInput.value = entriesToLazygyuText(existing);
+            localStorage.setItem('marble_roulette_3d_participants', participantsInput.value);
+          }
+          if (raceState !== 'running') spawnMarbles(false);
+          showToast(`📱 ${animal} ${name}님이 QR로 입장했습니다!`);
+        } else if (msg.type === 'action' && msg.name) {
+          const targets = marbles.filter(m => m.name === msg.name && !m.finished);
+          if (targets.length === 0) return;
+
+          targets.forEach(m => {
+            if (msg.kind === 'random_box') {
+              const roll = Math.floor(Math.random() * 4);
+              if (roll === 0) {
+                m.body.velocity.z += 12;
+                m.score += 40;
+                spawnParticles(m.mesh.position, 0x00f0ff, 14, 9, 0.6);
+                flashLabelBadge(m, '🌟 대박 터보! +40P');
+              } else if (roll === 1) {
+                m.body.velocity.y = 14;
+                m.body.velocity.z += 5;
+                m.score += 30;
+                sfx.playJumpPad();
+                spawnParticles(m.mesh.position, 0xffd166, 14, 9, 0.6);
+                flashLabelBadge(m, '🚀 슈퍼 점프! +30P');
+              } else if (roll === 2) {
+                m.body.velocity.x += (Math.random() - 0.5) * 14;
+                m.body.velocity.y += 9;
+                m.score += 25;
+                sfx.playBumper();
+                spawnParticles(m.mesh.position, 0xff2e93, 14, 9, 0.6);
+                flashLabelBadge(m, '💥 팡팡 바운스! +25P');
+              } else {
+                m.score += 50;
+                spawnParticles(m.mesh.position, 0x2ee59d, 16, 10, 0.7);
+                flashLabelBadge(m, '🍀 럭키 +50P!');
+              }
+            } else if (msg.kind === 'boost') {
+              m.body.velocity.z += 9;
+              m.score += 15;
+              sfx.playBoost();
+              spawnParticles(m.mesh.position, 0x00f0ff, 10, 8, 0.5);
+              flashLabelBadge(m, '⚡ 부스트! +15P');
+            } else if (msg.kind === 'jump') {
+              m.body.velocity.y = 13;
+              m.body.velocity.z += 4;
+              m.score += 20;
+              sfx.playJumpPad();
+              spawnParticles(m.mesh.position, 0x2ee59d, 10, 8, 0.5);
+              flashLabelBadge(m, '🦘 점프! +20P');
+            } else if (msg.kind === 'cheer') {
+              m.score += 5;
+              flashLabelBadge(m, `${msg.emoji || '🔥'} +5P`);
+            }
+          });
+          updateLeaderboard();
+        }
+      });
+
+      document.getElementById('qr-lobby-btn').addEventListener('click', () => {
+        qrModal.classList.add('open');
+      });
+      document.getElementById('qr-close-btn').addEventListener('click', () => {
+        qrModal.classList.remove('open');
+      });
+      document.getElementById('qr-copy-link-btn').addEventListener('click', async () => {
+        try {
+          await navigator.clipboard.writeText(joinUrl);
+          showToast('QR 참여 링크가 복사되었습니다!');
+        } catch (_) {
+          showToast(joinUrl);
+        }
+      });
+      document.getElementById('qr-clear-list-btn').addEventListener('click', () => {
+        const qrOnly = [...qrJoinedMap.keys()].map(name => ({ name, weight: 1 }));
+        participantsInput.value = entriesToLazygyuText(qrOnly);
+        localStorage.setItem('marble_roulette_3d_participants', participantsInput.value);
+        if (raceState !== 'running') spawnMarbles(false);
+        showToast('기존 목록을 비우고 QR 참여자만 남겼습니다!');
+      });
+    }
 
     // Init!
     buildCourse('rainbow_obby');
