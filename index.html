@@ -1211,7 +1211,7 @@
     let finishLineY = -80;
     let spawnOrigin = { x: 0, y: 82, z: -275 };
 
-    const COURSE_SLOPE = 0.17; // ~9.7 degrees tuned for ~30s epic marathon!
+    const COURSE_SLOPE = 0.21; // ~12 degrees tuned for ~30s epic marathon!
 
     function trackY(z) {
       return -Math.tan(COURSE_SLOPE) * z;
@@ -1668,8 +1668,8 @@
           mass: 1.6,
           material: marbleMat,
           shape: new CANNON.Sphere(MARBLE_RADIUS),
-          linearDamping: 0.22,
-          angularDamping: 0.08
+          linearDamping: 0.14,
+          angularDamping: 0.06
         });
         body.position.set(x, y, z);
         body.sleep();
