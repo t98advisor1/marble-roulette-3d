@@ -1014,10 +1014,10 @@
 
     const scene = new THREE.Scene();
     scene.background = new THREE.Color(0x060a18);
-    scene.fog = new THREE.FogExp2(0x060a18, 0.0042);
+    scene.fog = new THREE.FogExp2(0x060a18, 0.002);
 
-    const camera = new THREE.PerspectiveCamera(54, window.innerWidth / window.innerHeight, 0.1, 600);
-    camera.position.set(14, 52, -108);
+    const camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.1, 1000);
+    camera.position.set(36, 90, -265);
 
     const renderer = new THREE.WebGLRenderer({ antialias: true, powerPreference: 'high-performance' });
     renderer.setSize(window.innerWidth, window.innerHeight);
@@ -1072,14 +1072,14 @@
 
     function createStarfield() {
       const geo = new THREE.BufferGeometry();
-      const count = 1400;
+      const count = 2000;
       const pos = new Float32Array(count * 3);
       const colors = new Float32Array(count * 3);
       const cPalette = [new THREE.Color(0x00f0ff), new THREE.Color(0xff2e93), new THREE.Color(0xffd166), new THREE.Color(0xffffff)];
       for (let i = 0; i < count; i++) {
-        pos[i * 3] = (Math.random() - 0.5) * 340;
-        pos[i * 3 + 1] = Math.random() * 160 - 60;
-        pos[i * 3 + 2] = (Math.random() - 0.5) * 360;
+        pos[i * 3] = (Math.random() - 0.5) * 420;
+        pos[i * 3 + 1] = Math.random() * 260 - 120;
+        pos[i * 3 + 2] = (Math.random() - 0.5) * 760;
         const c = cPalette[i % cPalette.length];
         colors[i * 3] = c.r;
         colors[i * 3 + 1] = c.g;
@@ -1171,16 +1171,16 @@
     const bumperMat = new CANNON.Material('bumper');
 
     world.addContactMaterial(new CANNON.ContactMaterial(marbleMat, boardMat, {
-      friction: 0.04,
-      restitution: 0.42
+      friction: 0.03,
+      restitution: 0.68
     }));
     world.addContactMaterial(new CANNON.ContactMaterial(marbleMat, marbleMat, {
-      friction: 0.03,
-      restitution: 0.72
+      friction: 0.02,
+      restitution: 0.88
     }));
     world.addContactMaterial(new CANNON.ContactMaterial(marbleMat, bumperMat, {
-      friction: 0.02,
-      restitution: 1.25
+      friction: 0.01,
+      restitution: 1.42
     }));
 
     const courseGroup = new THREE.Group();
@@ -1190,12 +1190,12 @@
     let dynamicObstacles = [];
     let boostPads = [];
     let jumpPads = [];
-    let startLineZ = -86;
-    let finishLineZ = 92;
-    let finishLineY = -34;
-    let spawnOrigin = { x: 0, y: 36, z: -86 };
+    let startLineZ = -275;
+    let finishLineZ = 280;
+    let finishLineY = -80;
+    let spawnOrigin = { x: 0, y: 82, z: -275 };
 
-    const COURSE_SLOPE = 0.35; // ~20 degrees over 190+ units!
+    const COURSE_SLOPE = 0.28; // ~16 degrees over 580-unit epic marathon!
 
     function trackY(z) {
       return -Math.tan(COURSE_SLOPE) * z;
@@ -1396,50 +1396,51 @@
     }
 
     function buildBaseTrack(boardWidth = 28, rainbowMode = false) {
-      const totalLen = 196;
-      startLineZ = -86;
-      finishLineZ = 92;
+      const totalLen = 580;
+      startLineZ = -275;
+      finishLineZ = 280;
       finishLineY = trackY(finishLineZ);
       spawnOrigin = { x: 0, y: trackY(startLineZ) + 3.5, z: startLineZ };
 
       if (rainbowMode) {
-        // Vibrant Roblox-style segmented rainbow track!
         const rainbowColors = [0xff2e93, 0xff6b35, 0xffd166, 0x2ee59d, 0x00f0ff, 0x6366f1, 0xa855f7];
-        const segCount = 14;
+        const segCount = 28;
         const segLen = totalLen / segCount;
         for (let i = 0; i < segCount; i++) {
-          const z = -96 + segLen * (i + 0.5);
+          const z = -290 + segLen * (i + 0.5);
           const col = rainbowColors[i % rainbowColors.length];
-          addBox(boardWidth, 1.6, segLen + 0.3, 0, trackY(z), z, COURSE_SLOPE, 0, 0, col, 0x000000);
+          addBox(boardWidth, 1.6, segLen + 0.4, 0, trackY(z), z, COURSE_SLOPE, 0, 0, col, 0x000000);
         }
       } else {
         addBox(boardWidth, 1.6, totalLen, 0, 0, 0, COURSE_SLOPE, 0, 0, 0x121936);
       }
 
-      // High glowing side rails so marbles never fall off
-      addBox(1.1, 5.0, totalLen, -boardWidth / 2 - 0.3, 2.2, 0, COURSE_SLOPE, 0, 0, 0x101c42, 0x0066cc);
-      addBox(1.1, 5.0, totalLen, boardWidth / 2 + 0.3, 2.2, 0, COURSE_SLOPE, 0, 0, 0x101c42, 0x0066cc);
+      // High glowing side rails so marbles bounce back inside
+      addBox(1.1, 6.5, totalLen, -boardWidth / 2 - 0.3, 2.8, 0, COURSE_SLOPE, 0, 0, 0x101c42, 0x0066cc, bumperMat);
+      addBox(1.1, 6.5, totalLen, boardWidth / 2 + 0.3, 2.8, 0, COURSE_SLOPE, 0, 0, 0x101c42, 0x0066cc, bumperMat);
 
       // Top back wall
-      addBox(boardWidth + 2, 6, 1.5, 0, trackY(-97) + 2.5, -97, COURSE_SLOPE, 0, 0, 0x1b264f, 0x00f0ff);
+      addBox(boardWidth + 2, 7, 1.5, 0, trackY(-290) + 3.0, -290, COURSE_SLOPE, 0, 0, 0x1b264f, 0x00f0ff);
 
-      // Stage Checkpoints
-      addStageArch(-42, 0x00f0ff);
-      addStageArch(8, 0xff2e93);
-      addStageArch(54, 0xffd166);
+      // 5 Stage Checkpoints across the 580-unit marathon
+      addStageArch(-180, 0x00f0ff);
+      addStageArch(-90, 0xff2e93);
+      addStageArch(0, 0xffd166);
+      addStageArch(95, 0x2ee59d);
+      addStageArch(190, 0xa855f7);
 
       // Grand Funnel at the end
-      addBox(13, 3.8, 1.0, -9.2, trackY(86) + 1.8, 86, COURSE_SLOPE, -0.58, 0, 0x1b264f, 0xff2e93);
-      addBox(13, 3.8, 1.0, 9.2, trackY(86) + 1.8, 86, COURSE_SLOPE, 0.58, 0, 0x1b264f, 0xff2e93);
+      addBox(13, 4.2, 1.0, -9.2, trackY(272) + 2.0, 272, COURSE_SLOPE, -0.58, 0, 0x1b264f, 0xff2e93);
+      addBox(13, 4.2, 1.0, 9.2, trackY(272) + 2.0, 272, COURSE_SLOPE, 0.58, 0, 0x1b264f, 0xff2e93);
 
       // Finish Gate Archway
-      const gateY = finishLineY + 3.2;
-      addBox(0.9, 6.2, 0.9, -4.8, gateY, finishLineZ, 0, 0, 0, 0xffd166, 0xffd166);
-      addBox(0.9, 6.2, 0.9, 4.8, gateY, finishLineZ, 0, 0, 0, 0xffd166, 0xffd166);
-      addBox(10.6, 1.1, 1.0, 0, gateY + 3.2, finishLineZ, 0, 0, 0, 0xffd166, 0xffd166);
+      const gateY = finishLineY + 3.4;
+      addBox(0.9, 6.5, 0.9, -4.8, gateY, finishLineZ, 0, 0, 0, 0xffd166, 0xffd166);
+      addBox(0.9, 6.5, 0.9, 4.8, gateY, finishLineZ, 0, 0, 0, 0xffd166, 0xffd166);
+      addBox(10.6, 1.1, 1.0, 0, gateY + 3.4, finishLineZ, 0, 0, 0, 0xffd166, 0xffd166);
 
       // Finish laser line
-      const lineGeo = new THREE.BoxGeometry(9.2, 0.2, 0.4);
+      const lineGeo = new THREE.BoxGeometry(9.2, 0.25, 0.45);
       const lineMat = new THREE.MeshBasicMaterial({ color: 0x00ffaa });
       const lineMesh = new THREE.Mesh(lineGeo, lineMat);
       lineMesh.position.set(0, finishLineY + 1.0, finishLineZ);
@@ -1452,113 +1453,81 @@
       if (mapType === 'rainbow_obby') {
         buildBaseTrack(28, true);
 
-        // Zone 1: Launching Boosters & Plinko Pegs (-72 to -45)
-        addBoostPad(-6, trackY(-72), -72, 5.5, 7);
-        addBoostPad(6, trackY(-72), -72, 5.5, 7);
-        for (let row = 0; row < 5; row++) {
-          const z = -64 + row * 4.5;
-          const cols = row % 2 === 0 ? 7 : 6;
-          for (let c = 0; c < cols; c++) {
-            const x = (c - (cols - 1) / 2) * 3.6;
-            addPeg(x, trackY(z) + 1.6, z, 0.55, 2.8, 0xffffff, false);
+        // Repeat varied exciting Obby sectors from z = -255 to +255
+        for (let zSec = -250; zSec <= 220; zSec += 95) {
+          // Boosters + Plinko forest
+          addBoostPad(-6.5, trackY(zSec), zSec, 5.5, 7);
+          addBoostPad(6.5, trackY(zSec), zSec, 5.5, 7);
+          for (let r = 0; r < 4; r++) {
+            const pz = zSec + 12 + r * 5.2;
+            const cols = r % 2 === 0 ? 7 : 6;
+            for (let c = 0; c < cols; c++) {
+              const px = (c - (cols - 1) / 2) * 3.7;
+              addPeg(px, trackY(pz) + 1.6, pz, 0.62, 2.8, (r + c) % 2 === 0 ? 0xffffff : 0x00f0ff, true);
+            }
           }
+
+          // Moving Sweepers & Jump Pads
+          addMovingSweeper(0, trackY(zSec + 38) + 1.8, zSec + 38, 8.5, 8, 2.4, 0xff2e93);
+          addJumpPad(-7, trackY(zSec + 48), zSec + 48, 5.5, 4);
+          addJumpPad(7, trackY(zSec + 48), zSec + 48, 5.5, 4);
+
+          // Windmills & Bounce Bumpers
+          addWindmill(-6, trackY(zSec + 62) + 1.8, zSec + 62, 9.5, 2.5, 0x00f0ff);
+          addWindmill(6, trackY(zSec + 62) + 1.8, zSec + 62, 9.5, -2.5, 0xffd166);
+          addPeg(0, trackY(zSec + 76) + 1.8, zSec + 76, 1.3, 2.8, 0xff2e93, true);
+          addPeg(-7.5, trackY(zSec + 80) + 1.8, zSec + 80, 1.1, 2.8, 0xffd166, true);
+          addPeg(7.5, trackY(zSec + 80) + 1.8, zSec + 80, 1.1, 2.8, 0x2ee59d, true);
         }
-
-        // Zone 2: Roblox Moving Sweepers & Jump Pads (-38 to +5)
-        addMovingSweeper(0, trackY(-34) + 1.8, -34, 8, 8, 2.3, 0xff2e93);
-        addJumpPad(-7, trackY(-25), -25, 5.5, 3.8);
-        addJumpPad(7, trackY(-25), -25, 5.5, 3.8);
-        addWindmill(-6, trackY(-14) + 1.8, -14, 9.5, 2.4, 0x00f0ff);
-        addWindmill(6, trackY(-14) + 1.8, -14, 9.5, -2.4, 0xffd166);
-        addMovingSweeper(0, trackY(-2) + 1.8, -2, 9, 7.5, -2.8, 0x2ee59d);
-
-        // Zone 3: Bumper Pinball Arena (+14 to +50)
-        addBoostPad(0, trackY(14), 14, 6.5, 7);
-        const bumpers = [
-          [-7, 24], [0, 26], [7, 24],
-          [-4.5, 33], [4.5, 33],
-          [-8, 42], [0, 41], [8, 42]
-        ];
-        bumpers.forEach(([bx, bz], i) => {
-          addPeg(bx, trackY(bz) + 1.8, bz, 1.15, 2.8, i % 2 === 0 ? 0xff2e93 : 0xffd166, true);
-        });
-
-        // Zone 4: Final Obby Sprint (+58 to +82)
-        addWindmill(0, trackY(62) + 1.8, 62, 11, 2.8, 0xa855f7);
-        addJumpPad(0, trackY(72), 72, 6, 3.5);
-        addMovingSweeper(0, trackY(78) + 1.8, 78, 7, 6.5, 3.2, 0x00f0ff);
 
       } else if (mapType === 'windmill') {
         buildBaseTrack(28, false);
 
-        // Giant Windmill Canyon (11 Spinning Windmills + Side Bumpers)
-        const rows = [
-          { z: -70, xs: [-6, 6], len: 9.5, spd: 2.2 },
-          { z: -52, xs: [0], len: 13, spd: -2.0 },
-          { z: -34, xs: [-6.5, 6.5], len: 9.5, spd: 2.6 },
-          { z: -16, xs: [0], len: 13.5, spd: 2.3 },
-          { z: 2, xs: [-6, 6], len: 10, spd: -2.7 },
-          { z: 22, xs: [0], len: 14, spd: 2.5 },
-          { z: 42, xs: [-6, 6], len: 10, spd: 2.8 },
-          { z: 62, xs: [0], len: 12.5, spd: -3.0 },
-          { z: 77, xs: [-5, 5], len: 8.5, spd: 3.1 }
-        ];
-        rows.forEach((r, idx) => {
-          r.xs.forEach((x, j) => {
-            const col = (idx + j) % 2 === 0 ? 0x00f0ff : 0xff2e93;
-            addWindmill(x, trackY(r.z) + 1.8, r.z, r.len, r.spd * (j % 2 === 0 ? 1 : -1), col);
-          });
-        });
-
-        for (let z = -76; z <= 76; z += 12) {
-          addPeg(-11.5, trackY(z) + 1.8, z, 0.9, 2.8, 0xffd166, true);
-          addPeg(11.5, trackY(z) + 1.8, z, 0.9, 2.8, 0xffd166, true);
+        for (let z = -255; z <= 255; z += 22) {
+          const isDual = Math.abs(Math.round(z / 22)) % 2 === 0;
+          if (isDual) {
+            addWindmill(-6.2, trackY(z) + 1.8, z, 10, 2.4, 0x00f0ff);
+            addWindmill(6.2, trackY(z) + 1.8, z, 10, -2.4, 0xff2e93);
+          } else {
+            addWindmill(0, trackY(z) + 1.8, z, 14, 2.2, 0xffd166);
+          }
+          addPeg(-11.5, trackY(z + 10) + 1.8, z + 10, 1.0, 2.8, 0xffd166, true);
+          addPeg(11.5, trackY(z + 10) + 1.8, z + 10, 1.0, 2.8, 0xffd166, true);
         }
-        addBoostPad(0, trackY(-25), -25, 6, 7);
-        addBoostPad(0, trackY(32), 32, 6, 7);
+        for (let z = -210; z <= 210; z += 70) {
+          addBoostPad(0, trackY(z), z, 6.5, 7);
+          addJumpPad(0, trackY(z + 35), z + 35, 6.5, 4);
+        }
 
       } else if (mapType === 'chaos') {
         buildBaseTrack(28, false);
 
-        // Turbo Hyper Bumper: High speed & crazy ricochets!
-        for (let z = -74; z <= 70; z += 22) {
+        for (let z = -255; z <= 250; z += 28) {
           addBoostPad(-6.5, trackY(z), z, 5, 7);
           addBoostPad(6.5, trackY(z), z, 5, 7);
+          addJumpPad(0, trackY(z + 12), z + 12, 7, 4);
         }
-        for (let z = -62; z <= 72; z += 10) {
-          const offset = (Math.abs(z) % 20 === 2) ? 0 : 2.8;
-          addPeg(-7 + offset, trackY(z) + 1.8, z, 1.15, 2.8, 0xff2e93, true);
-          addPeg(0, trackY(z - 4) + 1.8, z - 4, 1.2, 2.8, 0xffd166, true);
-          addPeg(7 - offset, trackY(z) + 1.8, z, 1.15, 2.8, 0x00f0ff, true);
+        for (let z = -245; z <= 255; z += 11) {
+          const shift = (Math.abs(z) % 22 < 11) ? 0 : 2.8;
+          addPeg(-7.5 + shift, trackY(z) + 1.8, z, 1.2, 2.8, 0xff2e93, true);
+          addPeg(0, trackY(z - 5) + 1.8, z - 5, 1.25, 2.8, 0xffd166, true);
+          addPeg(7.5 - shift, trackY(z) + 1.8, z, 1.2, 2.8, 0x00f0ff, true);
         }
-        addJumpPad(0, trackY(-36), -36, 7, 4);
-        addJumpPad(0, trackY(18), 18, 7, 4);
-        addJumpPad(0, trackY(64), 64, 7, 4);
 
       } else if (mapType === 'megadrop') {
         buildBaseTrack(28, false);
 
-        // 3-Tier Zig-Zag Slanted Deflector Shelves + Plinko Chutes
-        const shelves = [
-          { x: -5, z: -68, ry: 0.34, col: 0x00f0ff },
-          { x: 5, z: -50, ry: -0.34, col: 0xff2e93 },
-          { x: -5, z: -32, ry: 0.34, col: 0xffd166 },
-          { x: 5, z: -12, ry: -0.34, col: 0x2ee59d },
-          { x: -5, z: 8, ry: 0.34, col: 0x00f0ff },
-          { x: 5, z: 28, ry: -0.34, col: 0xff2e93 },
-          { x: -5, z: 48, ry: 0.34, col: 0xa855f7 },
-          { x: 5, z: 68, ry: -0.34, col: 0xffd166 }
-        ];
-        shelves.forEach(s => {
-          addBox(16, 2.8, 1.1, s.x, trackY(s.z) + 1.8, s.z, COURSE_SLOPE, s.ry, 0, 0x1d2d5e, s.col);
-        });
-
-        for (let z = -60; z <= 74; z += 9) {
-          addPeg((Math.random() - 0.5) * 14, trackY(z) + 1.8, z, 0.75, 2.8, 0xffd166, true);
+        let side = -1;
+        for (let z = -250; z <= 245; z += 24) {
+          const col = side < 0 ? 0x00f0ff : 0xff2e93;
+          addBox(16.5, 2.8, 1.1, side * 5, trackY(z) + 1.8, z, COURSE_SLOPE, side * -0.35, 0, 0x1d2d5e, col);
+          addPeg(-side * 7, trackY(z + 10) + 1.8, z + 10, 1.0, 2.8, 0xffd166, true);
+          side *= -1;
         }
-        addMovingSweeper(0, trackY(-22) + 1.8, -22, 8, 7, 2.5, 0xff2e93);
-        addMovingSweeper(0, trackY(38) + 1.8, 38, 8, 7, -2.5, 0x00f0ff);
-        addWindmill(0, trackY(78) + 1.8, 78, 9, 2.6, 0x2ee59d);
+        for (let z = -200; z <= 210; z += 65) {
+          addMovingSweeper(0, trackY(z) + 1.8, z, 8, 7, 2.6, 0x2ee59d);
+          addJumpPad(0, trackY(z + 28), z + 28, 6.5, 4);
+        }
       }
     }
 
@@ -1688,11 +1657,20 @@
         body.addEventListener('collide', (e) => {
           if (raceState !== 'running') return;
           const impact = Math.abs(e.contact.getImpactVelocityAlongNormal());
-          if (impact > 2.2) {
+          if (impact > 2.0) {
             sfx.playPinHit(impact);
-            if (e.body.userData && e.body.userData.isBumper) {
-              sfx.playBumper();
-              spawnParticles(mesh.position, e.body.userData.color, 12, 9, 0.55);
+            if (e.body.userData && e.body.userData.isPeg) {
+              // Elastic, lively random bounce ("pang-pang!")
+              const kickX = (Math.random() - 0.5) * 11;
+              const kickY = 3.5 + Math.random() * 5.0;
+              const kickZ = (Math.random() - 0.35) * 6;
+              body.velocity.x += kickX;
+              body.velocity.y += kickY;
+              body.velocity.z += kickZ;
+              if (e.body.userData.isBumper) {
+                sfx.playBumper();
+                spawnParticles(mesh.position, e.body.userData.color, 12, 9, 0.55);
+              }
             } else if (impact > 6.5) {
               spawnParticles(mesh.position, item.colorHex, 5, 5, 0.35);
             }
@@ -1925,7 +1903,7 @@
         }
       }
 
-      // Cinematic Chase Camera (Looks ahead down the Obby track!)
+      // Side-3D Chase Camera (Side view with rich 3D depth!)
       if (camMode === 'auto' && marbles.length > 0) {
         const activeMarbles = marbles.filter(m => !m.finished);
         const focusList = activeMarbles.length > 0 ? activeMarbles : marbles;
@@ -1938,15 +1916,15 @@
         }
         const targetPos = focusMarble.mesh.position;
         const offset = slowMoActive
-          ? new THREE.Vector3(7, 8, -11)
-          : new THREE.Vector3(10, 15, -21);
+          ? new THREE.Vector3(22, 6, 3)
+          : new THREE.Vector3(34, 11, 4);
         const desiredCam = targetPos.clone().add(offset);
         camera.position.lerp(desiredCam, 0.065);
-        const lookAhead = targetPos.clone().add(new THREE.Vector3(0, -1.5, 9));
+        const lookAhead = targetPos.clone().add(new THREE.Vector3(0, -1.5, 8));
         controls.target.lerp(lookAhead, 0.09);
       } else if (camMode === 'overview') {
-        camera.position.lerp(new THREE.Vector3(85, 85, -35), 0.04);
-        controls.target.lerp(new THREE.Vector3(0, -5, 5), 0.04);
+        camera.position.lerp(new THREE.Vector3(200, 105, 0), 0.04);
+        controls.target.lerp(new THREE.Vector3(0, -10, 0), 0.04);
       }
 
       controls.update();
