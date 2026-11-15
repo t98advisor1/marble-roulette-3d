@@ -732,6 +732,20 @@
 
     <div>
       <div class="section-label">
+        <span>⚖️ 추첨 방식 (Win Mode)</span>
+        <span class="badge" id="win-mode-badge">골인 순위</span>
+      </div>
+      <div class="winner-group">
+        <button class="seg-btn active" data-win-mode="finish">🏁 골인 순위</button>
+        <button class="seg-btn" data-win-mode="score">⚡ 바운스 점수</button>
+      </div>
+      <div class="hint-text">
+        점수 모드: 핀·범퍼 충돌(+10~25P), 점프(+30P), 부스트(+20P) + 골인 보너스 합산!
+      </div>
+    </div>
+
+    <div>
+      <div class="section-label">
         <span>🏆 당첨 순위 (The Winner Is)</span>
         <span class="badge" id="target-rank-badge">1등</span>
       </div>
@@ -779,6 +793,7 @@
       <div class="winner-subtitle" id="winner-rank-subtitle">1ST PLACE WINNER</div>
       <div class="winner-name" id="winner-name-display">-</div>
       <div class="winner-meta" id="winner-meta-display">축하합니다!</div>
+      <div id="winner-summary-box" style="background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.12); border-radius:12px; padding:10px 12px; margin-bottom:18px; text-align:left; font-size:0.8rem; line-height:1.55;"></div>
       <div class="btn-row">
         <button class="btn-secondary" id="modal-close-btn" style="flex: 1;">닫기</button>
         <button class="btn-primary" id="modal-replay-btn" style="flex: 1; grid-column: auto; padding: 11px;">다시 추첨하기</button>
@@ -1546,6 +1561,7 @@
     let finishedCount = 0;
     let targetRank = 1;
     let rankMode = 'first';
+    let winMode = 'finish'; // 'finish' | 'score'
     let camMode = 'auto';
     let showLabels = true;
     let fastForward = false;
@@ -1654,6 +1670,21 @@
         body.position.set(x, y, z);
         body.sleep();
 
+        const mData = {
+          id: idx,
+          name: item.name,
+          colorHex: item.colorHex,
+          mesh,
+          body,
+          labelEl,
+          finished: false,
+          finishRank: null,
+          score: 0,
+          bounces: 0,
+          stuckTimer: 0,
+          padCooldown: 0
+        };
+
         body.addEventListener('collide', (e) => {
           if (raceState !== 'running') return;
           const impact = Math.abs(e.contact.getImpactVelocityAlongNormal());
@@ -1667,11 +1698,16 @@
               body.velocity.x += kickX;
               body.velocity.y += kickY;
               body.velocity.z += kickZ;
+              mData.bounces++;
               if (e.body.userData.isBumper) {
+                mData.score += 25;
                 sfx.playBumper();
                 spawnParticles(mesh.position, e.body.userData.color, 12, 9, 0.55);
+              } else {
+                mData.score += 10;
               }
             } else if (impact > 6.5) {
+              mData.score += 5;
               spawnParticles(mesh.position, item.colorHex, 5, 5, 0.35);
             }
           }
@@ -1685,18 +1721,8 @@
         labelEl.style.borderColor = `#${item.colorHex.toString(16).padStart(6, '0')}`;
         labelsLayer.appendChild(labelEl);
 
-        marbles.push({
-          id: idx,
-          name: item.name,
-          colorHex: item.colorHex,
-          mesh,
-          body,
-          labelEl,
-          finished: false,
-          finishRank: null,
-          stuckTimer: 0,
-          padCooldown: 0
-        });
+        mData.labelEl = labelEl;
+        marbles.push(mData);
       });
 
       updateLeaderboard();
@@ -1704,6 +1730,10 @@
 
     function updateLeaderboard() {
       const sorted = [...marbles].sort((a, b) => {
+        if (winMode === 'score') {
+          if (b.score !== a.score) return b.score - a.score;
+          return b.body.position.z - a.body.position.z;
+        }
         if (a.finished && b.finished) return a.finishRank - b.finishRank;
         if (a.finished) return -1;
         if (b.finished) return 1;
@@ -1711,21 +1741,28 @@
       });
 
       if (sorted.length > 0) {
-        const leadZ = sorted[0].finished ? finishLineZ : sorted[0].body.position.z;
+        let leadZ = startLineZ;
+        for (const m of marbles) {
+          const z = m.finished ? finishLineZ : m.body.position.z;
+          if (z > leadZ) leadZ = z;
+        }
         const pct = Math.max(0, Math.min(100, ((leadZ - startLineZ) / (finishLineZ - startLineZ)) * 100));
         raceProgressFill.style.width = `${pct.toFixed(1)}%`;
       }
 
       leaderboardList.innerHTML = sorted.slice(0, 20).map((m, idx) => {
-        const rankNum = m.finished ? m.finishRank : idx + 1;
+        const rankNum = (winMode === 'finish' && m.finished) ? m.finishRank : idx + 1;
         const isTarget = rankNum === targetRank;
         const hex = `#${m.colorHex.toString(16).padStart(6, '0')}`;
+        const rightText = winMode === 'score'
+          ? `${m.score}P${m.finished ? ' 🏁' : ''}`
+          : `${m.score}P ${m.finished ? '도착' : isTarget ? '🎯' : ''}`;
         return `
           <div class="lb-item ${m.finished ? 'finished' : ''} ${isTarget ? 'target-winner' : ''}">
-            <span class="lb-rank">${m.finished ? `🏁${rankNum}` : rankNum}</span>
+            <span class="lb-rank">${m.finished && winMode === 'finish' ? `🏁${rankNum}` : rankNum}</span>
             <span class="lb-color" style="background:${hex}; box-shadow:0 0 8px ${hex}"></span>
             <span class="lb-name">${escapeHtml(m.name)}</span>
-            <span class="lb-status">${m.finished ? '도착' : isTarget ? '🎯' : ''}</span>
+            <span class="lb-status">${rightText}</span>
           </div>
         `;
       }).join('');
@@ -1766,10 +1803,32 @@
       sfx.playWinFanfare();
       spawnConfetti(winnerMarble.mesh.position);
 
-      document.getElementById('winner-rank-subtitle').textContent = `${targetRank}등 당첨자 (TARGET RANK #${targetRank})`;
+      const byFinish = [...marbles].sort((a, b) => (a.finishRank || 9999) - (b.finishRank || 9999));
+      const byScore = [...marbles].sort((a, b) => b.score - a.score);
+      const finishChamp = byFinish[0];
+      const scoreChamp = byScore[0];
+
+      document.getElementById('winner-rank-subtitle').textContent =
+        winMode === 'score'
+          ? `⚡ 바운스 점수 ${targetRank}등 당첨자 (SCORE RANK #${targetRank})`
+          : `🏁 골인 순위 ${targetRank}등 당첨자 (FINISH RANK #${targetRank})`;
       document.getElementById('winner-name-display').textContent = winnerMarble.name;
       document.getElementById('winner-meta-display').textContent =
-        `총 ${marbles.length}개의 구슬 중 ${targetRank}번째로 결승선을 통과했습니다!`;
+        winMode === 'score'
+          ? `총 ${winnerMarble.score}P (바운스 ${winnerMarble.bounces}회)로 점수 ${targetRank}등을 차지했습니다!`
+          : `결승선 ${targetRank}번째 통과 · 획득 점수 ${winnerMarble.score}P (바운스 ${winnerMarble.bounces}회)`;
+
+      const topRows = byScore.slice(0, 5).map((m, idx) =>
+        `<div>${idx + 1}. <b>${escapeHtml(m.name)}</b> — ${m.score}P (바운스 ${m.bounces}회${m.finishRank ? ` · 🏁${m.finishRank}등` : ''})</div>`
+      ).join('');
+      document.getElementById('winner-summary-box').innerHTML = `
+        <div style="margin-bottom:6px; color:var(--accent-3); font-weight:700;">
+          🏁 골인 1등: ${escapeHtml(finishChamp.name)} &nbsp;|&nbsp; ⚡ 점수 1등: ${escapeHtml(scoreChamp.name)} (${scoreChamp.score}P)
+        </div>
+        <div style="color:var(--muted); font-size:0.75rem; margin-bottom:4px;">종합 점수 TOP 5</div>
+        ${topRows}
+      `;
+
       document.getElementById('winner-modal').classList.add('open');
       document.getElementById('start-btn').disabled = false;
     }
@@ -1819,6 +1878,7 @@
                 m.body.applyForce(new CANNON.Vec3(0, 0, 95), m.body.position);
                 if (m.padCooldown <= 0) {
                   m.padCooldown = 0.35;
+                  m.score += 20;
                   sfx.playBoost();
                   spawnParticles(m.mesh.position, 0x00ffaa, 6, 6, 0.4);
                 }
@@ -1834,6 +1894,7 @@
                 Math.abs(m.body.position.y - jpad.y) < 2.6
               ) {
                 m.padCooldown = 0.55;
+                m.score += 30;
                 m.body.velocity.y = 14;
                 m.body.velocity.z += 6;
                 sfx.playJumpPad();
@@ -1878,11 +1939,15 @@
               m.finished = true;
               finishedCount++;
               m.finishRank = finishedCount;
+              m.score += Math.max(25, (marbles.length - m.finishRank + 1) * 25);
               sfx.playFinishGate();
               spawnParticles(m.mesh.position, 0xffd166, 18, 10, 0.75);
 
-              if (m.finishRank === targetRank) {
+              if (winMode === 'finish' && m.finishRank === targetRank) {
                 declareWinner(m);
+              } else if (winMode === 'score' && finishedCount === marbles.length) {
+                const byScore = [...marbles].sort((a, b) => b.score - a.score);
+                declareWinner(byScore[targetRank - 1] || byScore[0]);
               }
             }
           }
@@ -1977,6 +2042,16 @@
       buildCourse(mapSelect.value);
       spawnMarbles(false);
       document.getElementById('start-btn').disabled = false;
+    });
+
+    document.querySelectorAll('[data-win-mode]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('[data-win-mode]').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        winMode = btn.dataset.winMode;
+        document.getElementById('win-mode-badge').textContent = winMode === 'score' ? '바운스 점수' : '골인 순위';
+        updateLeaderboard();
+      });
     });
 
     document.querySelectorAll('[data-rank-mode]').forEach(btn => {
