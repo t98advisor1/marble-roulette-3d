@@ -785,6 +785,7 @@
   <div class="bottom-hud">
     <button class="mini-btn" id="fast-forward-btn" style="flex: 0 0 auto; padding: 6px 14px;">⏩ 2x 배속 (길게 누르기 / Space)</button>
     <span class="speed-indicator">속도: <strong id="speed-val">1.0x</strong></span>
+    <span class="speed-indicator">⏱️ <strong id="race-timer">0.0s</strong></span>
   </div>
 
   <div class="modal-backdrop" id="winner-modal">
@@ -1210,7 +1211,7 @@
     let finishLineY = -80;
     let spawnOrigin = { x: 0, y: 82, z: -275 };
 
-    const COURSE_SLOPE = 0.28; // ~16 degrees over 580-unit epic marathon!
+    const COURSE_SLOPE = 0.17; // ~9.7 degrees tuned for ~30s epic marathon!
 
     function trackY(z) {
       return -Math.tan(COURSE_SLOPE) * z;
@@ -1566,6 +1567,7 @@
     let showLabels = true;
     let fastForward = false;
     let slowMoActive = false;
+    let raceElapsed = 0;
 
     const participantsInput = document.getElementById('participants-input');
     const marbleCountBadge = document.getElementById('marble-count-badge');
@@ -1605,6 +1607,8 @@
       clearMarbles();
       raceState = 'idle';
       finishedCount = 0;
+      raceElapsed = 0;
+      document.getElementById('race-timer').textContent = '0.0s';
       slowMoActive = false;
       slowmoBanner.classList.remove('active');
       raceProgressFill.style.width = '0%';
@@ -1664,8 +1668,8 @@
           mass: 1.6,
           material: marbleMat,
           shape: new CANNON.Sphere(MARBLE_RADIUS),
-          linearDamping: 0.02,
-          angularDamping: 0.04
+          linearDamping: 0.22,
+          angularDamping: 0.08
         });
         body.position.set(x, y, z);
         body.sleep();
@@ -1694,7 +1698,7 @@
               // Elastic, lively random bounce ("pang-pang!")
               const kickX = (Math.random() - 0.5) * 11;
               const kickY = 3.5 + Math.random() * 5.0;
-              const kickZ = (Math.random() - 0.35) * 6;
+              const kickZ = (Math.random() - 0.55) * 5;
               body.velocity.x += kickX;
               body.velocity.y += kickY;
               body.velocity.z += kickZ;
@@ -1852,6 +1856,10 @@
       }
       speedValEl.textContent = `${timeScale.toFixed(1)}x`;
       const simDt = rawDt * timeScale;
+      if (raceState === 'running') {
+        raceElapsed += rawDt;
+        document.getElementById('race-timer').textContent = `${raceElapsed.toFixed(1)}s`;
+      }
 
       for (const obs of dynamicObstacles) {
         obs.update(simDt);
