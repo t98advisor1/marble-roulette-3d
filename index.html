@@ -766,13 +766,139 @@
       color: #334155;
       border: 1px solid #cbd5e1;
       border-radius: 20px;
-      padding: 28px 30px;
-      max-width: 740px;
+      padding: 0;
+      max-width: 960px;
       width: 100%;
       text-align: left;
       box-shadow: 0 24px 60px rgba(15, 23, 42, 0.35);
-      max-height: 92vh;
+      height: min(88vh, 720px);
+      display: flex;
+      overflow: hidden;
+    }
+
+    .manual-modal-sidebar {
+      width: 245px;
+      flex-shrink: 0;
+      background: #f8fafc;
+      border-right: 1px solid #e2e8f0;
+      padding: 20px 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
       overflow-y: auto;
+    }
+
+    .manual-modal-steps {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .mm-step-btn {
+      width: 100%;
+      text-align: left;
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 10px;
+      padding: 9px 10px;
+      cursor: pointer;
+      font-family: inherit;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.15s;
+    }
+
+    .mm-step-btn:hover {
+      background: #eff6ff;
+      border-color: #93c5fd;
+    }
+
+    .mm-step-btn.active {
+      background: #2563eb;
+      border-color: #2563eb;
+      color: #ffffff;
+    }
+
+    .mm-step-num {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: #e2e8f0;
+      color: #0f172a;
+      font-size: 11px;
+      font-weight: 800;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .mm-step-btn.active .mm-step-num {
+      background: rgba(255, 255, 255, 0.25);
+      color: #ffffff;
+    }
+
+    .mm-step-label {
+      font-size: 13px;
+      font-weight: 700;
+      color: #0f172a;
+      line-height: 1.3;
+    }
+
+    .mm-step-btn.active .mm-step-label {
+      color: #ffffff;
+    }
+
+    .manual-modal-body {
+      flex: 1;
+      min-width: 0;
+      padding: 24px 26px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .mm-pane {
+      display: none;
+    }
+
+    .mm-pane.active {
+      display: block;
+    }
+
+    .mm-figure {
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid #cbd5e1;
+      margin: 10px 0 12px;
+      background: #0f172a;
+    }
+
+    .mm-figure img {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+
+    @media (max-width: 720px) {
+      .manual-card {
+        flex-direction: column;
+        height: 90vh;
+      }
+      .manual-modal-sidebar {
+        width: 100%;
+        border-right: none;
+        border-bottom: 1px solid #e2e8f0;
+        flex-shrink: 0;
+        max-height: 200px;
+      }
+      .manual-modal-steps {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+      }
     }
 
     .manual-eyebrow {
@@ -1415,89 +1541,128 @@
     </div>
   </div>
 
-  <!-- Built-in Light-Mode Game & QR Manual Modal -->
+  <!-- Built-in Light-Mode Sidebar Step-by-Step Game & QR Manual Modal -->
   <div class="modal-backdrop" id="manual-modal">
     <div class="manual-card">
-      <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:12px; margin-bottom:16px;">
+      <aside class="manual-modal-sidebar">
         <div>
           <div class="manual-eyebrow">USER MANUAL · math-tong</div>
-          <h2 class="manual-title">3D 마블 룰렛 사용 및 QR 참여 매뉴얼</h2>
-          <p class="manual-lead">단독 추첨 진행부터 스마트폰 QR 동시 접속, 구글 시트 명단 연동까지 한눈에 확인하세요.</p>
+          <div style="font-size: 1.15rem; font-weight: 800; color: #0f172a; margin-top: 3px;">3D 마블 룰렛 매뉴얼</div>
+          <div style="font-size: 0.78rem; color: #64748b; margin-top: 2px;">단계별로 화면과 조작법을 확인하세요.</div>
         </div>
-        <button class="manual-top-close" id="manual-top-close-btn">닫기</button>
-      </div>
+        <div class="manual-modal-steps">
+          <button type="button" class="mm-step-btn active" data-mm-step="1"><span class="mm-step-num">1</span><span class="mm-step-label">화면 구성 · 빠른 시작</span></button>
+          <button type="button" class="mm-step-btn" data-mm-step="2"><span class="mm-step-num">2</span><span class="mm-step-label">명단·구글 시트 설정</span></button>
+          <button type="button" class="mm-step-btn" data-mm-step="3"><span class="mm-step-num">3</span><span class="mm-step-label">QR 참여방 (진행자)</span></button>
+          <button type="button" class="mm-step-btn" data-mm-step="4"><span class="mm-step-num">4</span><span class="mm-step-label">QR 동시 조작 (참여자)</span></button>
+          <button type="button" class="mm-step-btn" data-mm-step="5"><span class="mm-step-num">5</span><span class="mm-step-label">당첨 결과 · 점수 규칙</span></button>
+        </div>
+        <div style="margin-top:auto; display:flex; flex-direction:column; gap:6px; padding-top:10px; border-top:1px solid #e2e8f0;">
+          <a href="./manual.html" target="_blank" rel="noopener noreferrer" class="manual-light-btn-link" style="font-size:0.82rem; padding:9px;">전체 페이지 매뉴얼 열기</a>
+          <button class="manual-top-close" id="manual-top-close-btn" style="width:100%;">닫기</button>
+        </div>
+      </aside>
 
-      <div class="manual-section">
-        <h3 class="manual-h2">1. 기본 추첨 진행 방법 (PC 단독 사용)</h3>
-        <ul>
-          <li>게임을 열면 출발선에 대기 중인 3D 동물들이 보입니다. 바로 시작하려면 하단 중앙의 <strong>[레이스 시작 (START)]</strong> 버튼을 누르세요.</li>
-          <li>명단 편집, 구글 시트/파일 불러오기, 코스 4종 선택, 추첨 방식(골인 순위 또는 바운스 점수) 변경은 상단의 <strong>[명단·코스 설정]</strong> 버튼을 눌러 열 수 있습니다.</li>
-        </ul>
-      </div>
-
-      <div class="manual-section">
-        <h3 class="manual-h2">2. QR 실시간 동시 참여 안내 (경기 시작: 진행자 클릭)</h3>
-        <p class="manual-body" style="margin:0 0 8px;">
-          스마트폰으로 접속한 참여자들은 닉네임과 동물을 고른 뒤 대기하며, <strong>진행자(PC 화면)가 시작 버튼을 눌러야</strong> 모든 참여자가 동시에 출발합니다.
-        </p>
-        <div class="manual-grid">
-          <div class="manual-role-box">
-            <h3>진행자 (PC · 대형 화면) 순서</h3>
-            <ol>
-              <li>상단 또는 하단의 <strong>[QR 참여방]</strong> 버튼을 눌러 QR 코드를 띄웁니다.</li>
-              <li>QR 접속자만 추첨하려면 <strong>[기존 목록 비우고 QR만 받기]</strong>를 클릭합니다.</li>
-              <li>출발선에 참여자 동물이 추가되는 것을 확인합니다.</li>
-              <li>모두 모이면 <strong>[입장 완료! 지금 레이스 시작]</strong>을 클릭합니다.</li>
-            </ol>
+      <div class="manual-modal-body">
+        <div>
+          <!-- Step 1 -->
+          <div class="mm-pane active" data-mm-pane="1">
+            <div class="manual-eyebrow">STEP 01 · MAIN SCREEN</div>
+            <h2 class="manual-title">전체 화면 구성 및 빠른 시작</h2>
+            <div class="mm-figure"><img src="./assets/manual-main.png" alt="메인 화면 스크린샷" /></div>
+            <div class="manual-section">
+              <ul>
+                <li><strong>상단 메뉴바</strong>: 사용 매뉴얼, QR 참여방, 명단·코스 설정, 시점 전환, 사운드 제어가 위치합니다.</li>
+                <li><strong>하단 메인 컨트롤 바</strong>: <strong>[레이스 시작 (START)]</strong> 버튼만 누르면 약 30초 경주가 즉시 시작됩니다. (<code>Space</code> 키로 2배속 가능)</li>
+                <li><strong>우측 실시간 순위표</strong>: 현재 1~20위 동물의 풀컬러 캐릭터 아이콘과 점수를 실시간으로 보여줍니다.</li>
+              </ul>
+            </div>
           </div>
-          <div class="manual-role-box">
-            <h3>참여자 (스마트폰 QR) 순서</h3>
-            <ol>
-              <li>스마트폰 기본 카메라로 화면의 <strong>QR 코드를 스캔</strong>해 접속합니다.</li>
-              <li><strong>닉네임 입력</strong> 후 원하는 <strong>동물 캐릭터</strong>를 골라 입장합니다.</li>
-              <li>진행자가 시작할 때까지 대기 화면에서 잠시 기다립니다.</li>
-              <li>레이스가 시작되면 아래 4가지 실시간 버튼을 눌러 캐릭터를 지원합니다.</li>
-            </ol>
+
+          <!-- Step 2 -->
+          <div class="mm-pane" data-mm-pane="2">
+            <div class="manual-eyebrow">STEP 02 · PARTICIPANTS &amp; GOOGLE SHEETS</div>
+            <h2 class="manual-title">명단 입력 및 구글 시트 불러오기</h2>
+            <div class="mm-figure"><img src="./assets/manual-settings.png" alt="명단·코스 설정 스크린샷" /></div>
+            <div class="manual-section">
+              <ul>
+                <li><strong>구글 시트 연동</strong>: 구글 시트 [공유]를 <strong>'링크가 있는 모든 사용자(뷰어)'</strong>로 바꾼 뒤 URL을 붙여넣고 <strong>[시트 불러오기]</strong>를 클릭하세요.</li>
+                <li><strong>직접 입력 / 파일</strong>: <code>짱구*2, 철수*1</code> 형식 입력 또는 <code>.csv</code>, <code>.txt</code>, <code>.json</code> 파일 드래그를 지원합니다.</li>
+                <li><strong>코스 4종</strong>: 레인보우 메가 오비, 자이언트 풍차 캐니언, 터보 하이퍼 범퍼, 메가 드롭 3단 폭포 중 선택 가능합니다.</li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Step 3 -->
+          <div class="mm-pane" data-mm-pane="3">
+            <div class="manual-eyebrow">STEP 03 · HOST QR LOBBY</div>
+            <h2 class="manual-title">QR 참여방 열기 (시작: 진행자 클릭)</h2>
+            <div class="mm-figure"><img src="./assets/manual-qr.png" alt="QR 참여방 스크린샷" /></div>
+            <div class="manual-section">
+              <ul>
+                <li><strong>누가 시작하나요?</strong> 참여자들이 QR로 입장한 뒤, <strong>진행자(PC 화면)</strong>가 <strong>[입장 완료! 지금 레이스 시작]</strong> 버튼을 누르면 전원이 동시에 출발합니다.</li>
+                <li><strong>명단 정리</strong>: 기존 샘플 명단을 빼고 QR 접속자만 추첨하려면 <strong>[기존 목록 비우고 QR만 받기]</strong>를 먼저 누르세요.</li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Step 4 -->
+          <div class="mm-pane" data-mm-pane="4">
+            <div class="manual-eyebrow">STEP 04 · PARTICIPANT CONTROLLER</div>
+            <h2 class="manual-title">QR 동시 접속 및 실시간 조작 (참여자)</h2>
+            <div class="manual-grid" style="margin-bottom:12px;">
+              <div class="manual-role-box">
+                <h3>1. 스마트폰 입장 순서</h3>
+                <ol>
+                  <li>카메라로 화면의 <strong>QR 코드 스캔</strong></li>
+                  <li><strong>닉네임</strong> 입력 및 <strong>동물 16종</strong> 선택</li>
+                  <li><strong>[레이스 입장하기]</strong> 클릭 후 대기</li>
+                </ol>
+              </div>
+              <div class="manual-role-box">
+                <h3>2. 경기 시작 후 조작</h3>
+                <ol>
+                  <li>진행자가 시작하면 상태 배지 자동 전환</li>
+                  <li>아래 4가지 버튼을 <strong>동시에 연타</strong>해 개입</li>
+                  <li>실시간 속도 상승 및 보너스 점수 적립</li>
+                </ol>
+              </div>
+            </div>
+            <details class="manual-acc">
+              <summary>QR 접속자용 4가지 실시간 액션 상세 표 (럭키박스 · 부스트 · 점프 · 응원)</summary>
+              <div class="manual-acc-body">
+                <ul>
+                  <li><strong>랜덤 럭키박스</strong> (3.5초): 대박 터보(+40P) / 슈퍼 점프(+30P) / 팡팡 바운스(+25P) / 럭키(+50P) 중 1개 무작위 발동</li>
+                  <li><strong>대시 부스트</strong> (3.0초): 내 3D 동물 전방 급가속 + <strong>+15P</strong></li>
+                  <li><strong>슈퍼 점프</strong> (2.5초): 장애물 도약 + <strong>+20P</strong></li>
+                  <li><strong>실시간 응원</strong> (제한 없음): 이름표 옆 응원 표시 + 회당 <strong>+5P</strong></li>
+                </ul>
+              </div>
+            </details>
+          </div>
+
+          <!-- Step 5 -->
+          <div class="mm-pane" data-mm-pane="5">
+            <div class="manual-eyebrow">STEP 05 · RESULTS &amp; WIN MODES</div>
+            <h2 class="manual-title">당첨 결과 화면 및 추첨 방식</h2>
+            <div class="mm-figure"><img src="./assets/manual-winner.png" alt="당첨 결과 스크린샷" /></div>
+            <details class="manual-acc">
+              <summary>골인 순위 vs 바운스 점수 규칙 펼쳐보기</summary>
+              <div class="manual-acc-body">
+                <ul>
+                  <li><strong>골인 순위</strong>: 결승선 통과 순서(1등, 꼴찌, 지정, 무작위) 기준 당첨</li>
+                  <li><strong>바운스 점수</strong>: 핀(+10P), 범퍼·풍차(+25P), 부스트(+20P), 점프대(+30P), 골인 보너스, 스마트폰 액션 점수 합산 최고점 당첨</li>
+                </ul>
+              </div>
+            </details>
           </div>
         </div>
-      </div>
 
-      <details class="manual-acc">
-        <summary>QR 접속자용 4가지 실시간 액션 상세 안내 (럭키박스 · 부스트 · 점프 · 응원)</summary>
-        <div class="manual-acc-body">
-          <ul>
-            <li><strong>랜덤 럭키박스</strong> (대기시간 3.5초): 대박 터보(+40P) / 슈퍼 점프(+30P) / 팡팡 바운스(+25P) / 럭키 보너스(+50P) 중 1개 무작위 발동</li>
-            <li><strong>대시 부스트</strong> (대기시간 3.0초): 내 3D 동물 전방 속도를 즉시 가속하고 <strong>+15P</strong> 적립</li>
-            <li><strong>슈퍼 점프</strong> (대기시간 2.5초): 장애물을 뛰어넘는 큰 점프와 함께 <strong>+20P</strong> 적립</li>
-            <li><strong>실시간 응원</strong> (대기시간 없음 · 연타 가능): 캐릭터 이름표 위에 응원 문구가 표시되며 회당 <strong>+5P</strong> 적립</li>
-          </ul>
+        <div class="btn-row" style="padding-top:10px; border-top:1px solid #e2e8f0; gap:10px;">
+          <button type="button" class="manual-top-close" id="mm-prev-btn">← 이전 단계</button>
+          <button type="button" class="manual-top-close" id="mm-next-btn">다음 단계 →</button>
+          <button type="button" class="manual-light-btn-primary" id="manual-close-btn">확인하고 게임하기</button>
         </div>
-      </details>
-
-      <details class="manual-acc">
-        <summary>구글 시트(Google Sheets) 및 엑셀/CSV 명단 불러오기 안내</summary>
-        <div class="manual-acc-body">
-          <ul>
-            <li><strong>구글 시트 연동</strong>: 구글 시트 우측 상단 <strong>[공유]</strong>에서 <strong>'링크가 있는 모든 사용자(뷰어)'</strong>로 설정한 뒤, URL을 복사해 <strong>[명단·코스 설정]</strong>의 구글 시트 입력칸에 붙여넣고 <strong>[시트 불러오기]</strong>를 누릅니다.</li>
-            <li><strong>파일 업로드</strong>: <code>.csv</code>, <code>.txt</code>, <code>.json</code> 파일을 설정 창 점선 영역으로 드래그 앤 드롭하거나 <strong>[파일 불러오기]</strong>로 불러올 수 있습니다.</li>
-            <li><strong>직접 입력 문법</strong>: <code>홍길동*2, 김철수*1</code> 처럼 쉼표(<code>,</code>)나 줄바꿈으로 구분하며 <code>*숫자</code>는 가중치(출전 수)입니다.</li>
-          </ul>
-        </div>
-      </details>
-
-      <details class="manual-acc">
-        <summary>추첨 방식 (골인 순위 vs 바운스 점수) 및 당첨 순위 규칙</summary>
-        <div class="manual-acc-body">
-          <ul>
-            <li><strong>골인 순위 추첨</strong>: 약 30초 동안 580유닛 코스를 달려 결승선에 목표 순위(1등, 꼴찌, 지정, 무작위)로 통과한 동물이 당첨됩니다.</li>
-            <li><strong>바운스 점수 추첨</strong>: 핀(+10P), 범퍼·풍차(+25P), 부스트(+20P), 점프대(+30P), 골인 보너스, 스마트폰 액션 점수를 합산해 최고 점수를 겨룹니다.</li>
-          </ul>
-        </div>
-      </details>
-
-      <div class="btn-row" style="margin-top:14px; gap:10px;">
-        <a href="./manual.html" target="_blank" rel="noopener noreferrer" class="manual-light-btn-link">스크린샷 포함 전체 매뉴얼 보기 (새 창)</a>
-        <button class="manual-light-btn-primary" id="manual-close-btn">확인하고 게임하기</button>
       </div>
     </div>
   </div>
@@ -3420,10 +3585,25 @@
     });
 
     const manualModal = document.getElementById('manual-modal');
+    let mmStep = 1;
+    function setManualModalStep(n) {
+      mmStep = Math.max(1, Math.min(5, Number(n) || 1));
+      document.querySelectorAll('.mm-step-btn').forEach(b => b.classList.toggle('active', Number(b.dataset.mmStep) === mmStep));
+      document.querySelectorAll('.mm-pane').forEach(p => p.classList.toggle('active', Number(p.dataset.mmPane) === mmStep));
+      document.getElementById('mm-prev-btn').disabled = mmStep === 1;
+      document.getElementById('mm-next-btn').disabled = mmStep === 5;
+    }
+    document.querySelectorAll('.mm-step-btn').forEach(btn => {
+      btn.addEventListener('click', () => setManualModalStep(btn.dataset.mmStep));
+    });
+    document.getElementById('mm-prev-btn').addEventListener('click', () => setManualModalStep(mmStep - 1));
+    document.getElementById('mm-next-btn').addEventListener('click', () => setManualModalStep(mmStep + 1));
     document.getElementById('open-manual-btn').addEventListener('click', () => {
+      setManualModalStep(1);
       manualModal.classList.add('open');
     });
     document.getElementById('quick-manual-btn').addEventListener('click', () => {
+      setManualModalStep(1);
       manualModal.classList.add('open');
     });
     document.getElementById('manual-close-btn').addEventListener('click', () => {
