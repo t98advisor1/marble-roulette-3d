@@ -747,8 +747,8 @@
       }
     }
 
-    /* QR Lobby & Manual Modal & Mobile Controller */
-    .qr-card, .manual-card {
+    /* QR Lobby & Light-Mode Manual Modal & Mobile Controller */
+    .qr-card {
       background: linear-gradient(160deg, rgba(20, 26, 54, 0.98), rgba(10, 13, 28, 0.99));
       border: 1px solid rgba(0, 240, 255, 0.45);
       border-radius: 22px;
@@ -762,8 +762,56 @@
     }
 
     .manual-card {
-      max-width: 680px;
+      background: #ffffff;
+      color: #334155;
+      border: 1px solid #cbd5e1;
+      border-radius: 20px;
+      padding: 28px 30px;
+      max-width: 740px;
+      width: 100%;
       text-align: left;
+      box-shadow: 0 24px 60px rgba(15, 23, 42, 0.35);
+      max-height: 92vh;
+      overflow-y: auto;
+    }
+
+    .manual-eyebrow {
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #2563eb;
+    }
+
+    .manual-title {
+      margin: 4px 0 6px;
+      font-size: 1.65rem;
+      font-weight: 800;
+      color: #0f172a;
+      line-height: 1.3;
+    }
+
+    .manual-lead {
+      margin: 0;
+      font-size: 0.92rem;
+      color: #64748b;
+    }
+
+    .manual-top-close {
+      background: #f1f5f9;
+      border: 1px solid #cbd5e1;
+      color: #0f172a;
+      padding: 7px 14px;
+      border-radius: 10px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      cursor: pointer;
+      font-family: inherit;
+      flex-shrink: 0;
+    }
+
+    .manual-top-close:hover {
+      background: #e2e8f0;
     }
 
     .qr-role-banner {
@@ -804,27 +852,52 @@
     }
 
     .manual-section {
-      background: rgba(255, 255, 255, 0.04);
-      border: 1px solid rgba(130, 160, 255, 0.2);
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
       border-radius: 14px;
-      padding: 14px 16px;
-      margin-bottom: 12px;
+      padding: 16px 18px;
+      margin-bottom: 14px;
     }
 
-    .manual-section h3 {
-      margin: 0 0 8px;
-      font-size: 0.98rem;
-      font-weight: 800;
-      color: var(--accent);
-      display: flex;
-      align-items: center;
-      gap: 6px;
+    .manual-h2 {
+      margin: 0 0 10px;
+      padding-bottom: 6px;
+      border-bottom: 2px solid #e2e8f0;
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: #0f172a;
+    }
+
+    .manual-body, .manual-section p, .manual-section li {
+      font-size: 0.94rem;
+      line-height: 1.72;
+      color: #334155;
+      font-weight: 400;
+    }
+
+    .manual-section ul, .manual-section ol {
+      margin: 0;
+      padding-left: 20px;
+    }
+
+    .manual-section li {
+      margin-bottom: 5px;
+    }
+
+    .manual-section code, .manual-acc code {
+      background: #e2e8f0;
+      color: #0f172a;
+      padding: 2px 6px;
+      border-radius: 5px;
+      font-size: 0.86rem;
+      font-family: monospace;
     }
 
     .manual-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 10px;
+      gap: 12px;
+      margin-top: 8px;
     }
 
     @media (max-width: 640px) {
@@ -834,28 +907,151 @@
     }
 
     .manual-role-box {
-      background: rgba(6, 10, 24, 0.65);
-      border: 1px solid rgba(255, 255, 255, 0.12);
+      background: #ffffff;
+      border: 1px solid #cbd5e1;
       border-radius: 12px;
-      padding: 11px 12px;
-      font-size: 0.8rem;
-      line-height: 1.55;
+      padding: 14px 15px;
     }
 
-    .manual-role-box h4 {
-      margin: 0 0 6px;
-      font-size: 0.88rem;
-      color: var(--accent-3);
+    .manual-role-box h3 {
+      margin: 0 0 8px;
+      font-size: 1.04rem;
+      font-weight: 700;
+      color: #1d4ed8;
     }
 
-    .manual-role-box ol, .manual-section ul {
+    .manual-role-box ol {
       margin: 0;
       padding-left: 18px;
-      color: #dbe4ff;
     }
 
-    .manual-role-box li, .manual-section li {
-      margin-bottom: 4px;
+    .manual-role-box li {
+      font-size: 0.9rem;
+      line-height: 1.65;
+      color: #334155;
+      margin-bottom: 5px;
+    }
+
+    details.manual-acc {
+      background: #f8fafc;
+      border: 1px solid #cbd5e1;
+      border-radius: 12px;
+      margin-bottom: 10px;
+      overflow: hidden;
+    }
+
+    details.manual-acc summary {
+      list-style: none;
+      padding: 13px 16px;
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: #0f172a;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      background: #f1f5f9;
+    }
+
+    details.manual-acc summary::-webkit-details-marker {
+      display: none;
+    }
+
+    details.manual-acc summary::after {
+      content: '펼치기 +';
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: #2563eb;
+      background: #dbeafe;
+      padding: 3px 10px;
+      border-radius: 999px;
+      flex-shrink: 0;
+    }
+
+    details.manual-acc[open] summary::after {
+      content: '접기 -';
+      background: #e2e8f0;
+      color: #475569;
+    }
+
+    .manual-acc-body {
+      padding: 14px 16px;
+      background: #ffffff;
+      border-top: 1px solid #e2e8f0;
+      font-size: 0.92rem;
+      line-height: 1.7;
+      color: #334155;
+    }
+
+    .manual-acc-body ul {
+      margin: 0;
+      padding-left: 18px;
+    }
+
+    .manual-acc-body li {
+      margin-bottom: 6px;
+    }
+
+    .manual-light-btn-link {
+      flex: 1;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 11px 14px;
+      border-radius: 10px;
+      background: #eff6ff;
+      border: 1px solid #93c5fd;
+      color: #1d4ed8;
+      font-weight: 700;
+      font-size: 0.9rem;
+      text-decoration: none;
+      text-align: center;
+    }
+
+    .manual-light-btn-link:hover {
+      background: #dbeafe;
+    }
+
+    .manual-light-btn-primary {
+      flex: 1;
+      padding: 11px 16px;
+      border-radius: 10px;
+      background: #2563eb;
+      border: none;
+      color: #ffffff;
+      font-weight: 700;
+      font-size: 0.92rem;
+      cursor: pointer;
+      font-family: inherit;
+    }
+
+    .manual-light-btn-primary:hover {
+      background: #1d4ed8;
+    }
+
+    .gsheet-row {
+      display: flex;
+      gap: 6px;
+      margin-top: 4px;
+    }
+
+    .gsheet-input {
+      flex: 1;
+      min-width: 0;
+      background: rgba(6, 9, 20, 0.8);
+      border: 1px solid rgba(130, 160, 255, 0.25);
+      color: var(--text);
+      border-radius: 9px;
+      padding: 7px 10px;
+      font-size: 0.78rem;
+      font-family: inherit;
+      outline: none;
+      user-select: text;
+    }
+
+    .gsheet-input:focus {
+      border-color: var(--accent);
     }
 
     .qr-img-wrap {
@@ -1075,10 +1271,10 @@
 
     <div class="import-box" id="import-dropzone">
       <div class="section-label" style="margin-bottom: 2px;">
-        <span>참여자 서식 불러오기 / 내보내기</span>
+        <span>참여자 서식 불러오기 / 구글 시트 연동</span>
       </div>
       <div class="hint-text" style="margin-top: 0;">
-        <code>.txt</code>, <code>.csv</code>, <code>.json</code> 파일을 선택하거나 여기로 드래그하세요.
+        <code>.txt</code>, <code>.csv</code>, <code>.json</code> 파일을 드래그하거나 구글 시트 공유 링크를 붙여넣으세요.
       </div>
       <div class="btn-row">
         <button class="mini-btn" id="import-file-btn">파일 불러오기</button>
@@ -1087,6 +1283,10 @@
       <div class="btn-row">
         <button class="mini-btn" id="template-csv-btn">CSV 양식 받기</button>
         <button class="mini-btn" id="sample-preset-btn">샘플 채우기</button>
+      </div>
+      <div class="gsheet-row">
+        <input type="text" id="gsheet-url-input" class="gsheet-input" placeholder="구글 시트 공유 링크 붙여넣기" />
+        <button class="mini-btn" id="import-gsheet-btn" style="flex: 0 0 auto; min-width: auto; padding: 7px 11px;">시트 불러오기</button>
       </div>
       <input type="file" id="file-input" accept=".txt,.csv,.json,.tsv" hidden />
     </div>
@@ -1215,70 +1415,89 @@
     </div>
   </div>
 
-  <!-- Built-in Game & QR Manual Modal -->
+  <!-- Built-in Light-Mode Game & QR Manual Modal -->
   <div class="modal-backdrop" id="manual-modal">
     <div class="manual-card">
-      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+      <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:12px; margin-bottom:16px;">
         <div>
-          <div class="winner-subtitle">USER MANUAL · math-tong</div>
-          <h2 style="margin:2px 0 0; font-size:1.25rem; font-weight:900; color:#fff;">3D 마블 룰렛 사용 & QR 참여 매뉴얼</h2>
+          <div class="manual-eyebrow">USER MANUAL · math-tong</div>
+          <h2 class="manual-title">3D 마블 룰렛 사용 및 QR 참여 매뉴얼</h2>
+          <p class="manual-lead">단독 추첨 진행부터 스마트폰 QR 동시 접속, 구글 시트 명단 연동까지 한눈에 확인하세요.</p>
         </div>
-        <button class="pill-btn" id="manual-top-close-btn" style="padding:6px 12px;">닫기</button>
+        <button class="manual-top-close" id="manual-top-close-btn">닫기</button>
       </div>
 
       <div class="manual-section">
-        <h3>1. 빠른 시작 (PC 단독 추첨)</h3>
+        <h3 class="manual-h2">1. 기본 추첨 진행 방법 (PC 단독 사용)</h3>
         <ul>
-          <li>화면 하단 중앙의 <strong>[레이스 시작 (START)]</strong> 버튼만 누르면 즉시 3D 동물들이 출발합니다.</li>
-          <li>명단 편집, 3D 코스(4종), 추첨 방식(골인 순위 / 바운스 점수), 당첨 순위 변경은 상단 <strong>[명단·코스 설정]</strong>에서 열 수 있습니다.</li>
+          <li>게임을 열면 출발선에 대기 중인 3D 동물들이 보입니다. 바로 시작하려면 하단 중앙의 <strong>[레이스 시작 (START)]</strong> 버튼을 누르세요.</li>
+          <li>명단 편집, 구글 시트/파일 불러오기, 코스 4종 선택, 추첨 방식(골인 순위 또는 바운스 점수) 변경은 상단의 <strong>[명단·코스 설정]</strong> 버튼을 눌러 열 수 있습니다.</li>
         </ul>
       </div>
 
       <div class="manual-section">
-        <h3>2. QR 실시간 참여 매뉴얼 (시작: 진행자 PC에서 클릭)</h3>
+        <h3 class="manual-h2">2. QR 실시간 동시 참여 안내 (경기 시작: 진행자 클릭)</h3>
+        <p class="manual-body" style="margin:0 0 8px;">
+          스마트폰으로 접속한 참여자들은 닉네임과 동물을 고른 뒤 대기하며, <strong>진행자(PC 화면)가 시작 버튼을 눌러야</strong> 모든 참여자가 동시에 출발합니다.
+        </p>
         <div class="manual-grid">
           <div class="manual-role-box">
-            <h4>[진행자 · PC 화면] 순서</h4>
+            <h3>진행자 (PC · 대형 화면) 순서</h3>
             <ol>
-              <li><strong>[QR 참여방]</strong>을 눌러 화면에 QR 코드를 띄웁니다.</li>
-              <li>QR 참여자만 추첨하려면 <strong>[기존 목록 비우고 QR만 받기]</strong>를 클릭합니다.</li>
-              <li>참여자들이 입장해 출발선에 동물이 생성되는 것을 확인합니다.</li>
-              <li>입장이 끝나면 <strong>진행자가 [지금 레이스 시작] 버튼</strong>을 눌러 출발시킵니다.</li>
+              <li>상단 또는 하단의 <strong>[QR 참여방]</strong> 버튼을 눌러 QR 코드를 띄웁니다.</li>
+              <li>QR 접속자만 추첨하려면 <strong>[기존 목록 비우고 QR만 받기]</strong>를 클릭합니다.</li>
+              <li>출발선에 참여자 동물이 추가되는 것을 확인합니다.</li>
+              <li>모두 모이면 <strong>[입장 완료! 지금 레이스 시작]</strong>을 클릭합니다.</li>
             </ol>
           </div>
           <div class="manual-role-box">
-            <h4>[참여자 · 스마트폰] 순서</h4>
+            <h3>참여자 (스마트폰 QR) 순서</h3>
             <ol>
-              <li>스마트폰 카메라로 화면의 <strong>QR 코드를 스캔</strong>해 접속합니다.</li>
-              <li><strong>닉네임 입력</strong> + 원하는 <strong>동물 캐릭터 선택</strong> 후 <strong>[레이스 입장하기]</strong>를 누릅니다.</li>
-              <li>진행자(PC)가 시작 버튼을 누를 때까지 잠시 대기합니다.</li>
-              <li>경기 중 스마트폰의 <strong>럭키박스 / 대시 / 점프 / 응원</strong> 버튼으로 내 캐릭터를 조종·지원합니다.</li>
+              <li>스마트폰 기본 카메라로 화면의 <strong>QR 코드를 스캔</strong>해 접속합니다.</li>
+              <li><strong>닉네임 입력</strong> 후 원하는 <strong>동물 캐릭터</strong>를 골라 입장합니다.</li>
+              <li>진행자가 시작할 때까지 대기 화면에서 잠시 기다립니다.</li>
+              <li>레이스가 시작되면 아래 4가지 실시간 버튼을 눌러 캐릭터를 지원합니다.</li>
             </ol>
           </div>
         </div>
-        <div class="manual-role-box" style="margin-top:10px;">
-          <h4>QR 접속자가 동시에 누를 수 있는 4가지 실시간 액션</h4>
+      </div>
+
+      <details class="manual-acc">
+        <summary>QR 접속자용 4가지 실시간 액션 상세 안내 (럭키박스 · 부스트 · 점프 · 응원)</summary>
+        <div class="manual-acc-body">
           <ul>
-            <li><strong>랜덤 럭키박스</strong> (대기시간 3.5초): 대박 터보(+40P) / 슈퍼 점프(+30P) / 팡팡 바운스(+25P) / 럭키(+50P) 중 1개 즉시 발동</li>
-            <li><strong>대시 부스트</strong> (대기시간 3.0초): 내 3D 동물 전방 급가속 + <strong>+15P</strong></li>
-            <li><strong>슈퍼 점프</strong> (대기시간 2.5초): 장애물을 뛰어넘는 점프 + <strong>+20P</strong></li>
-            <li><strong>실시간 응원</strong> (대기시간 없음 · 연타 가능): 캐릭터 이름표 위 응원 표시 + 회당 <strong>+5P</strong></li>
+            <li><strong>랜덤 럭키박스</strong> (대기시간 3.5초): 대박 터보(+40P) / 슈퍼 점프(+30P) / 팡팡 바운스(+25P) / 럭키 보너스(+50P) 중 1개 무작위 발동</li>
+            <li><strong>대시 부스트</strong> (대기시간 3.0초): 내 3D 동물 전방 속도를 즉시 가속하고 <strong>+15P</strong> 적립</li>
+            <li><strong>슈퍼 점프</strong> (대기시간 2.5초): 장애물을 뛰어넘는 큰 점프와 함께 <strong>+20P</strong> 적립</li>
+            <li><strong>실시간 응원</strong> (대기시간 없음 · 연타 가능): 캐릭터 이름표 위에 응원 문구가 표시되며 회당 <strong>+5P</strong> 적립</li>
           </ul>
         </div>
-      </div>
+      </details>
 
-      <div class="manual-section">
-        <h3>3. 추첨 방식 및 명단 서식 안내</h3>
-        <ul>
-          <li><strong>골인 순위 추첨</strong>: 약 30초 코스를 달려 결승선에 목표 순위(기본 1등)로 통과한 동물이 당첨됩니다.</li>
-          <li><strong>바운스 점수 추첨</strong>: 핀·범퍼·풍차 충돌(+10~25P), 점프(+30P), 부스트(+20P) 및 스마트폰 액션 점수를 합산해 최고 점수 동물이 당첨됩니다.</li>
-          <li><strong>명단 서식 문법</strong>: <code>짱구*2, 철수*1, 유리*3</code> 처럼 쉼표(<code>,</code>)나 줄바꿈으로 구분하고 <code>*숫자</code>로 가중치(출전 수)를 지정합니다.</li>
-        </ul>
-      </div>
+      <details class="manual-acc">
+        <summary>구글 시트(Google Sheets) 및 엑셀/CSV 명단 불러오기 안내</summary>
+        <div class="manual-acc-body">
+          <ul>
+            <li><strong>구글 시트 연동</strong>: 구글 시트 우측 상단 <strong>[공유]</strong>에서 <strong>'링크가 있는 모든 사용자(뷰어)'</strong>로 설정한 뒤, URL을 복사해 <strong>[명단·코스 설정]</strong>의 구글 시트 입력칸에 붙여넣고 <strong>[시트 불러오기]</strong>를 누릅니다.</li>
+            <li><strong>파일 업로드</strong>: <code>.csv</code>, <code>.txt</code>, <code>.json</code> 파일을 설정 창 점선 영역으로 드래그 앤 드롭하거나 <strong>[파일 불러오기]</strong>로 불러올 수 있습니다.</li>
+            <li><strong>직접 입력 문법</strong>: <code>홍길동*2, 김철수*1</code> 처럼 쉼표(<code>,</code>)나 줄바꿈으로 구분하며 <code>*숫자</code>는 가중치(출전 수)입니다.</li>
+          </ul>
+        </div>
+      </details>
 
-      <div class="btn-row">
-        <a href="./manual.html" target="_blank" rel="noopener noreferrer" class="mini-btn" style="text-decoration:none; color:var(--accent); border-color:rgba(0,240,255,0.4); padding:10px;">스크린샷 포함 전체 매뉴얼 페이지 열기 (manual.html)</a>
-        <button class="btn-primary" id="manual-close-btn" style="flex:1; grid-column:auto; padding:10px;">확인하고 게임하기</button>
+      <details class="manual-acc">
+        <summary>추첨 방식 (골인 순위 vs 바운스 점수) 및 당첨 순위 규칙</summary>
+        <div class="manual-acc-body">
+          <ul>
+            <li><strong>골인 순위 추첨</strong>: 약 30초 동안 580유닛 코스를 달려 결승선에 목표 순위(1등, 꼴찌, 지정, 무작위)로 통과한 동물이 당첨됩니다.</li>
+            <li><strong>바운스 점수 추첨</strong>: 핀(+10P), 범퍼·풍차(+25P), 부스트(+20P), 점프대(+30P), 골인 보너스, 스마트폰 액션 점수를 합산해 최고 점수를 겨룹니다.</li>
+          </ul>
+        </div>
+      </details>
+
+      <div class="btn-row" style="margin-top:14px; gap:10px;">
+        <a href="./manual.html" target="_blank" rel="noopener noreferrer" class="manual-light-btn-link">스크린샷 포함 전체 매뉴얼 보기 (새 창)</a>
+        <button class="manual-light-btn-primary" id="manual-close-btn">확인하고 게임하기</button>
       </div>
     </div>
   </div>
@@ -3137,6 +3356,41 @@
       localStorage.setItem('marble_roulette_3d_participants', participantsInput.value);
       spawnMarbles(false);
       showToast('샘플 참여자가 입력되었습니다.');
+    });
+
+    async function importFromGoogleSheetUrl(rawUrl) {
+      const urlText = (rawUrl || '').trim();
+      const match = urlText.match(/\/spreadsheets\/d\/([a-zA-Z0-9-_]+)/);
+      if (!match) {
+        showToast('올바른 구글 시트 공유 링크를 입력해주세요.');
+        return;
+      }
+      const sheetId = match[1];
+      const gidMatch = urlText.match(/[?#&]gid=([0-9]+)/);
+      const gid = gidMatch ? gidMatch[1] : '0';
+      const csvUrl = `https://docs.google.com/spreadsheets/d/${sheetId}/export?format=csv&gid=${gid}`;
+      try {
+        showToast('구글 시트 데이터를 불러오는 중...');
+        const res = await fetch(csvUrl);
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const csvText = await res.text();
+        const formatted = parseImportedFileContent('google-sheet.csv', csvText);
+        if (!formatted) {
+          showToast('시트에서 참여자 명단을 찾지 못했습니다.');
+          return;
+        }
+        participantsInput.value = formatted;
+        localStorage.setItem('marble_roulette_3d_participants', formatted);
+        spawnMarbles(false);
+        setStartButtonsDisabled(false);
+        showToast('구글 시트 명단을 성공적으로 불러왔습니다.');
+      } catch (_) {
+        showToast('구글 시트 불러오기 실패: 시트 공유를 [링크가 있는 모든 사용자(뷰어)]로 설정해주세요.');
+      }
+    }
+
+    document.getElementById('import-gsheet-btn').addEventListener('click', () => {
+      importFromGoogleSheetUrl(document.getElementById('gsheet-url-input').value);
     });
 
     document.getElementById('start-btn').addEventListener('click', startRace);
