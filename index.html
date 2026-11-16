@@ -1012,10 +1012,13 @@
 
     .mc-cheer-btn {
       background: rgba(255, 255, 255, 0.08);
-      border: 1px solid rgba(255, 255, 255, 0.18);
+      border: 1px solid rgba(255, 255, 255, 0.22);
       border-radius: 12px;
-      padding: 10px 4px;
-      font-size: 1.35rem;
+      padding: 11px 4px;
+      font-size: 0.9rem;
+      font-weight: 800;
+      color: #ffffff;
+      font-family: inherit;
       cursor: pointer;
     }
 
@@ -1050,11 +1053,11 @@
     </div>
 
     <div class="top-controls">
-      <button class="pill-btn" id="open-manual-btn" style="background: rgba(255, 209, 102, 0.18); border-color: rgba(255, 209, 102, 0.55); color: var(--accent-3);">📖 사용 매뉴얼</button>
-      <button class="pill-btn active" id="qr-lobby-btn">📱 QR 참여방 (0명)</button>
-      <button class="pill-btn" id="toggle-settings-btn">⚙️ 명단·코스 설정</button>
-      <button class="pill-btn active" id="cam-mode-btn">🎥 시점: 자동 추적</button>
-      <button class="pill-btn active" id="sound-toggle-btn">🔊 사운드 ON</button>
+      <button class="pill-btn" id="open-manual-btn" style="background: rgba(255, 209, 102, 0.18); border-color: rgba(255, 209, 102, 0.55); color: var(--accent-3);">사용 매뉴얼</button>
+      <button class="pill-btn active" id="qr-lobby-btn">QR 참여방 (0명)</button>
+      <button class="pill-btn" id="toggle-settings-btn">명단·코스 설정</button>
+      <button class="pill-btn active" id="cam-mode-btn">시점: 자동 추적</button>
+      <button class="pill-btn active" id="sound-toggle-btn">사운드 켜짐</button>
     </div>
   </header>
 
@@ -1072,51 +1075,51 @@
 
     <div class="import-box" id="import-dropzone">
       <div class="section-label" style="margin-bottom: 2px;">
-        <span>📂 참여자 서식 불러오기 / 내보내기</span>
+        <span>참여자 서식 불러오기 / 내보내기</span>
       </div>
       <div class="hint-text" style="margin-top: 0;">
         <code>.txt</code>, <code>.csv</code>, <code>.json</code> 파일을 선택하거나 여기로 드래그하세요.
       </div>
       <div class="btn-row">
-        <button class="mini-btn" id="import-file-btn">📁 파일 불러오기</button>
-        <button class="mini-btn" id="export-txt-btn">💾 서식 저장(.txt)</button>
+        <button class="mini-btn" id="import-file-btn">파일 불러오기</button>
+        <button class="mini-btn" id="export-txt-btn">서식 저장(.txt)</button>
       </div>
       <div class="btn-row">
-        <button class="mini-btn" id="template-csv-btn">📄 CSV 양식 받기</button>
-        <button class="mini-btn" id="sample-preset-btn">✨ 샘플 채우기</button>
+        <button class="mini-btn" id="template-csv-btn">CSV 양식 받기</button>
+        <button class="mini-btn" id="sample-preset-btn">샘플 채우기</button>
       </div>
       <input type="file" id="file-input" accept=".txt,.csv,.json,.tsv" hidden />
     </div>
 
     <div>
       <div class="section-label">
-        <span>🗺️ 3D 메가 코스 선택 (4종)</span>
+        <span>3D 메가 코스 선택 (4종)</span>
       </div>
       <select id="map-select">
-        <option value="rainbow_obby">🌈 레인보우 메가 오비 (Rainbow Mega Obby)</option>
-        <option value="windmill">🌪️ 자이언트 풍차 캐니언 (Giant Windmill)</option>
-        <option value="chaos">⚡ 터보 하이퍼 범퍼 (Turbo Hyper Bumper)</option>
-        <option value="megadrop">🏔️ 메가 드롭 3단 폭포 (3-Tier Waterfall)</option>
+        <option value="rainbow_obby">레인보우 메가 오비 (Rainbow Mega Obby)</option>
+        <option value="windmill">자이언트 풍차 캐니언 (Giant Windmill)</option>
+        <option value="chaos">터보 하이퍼 범퍼 (Turbo Hyper Bumper)</option>
+        <option value="megadrop">메가 드롭 3단 폭포 (3-Tier Waterfall)</option>
       </select>
     </div>
 
     <div>
       <div class="section-label">
-        <span>⚖️ 추첨 방식 (Win Mode)</span>
+        <span>추첨 방식 (Win Mode)</span>
         <span class="badge" id="win-mode-badge">골인 순위</span>
       </div>
       <div class="winner-group">
-        <button class="seg-btn active" data-win-mode="finish">🏁 골인 순위</button>
-        <button class="seg-btn" data-win-mode="score">⚡ 바운스 점수</button>
+        <button class="seg-btn active" data-win-mode="finish">골인 순위</button>
+        <button class="seg-btn" data-win-mode="score">바운스 점수</button>
       </div>
       <div class="hint-text">
-        점수 모드: 핀·범퍼 충돌(+10~25P), 점프(+30P), 부스트(+20P) + 골인 보너스 합산!
+        점수 모드: 핀·범퍼 충돌(+10~25P), 점프(+30P), 부스트(+20P) + 골인 보너스 합산
       </div>
     </div>
 
     <div>
       <div class="section-label">
-        <span>🏆 당첨 순위 (The Winner Is)</span>
+        <span>당첨 순위 (The Winner Is)</span>
         <span class="badge" id="target-rank-badge">1등</span>
       </div>
       <div class="winner-group">
@@ -1131,13 +1134,13 @@
     </div>
 
     <div class="btn-row">
-      <button class="mini-btn active" id="labels-toggle-btn">🏷️ 이름표 표시 ON/OFF</button>
+      <button class="mini-btn active" id="labels-toggle-btn">이름표 표시 켜짐/꺼짐</button>
     </div>
 
     <div class="action-grid">
-      <button class="btn-secondary" id="shuffle-btn">🔀 섞기 (Shuffle)</button>
-      <button class="btn-secondary" id="reset-btn">🔄 초기화 (Reset)</button>
-      <button class="btn-primary" id="start-btn">🚀 출발! (START)</button>
+      <button class="btn-secondary" id="shuffle-btn">순서 섞기 (Shuffle)</button>
+      <button class="btn-secondary" id="reset-btn">초기화 (Reset)</button>
+      <button class="btn-primary" id="start-btn">레이스 출발 (START)</button>
     </div>
 
     <div class="hint-text" style="border-top: 1px solid rgba(255,255,255,0.08); padding-top: 8px; margin-top: 2px; font-size: 0.72rem; line-height: 1.5;">
@@ -1148,7 +1151,7 @@
 
   <aside class="leaderboard-panel">
     <div class="section-label" style="margin-bottom: 2px;">
-      <span>📊 실시간 순위</span>
+      <span>실시간 순위</span>
       <span class="badge" id="race-progress-badge">대기 중</span>
     </div>
     <div class="progress-bar-wrap">
@@ -1158,18 +1161,18 @@
   </aside>
 
   <div class="bottom-hud">
-    <button class="quick-start-btn" id="quick-start-btn">🚀 바로 레이스 시작!</button>
-    <button class="arcade-btn" id="quick-shuffle-btn">🔀 섞기</button>
-    <button class="arcade-btn" id="quick-qr-btn">📱 QR 참여</button>
-    <button class="arcade-btn" id="quick-manual-btn" style="border-color: rgba(255, 209, 102, 0.55); color: var(--accent-3);">📖 매뉴얼</button>
-    <button class="arcade-btn" id="fast-forward-btn">⏩ 2x 배속</button>
+    <button class="quick-start-btn" id="quick-start-btn">레이스 시작 (START)</button>
+    <button class="arcade-btn" id="quick-shuffle-btn">순서 섞기</button>
+    <button class="arcade-btn" id="quick-qr-btn">QR 참여</button>
+    <button class="arcade-btn" id="quick-manual-btn" style="border-color: rgba(255, 209, 102, 0.55); color: var(--accent-3);">사용 매뉴얼</button>
+    <button class="arcade-btn" id="fast-forward-btn">2배속</button>
     <span class="speed-indicator">속도: <strong id="speed-val">1.0x</strong></span>
-    <span class="speed-indicator">⏱️ <strong id="race-timer">0.0s</strong></span>
+    <span class="speed-indicator">경과: <strong id="race-timer">0.0s</strong></span>
   </div>
 
   <div class="modal-backdrop" id="winner-modal">
     <div class="winner-card">
-      <div class="winner-crown">👑</div>
+      <div class="winner-subtitle" style="color:var(--accent-3); margin-bottom:2px;">WINNER ANNOUNCEMENT</div>
       <div class="winner-subtitle" id="winner-rank-subtitle">1ST PLACE WINNER</div>
       <div class="winner-animal-avatar" id="winner-animal-avatar"></div>
       <div class="winner-name" id="winner-name-display">-</div>
@@ -1187,11 +1190,11 @@
   <!-- Host QR Lobby Modal -->
   <div class="modal-backdrop" id="qr-modal">
     <div class="qr-card">
-      <div class="winner-subtitle" style="margin-bottom: 6px;">📱 QR 실시간 멀티 참여방</div>
+      <div class="winner-subtitle" style="margin-bottom: 6px;">QR 실시간 멀티 참여방</div>
       <div class="qr-code-pill">ROOM <span id="qr-room-code">----</span></div>
       <div class="qr-role-banner">
-        <strong>👑 시작은 누가 하나요?</strong><br />
-        참여자들이 스마트폰으로 QR을 스캔해 닉네임과 동물을 골라 입장한 뒤, <strong>진행자(이 PC 화면)</strong>가 아래의 <strong>[🚀 지금 레이스 시작]</strong> 버튼을 누르면 경기가 시작됩니다!
+        <strong>[진행자 안내] 시작은 누가 하나요?</strong><br />
+        참여자들이 스마트폰으로 QR을 스캔해 닉네임과 동물을 골라 입장한 뒤, <strong>진행자(이 PC 화면)</strong>가 아래의 <strong>[지금 레이스 시작]</strong> 버튼을 누르면 경기가 시작됩니다.
       </div>
       <div class="qr-img-wrap">
         <img id="qr-code-img" alt="QR Code" src="" />
@@ -1200,13 +1203,13 @@
       <div class="qr-joined-chips" id="qr-joined-list">
         <span class="hint-text">아직 QR로 입장한 참여자가 없습니다.</span>
       </div>
-      <button class="qr-start-btn" id="qr-start-race-btn">🚀 입장 완료! 지금 레이스 시작 (진행자 시작)</button>
+      <button class="qr-start-btn" id="qr-start-race-btn">입장 완료! 지금 레이스 시작 (진행자 시작)</button>
       <div class="btn-row" style="margin-bottom: 8px;">
-        <button class="mini-btn" id="qr-copy-link-btn">🔗 참여 링크 복사</button>
-        <button class="mini-btn" id="qr-clear-list-btn">🧹 기존 목록 비우고 QR만 받기</button>
+        <button class="mini-btn" id="qr-copy-link-btn">참여 링크 복사</button>
+        <button class="mini-btn" id="qr-clear-list-btn">기존 목록 비우고 QR만 받기</button>
       </div>
       <div class="btn-row">
-        <button class="mini-btn" id="qr-open-manual-btn" style="color: var(--accent-3);">📖 QR 참여 매뉴얼 보기</button>
+        <button class="mini-btn" id="qr-open-manual-btn" style="color: var(--accent-3);">QR 참여 매뉴얼 보기</button>
         <button class="btn-secondary" id="qr-close-btn" style="flex: 1;">닫기</button>
       </div>
     </div>
@@ -1218,63 +1221,63 @@
       <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
         <div>
           <div class="winner-subtitle">USER MANUAL · math-tong</div>
-          <h2 style="margin:2px 0 0; font-size:1.3rem; font-weight:900; color:#fff;">🐾 3D 마블 룰렛 사용 & QR 참여 매뉴얼</h2>
+          <h2 style="margin:2px 0 0; font-size:1.25rem; font-weight:900; color:#fff;">3D 마블 룰렛 사용 & QR 참여 매뉴얼</h2>
         </div>
-        <button class="pill-btn" id="manual-top-close-btn" style="padding:6px 12px;">✕ 닫기</button>
+        <button class="pill-btn" id="manual-top-close-btn" style="padding:6px 12px;">닫기</button>
       </div>
 
       <div class="manual-section">
-        <h3>⚡ 1. 빠른 시작 (PC 혼자 · 일반 추첨)</h3>
+        <h3>1. 빠른 시작 (PC 단독 추첨)</h3>
         <ul>
-          <li>화면 하단 중앙의 <strong>[🚀 바로 레이스 시작!]</strong> 버튼만 누르면 즉시 3D 동물들이 출발합니다.</li>
-          <li>명단 편집, 3D 코스(4종), 추첨 방식(골인 순위 / 바운스 점수), 당첨 순위 변경은 상단 <strong>[⚙️ 명단·코스 설정]</strong>에서 열 수 있습니다.</li>
+          <li>화면 하단 중앙의 <strong>[레이스 시작 (START)]</strong> 버튼만 누르면 즉시 3D 동물들이 출발합니다.</li>
+          <li>명단 편집, 3D 코스(4종), 추첨 방식(골인 순위 / 바운스 점수), 당첨 순위 변경은 상단 <strong>[명단·코스 설정]</strong>에서 열 수 있습니다.</li>
         </ul>
       </div>
 
       <div class="manual-section">
-        <h3>📱 2. QR 실시간 참여 매뉴얼 (Q. 시작은 누가 하나요? → 진행자!)</h3>
+        <h3>2. QR 실시간 참여 매뉴얼 (시작: 진행자 PC에서 클릭)</h3>
         <div class="manual-grid">
           <div class="manual-role-box">
-            <h4>👑 진행자 (PC · 대형화면) 매뉴얼</h4>
+            <h4>[진행자 · PC 화면] 순서</h4>
             <ol>
-              <li>상단 또는 하단의 <strong>[📱 QR 참여방]</strong>을 눌러 화면에 QR 코드를 띄웁니다.</li>
-              <li>QR 참여자만 추첨하려면 <strong>[🧹 기존 목록 비우고 QR만 받기]</strong>를 클릭합니다.</li>
+              <li><strong>[QR 참여방]</strong>을 눌러 화면에 QR 코드를 띄웁니다.</li>
+              <li>QR 참여자만 추첨하려면 <strong>[기존 목록 비우고 QR만 받기]</strong>를 클릭합니다.</li>
               <li>참여자들이 입장해 출발선에 동물이 생성되는 것을 확인합니다.</li>
-              <li>입장이 끝나면 <strong>진행자가 [🚀 지금 레이스 시작] 버튼</strong>을 눌러 경기를 출발시킵니다!</li>
+              <li>입장이 끝나면 <strong>진행자가 [지금 레이스 시작] 버튼</strong>을 눌러 출발시킵니다.</li>
             </ol>
           </div>
           <div class="manual-role-box">
-            <h4>🙋 참여자 (스마트폰 QR) 매뉴얼</h4>
+            <h4>[참여자 · 스마트폰] 순서</h4>
             <ol>
-              <li>스마트폰 기본 카메라로 화면의 <strong>QR 코드를 스캔</strong>해 접속합니다.</li>
-              <li><strong>닉네임 입력</strong> + 원하는 <strong>동물 캐릭터 선택</strong> 후 <strong>[🎮 레이스 입장하기!]</strong>를 누릅니다.</li>
+              <li>스마트폰 카메라로 화면의 <strong>QR 코드를 스캔</strong>해 접속합니다.</li>
+              <li><strong>닉네임 입력</strong> + 원하는 <strong>동물 캐릭터 선택</strong> 후 <strong>[레이스 입장하기]</strong>를 누릅니다.</li>
               <li>진행자(PC)가 시작 버튼을 누를 때까지 잠시 대기합니다.</li>
-              <li>레이스 시작 후 스마트폰의 <strong>랜덤 럭키박스 / 대시 / 점프 / 응원</strong> 버튼으로 직접 캐릭터를 조종·지원하세요!</li>
+              <li>경기 중 스마트폰의 <strong>럭키박스 / 대시 / 점프 / 응원</strong> 버튼으로 내 캐릭터를 조종·지원합니다.</li>
             </ol>
           </div>
         </div>
         <div class="manual-role-box" style="margin-top:10px;">
-          <h4>⚡ QR 접속자가 동시에 누를 수 있는 4가지 실시간 액션</h4>
+          <h4>QR 접속자가 동시에 누를 수 있는 4가지 실시간 액션</h4>
           <ul>
-            <li><strong>🎲 랜덤 럭키박스 뽑기!</strong> (쿨타임 3.5초): 대박 터보(+40P) / 슈퍼 점프(+30P) / 팡팡 바운스(+25P) / 럭키(+50P) 중 1개 즉시 발동</li>
-            <li><strong>⚡ 대시 부스트!</strong> (쿨타임 3.0초): 내 3D 동물 전방 급가속 + <strong>+15P</strong></li>
-            <li><strong>🦘 슈퍼 점프!</strong> (쿨타임 2.5초): 장애물 뛰어넘는 점프 + <strong>+20P</strong></li>
-            <li><strong>📣 실시간 응원 (🔥 💖 ⚡ 👑)</strong> (무제한 연타): 캐릭터 이름표 응원 팝업 + 회당 <strong>+5P</strong></li>
+            <li><strong>랜덤 럭키박스</strong> (대기시간 3.5초): 대박 터보(+40P) / 슈퍼 점프(+30P) / 팡팡 바운스(+25P) / 럭키(+50P) 중 1개 즉시 발동</li>
+            <li><strong>대시 부스트</strong> (대기시간 3.0초): 내 3D 동물 전방 급가속 + <strong>+15P</strong></li>
+            <li><strong>슈퍼 점프</strong> (대기시간 2.5초): 장애물을 뛰어넘는 점프 + <strong>+20P</strong></li>
+            <li><strong>실시간 응원</strong> (대기시간 없음 · 연타 가능): 캐릭터 이름표 위 응원 표시 + 회당 <strong>+5P</strong></li>
           </ul>
         </div>
       </div>
 
       <div class="manual-section">
-        <h3>🏆 3. 추첨 방식 & 명단 서식 규칙</h3>
+        <h3>3. 추첨 방식 및 명단 서식 안내</h3>
         <ul>
-          <li><strong>🏁 골인 순위 추첨</strong>: 약 30초 코스를 달려 결승선에 목표 순위(기본 1등)로 통과한 동물이 당첨됩니다.</li>
-          <li><strong>⚡ 바운스 점수 추첨</strong>: 핀·범퍼·풍차 충돌(+10~25P), 점프(+30P), 부스트(+20P) 및 스마트폰 스킬 점수를 합산해 최고 점수 동물이 당첨됩니다.</li>
-          <li><strong>📄 서식 입력법</strong>: <code>짱구*2, 철수*1, 유리*3</code> 처럼 쉼표(<code>,</code>)나 줄바꿈으로 구분하고 <code>*숫자</code>로 가중치(출전 마리 수)를 지정합니다.</li>
+          <li><strong>골인 순위 추첨</strong>: 약 30초 코스를 달려 결승선에 목표 순위(기본 1등)로 통과한 동물이 당첨됩니다.</li>
+          <li><strong>바운스 점수 추첨</strong>: 핀·범퍼·풍차 충돌(+10~25P), 점프(+30P), 부스트(+20P) 및 스마트폰 액션 점수를 합산해 최고 점수 동물이 당첨됩니다.</li>
+          <li><strong>명단 서식 문법</strong>: <code>짱구*2, 철수*1, 유리*3</code> 처럼 쉼표(<code>,</code>)나 줄바꿈으로 구분하고 <code>*숫자</code>로 가중치(출전 수)를 지정합니다.</li>
         </ul>
       </div>
 
       <div class="btn-row">
-        <a href="./manual.html" target="_blank" rel="noopener noreferrer" class="mini-btn" style="text-decoration:none; color:var(--accent); border-color:rgba(0,240,255,0.4); padding:10px;">📄 전체·인쇄용 매뉴얼 페이지 열기 (manual.html)</a>
+        <a href="./manual.html" target="_blank" rel="noopener noreferrer" class="mini-btn" style="text-decoration:none; color:var(--accent); border-color:rgba(0,240,255,0.4); padding:10px;">스크린샷 포함 전체 매뉴얼 페이지 열기 (manual.html)</a>
         <button class="btn-primary" id="manual-close-btn" style="flex:1; grid-column:auto; padding:10px;">확인하고 게임하기</button>
       </div>
     </div>
@@ -1284,15 +1287,15 @@
   <div id="mobile-controller-overlay">
     <div class="mc-card">
       <div style="display:flex; justify-content:space-between; align-items:center;">
-        <span style="font-weight:900; color:var(--accent); font-size:0.95rem;">🐾 3D 마블 룰렛 컨트롤러</span>
+        <span style="font-weight:900; color:var(--accent); font-size:0.95rem;">3D 마블 룰렛 모바일 컨트롤러</span>
         <span class="badge" id="mc-room-badge">ROOM ----</span>
       </div>
 
       <div id="mc-join-view" style="display:flex; flex-direction:column; gap:12px;">
-        <div class="hint-text" style="margin:0;">닉네임과 3D 동물 캐릭터를 선택해 레이스에 입장하세요! (경기는 진행자가 시작합니다)</div>
+        <div class="hint-text" style="margin:0;">닉네임과 3D 동물 캐릭터를 선택해 레이스에 입장하세요. (경기 시작은 진행자가 합니다)</div>
         <input type="text" id="mc-name-input" class="mc-input" maxlength="16" placeholder="닉네임을 입력하세요 (예: 홍길동)" />
         <div class="mc-animal-grid" id="mc-animal-grid"></div>
-        <button class="btn-primary" id="mc-join-btn">🎮 레이스 입장하기!</button>
+        <button class="btn-primary" id="mc-join-btn">레이스 입장하기</button>
       </div>
 
       <div id="mc-pad-view" style="display:none; flex-direction:column; gap:12px;">
@@ -1301,29 +1304,29 @@
             <div style="font-size:0.75rem; color:var(--muted);">참가 캐릭터</div>
             <div id="mc-player-label" style="font-size:1.15rem; font-weight:900; display:flex; align-items:center; gap:6px;">-</div>
           </div>
-          <span class="badge" id="mc-status-badge" style="text-align:right;">⏳ 진행자 시작 대기 중</span>
+          <span class="badge" id="mc-status-badge" style="text-align:right;">진행자 시작 대기 중</span>
         </div>
 
         <button class="mc-skill-btn" id="mc-btn-random" style="background:linear-gradient(135deg,#ff2e93,#ff8a00);">
-          <span>🎲 랜덤 럭키박스 뽑기!</span>
+          <span>랜덤 럭키박스 뽑기</span>
           <span class="mc-cd" style="font-size:0.82rem;">READY</span>
         </button>
         <button class="mc-skill-btn" id="mc-btn-boost" style="background:linear-gradient(135deg,#00c6ff,#0072ff);">
-          <span>⚡ 대시 부스트! (+15P)</span>
+          <span>대시 부스트 (+15P)</span>
           <span class="mc-cd" style="font-size:0.82rem;">READY</span>
         </button>
         <button class="mc-skill-btn" id="mc-btn-jump" style="background:linear-gradient(135deg,#11998e,#38ef7d); color:#041614;">
-          <span>🦘 슈퍼 점프! (+20P)</span>
+          <span>슈퍼 점프 (+20P)</span>
           <span class="mc-cd" style="font-size:0.82rem;">READY</span>
         </button>
 
         <div>
-          <div class="section-label" style="margin-bottom:6px;"><span>📣 실시간 응원 (+5P)</span></div>
+          <div class="section-label" style="margin-bottom:6px;"><span>실시간 응원 버튼 (+5P · 연타 가능)</span></div>
           <div class="mc-cheer-row">
-            <button class="mc-cheer-btn" data-cheer="🔥">🔥</button>
-            <button class="mc-cheer-btn" data-cheer="💖">💖</button>
-            <button class="mc-cheer-btn" data-cheer="⚡">⚡</button>
-            <button class="mc-cheer-btn" data-cheer="👑">👑</button>
+            <button class="mc-cheer-btn" data-cheer="화이팅">화이팅</button>
+            <button class="mc-cheer-btn" data-cheer="가즈아">가즈아</button>
+            <button class="mc-cheer-btn" data-cheer="역전">역전!</button>
+            <button class="mc-cheer-btn" data-cheer="1등">1등!</button>
           </div>
         </div>
         <div id="mc-action-feedback" class="hint-text" style="text-align:center; color:var(--accent-3); min-height:18px;"></div>
@@ -2699,11 +2702,11 @@
         const isTarget = rankNum === targetRank;
         const hex = `#${m.colorHex.toString(16).padStart(6, '0')}`;
         const rightText = winMode === 'score'
-          ? `${m.score}P${m.finished ? ' 🏁' : ''}`
-          : `${m.score}P ${m.finished ? '도착' : isTarget ? '🎯' : ''}`;
+          ? `${m.score}P${m.finished ? ' (도착)' : ''}`
+          : `${m.score}P ${m.finished ? '도착' : isTarget ? '[목표]' : ''}`;
         return `
           <div class="lb-item ${m.finished ? 'finished' : ''} ${isTarget ? 'target-winner' : ''}">
-            <span class="lb-rank">${m.finished && winMode === 'finish' ? `🏁${rankNum}` : rankNum}</span>
+            <span class="lb-rank">${rankNum}</span>
             <span class="lb-avatar" style="border-color:${hex}; box-shadow:0 0 8px ${hex}">${getAnimalSvg(m.animal, 20)}</span>
             <span class="lb-name">${escapeHtml(m.name)}</span>
             <span class="lb-status">${rightText}</span>
@@ -2765,8 +2768,8 @@
 
       document.getElementById('winner-rank-subtitle').textContent =
         winMode === 'score'
-          ? `⚡ 바운스 점수 ${targetRank}등 당첨자 (SCORE RANK #${targetRank})`
-          : `🏁 골인 순위 ${targetRank}등 당첨자 (FINISH RANK #${targetRank})`;
+          ? `바운스 점수 ${targetRank}등 당첨자 (SCORE RANK #${targetRank})`
+          : `골인 순위 ${targetRank}등 당첨자 (FINISH RANK #${targetRank})`;
       document.getElementById('winner-animal-avatar').innerHTML = getAnimalSvg(winnerMarble.animal, 84);
       document.getElementById('winner-name-display').textContent = winnerMarble.name;
       document.getElementById('winner-meta-display').textContent =
@@ -2775,13 +2778,13 @@
           : `결승선 ${targetRank}번째 통과 · 획득 점수 ${winnerMarble.score}P (바운스 ${winnerMarble.bounces}회)`;
 
       const topRows = byScore.slice(0, 5).map((m, idx) =>
-        `<div class="winner-rank-row"><span>${idx + 1}.</span>${getAnimalSvg(m.animal, 20)}<b>${escapeHtml(m.name)}</b><span>— ${m.score}P (바운스 ${m.bounces}회${m.finishRank ? ` · 🏁${m.finishRank}등` : ''})</span></div>`
+        `<div class="winner-rank-row"><span>${idx + 1}.</span>${getAnimalSvg(m.animal, 20)}<b>${escapeHtml(m.name)}</b><span>— ${m.score}P (바운스 ${m.bounces}회${m.finishRank ? ` · 결승 ${m.finishRank}등` : ''})</span></div>`
       ).join('');
       document.getElementById('winner-summary-box').innerHTML = `
         <div style="margin-bottom:6px; color:var(--accent-3); font-weight:700; display:flex; align-items:center; flex-wrap:wrap; gap:6px;">
-          <span>🏁 골인 1등:</span> ${getAnimalSvg(finishChamp.animal, 18)} <span>${escapeHtml(finishChamp.name)}</span>
+          <span>골인 1등:</span> ${getAnimalSvg(finishChamp.animal, 18)} <span>${escapeHtml(finishChamp.name)}</span>
           <span style="opacity:0.5;">|</span>
-          <span>⚡ 점수 1등:</span> ${getAnimalSvg(scoreChamp.animal, 18)} <span>${escapeHtml(scoreChamp.name)} (${scoreChamp.score}P)</span>
+          <span>점수 1등:</span> ${getAnimalSvg(scoreChamp.animal, 18)} <span>${escapeHtml(scoreChamp.name)} (${scoreChamp.score}P)</span>
         </div>
         <div style="color:var(--muted); font-size:0.75rem; margin-bottom:4px;">종합 점수 TOP 5</div>
         ${topRows}
@@ -3190,13 +3193,13 @@
     camBtn.addEventListener('click', () => {
       if (camMode === 'auto') {
         camMode = 'overview';
-        camBtn.textContent = '🎥 시점: 전체 뷰';
+        camBtn.textContent = '시점: 전체 뷰';
       } else if (camMode === 'overview') {
         camMode = 'free';
-        camBtn.textContent = '🎥 시점: 자유 시점';
+        camBtn.textContent = '시점: 자유 시점';
       } else {
         camMode = 'auto';
-        camBtn.textContent = '🎥 시점: 자동 추적';
+        camBtn.textContent = '시점: 자동 추적';
       }
     });
 
@@ -3208,7 +3211,7 @@
     document.getElementById('sound-toggle-btn').addEventListener('click', (e) => {
       sfx.enabled = !sfx.enabled;
       e.currentTarget.classList.toggle('active', sfx.enabled);
-      e.currentTarget.textContent = sfx.enabled ? '🔊 사운드 ON' : '🔇 사운드 OFF';
+      e.currentTarget.textContent = sfx.enabled ? '사운드 켜짐' : '사운드 꺼짐';
     });
 
     const ffBtn = document.getElementById('fast-forward-btn');
@@ -3271,13 +3274,13 @@
           client.on('connect', () => {
             client.subscribe(topic);
             if (statusEl) {
-              statusEl.textContent = '🟢 실시간 멀티 서버 연결됨 (QR 접속 가능)';
+              statusEl.textContent = '[연결됨] 실시간 멀티 서버 (QR 접속 가능)';
               statusEl.style.color = 'var(--success)';
             }
           });
           client.on('error', () => {
             if (statusEl) {
-              statusEl.textContent = '🟡 로컬 브로드캐스트 모드 (외부 MQTT 연결 대기)';
+              statusEl.textContent = '[대기중] 로컬 브로드캐스트 모드 (외부 MQTT 대기)';
               statusEl.style.color = 'var(--accent-3)';
             }
           });
@@ -3342,19 +3345,19 @@
       const channel = createRoomChannel(joinRoomCode, (msg) => {
         if (msg.type === 'race_state') {
           if (msg.state === 'running') {
-            statusBadge.textContent = '🏁 레이스 진행 중!';
+            statusBadge.textContent = '레이스 진행 중';
             statusBadge.style.background = 'rgba(46, 229, 157, 0.25)';
             statusBadge.style.color = '#2ee59d';
-            feedbackEl.textContent = '🔥 진행자가 경기를 시작했습니다! 지금 버튼을 연타하세요!';
+            feedbackEl.textContent = '진행자가 경기를 시작했습니다. 버튼을 눌러 응원하세요.';
           } else if (msg.state === 'finished') {
-            statusBadge.textContent = '🎉 레이스 종료!';
+            statusBadge.textContent = '레이스 종료';
             statusBadge.style.background = 'rgba(255, 209, 102, 0.25)';
             statusBadge.style.color = '#ffd166';
             if (msg.winner) {
-              feedbackEl.innerHTML = `👑 우승: ${getAnimalSvg(msg.animal || '🐶', 18)} <b>${escapeHtml(msg.winner)}</b>!`;
+              feedbackEl.innerHTML = `우승: ${getAnimalSvg(msg.animal || '🐶', 18)} <b>${escapeHtml(msg.winner)}</b>`;
             }
           } else {
-            statusBadge.textContent = '⏳ 진행자 시작 대기 중';
+            statusBadge.textContent = '진행자 시작 대기 중';
             statusBadge.style.background = '';
             statusBadge.style.color = '';
           }
@@ -3382,7 +3385,7 @@
         btn.addEventListener('click', () => {
           if (!myNick || btn.disabled) return;
           channel.send({ type: 'action', name: myNick, kind });
-          feedbackEl.textContent = `✨ "${label}" 발동 전송됨!`;
+          feedbackEl.textContent = `"${label}" 발동 전송됨 (+점수 반영)`;
           btn.disabled = true;
           let left = cooldownSec;
           cdSpan.textContent = `${left.toFixed(1)}s`;
@@ -3425,7 +3428,7 @@
 
       function renderQrJoinedList() {
         const btn = document.getElementById('qr-lobby-btn');
-        btn.textContent = `📱 QR 참여방 (${qrJoinedMap.size}명)`;
+        btn.textContent = `QR 참여방 (${qrJoinedMap.size}명)`;
         const listEl = document.getElementById('qr-joined-list');
         if (qrJoinedMap.size === 0) {
           listEl.innerHTML = '<span class="hint-text">아직 QR로 입장한 참여자가 없습니다.</span>';
@@ -3457,7 +3460,7 @@
           } else if (hostRoomChannel) {
             hostRoomChannel.send({ type: 'race_state', state: 'running', targetRank, winMode });
           }
-          showToast(`📱 ${animal} ${name}님이 QR로 입장했습니다!`);
+          showToast(`${name}님이 QR로 입장했습니다.`);
         } else if (msg.type === 'action' && msg.name) {
           const targets = marbles.filter(m => m.name === msg.name && !m.finished);
           if (targets.length === 0) return;
@@ -3469,42 +3472,42 @@
                 m.body.velocity.z += 12;
                 m.score += 40;
                 spawnParticles(m.mesh.position, 0x00f0ff, 14, 9, 0.6);
-                flashLabelBadge(m, '🌟 대박 터보! +40P');
+                flashLabelBadge(m, '대박 터보 +40P');
               } else if (roll === 1) {
                 m.body.velocity.y = 14;
                 m.body.velocity.z += 5;
                 m.score += 30;
                 sfx.playJumpPad();
                 spawnParticles(m.mesh.position, 0xffd166, 14, 9, 0.6);
-                flashLabelBadge(m, '🚀 슈퍼 점프! +30P');
+                flashLabelBadge(m, '슈퍼 점프 +30P');
               } else if (roll === 2) {
                 m.body.velocity.x += (Math.random() - 0.5) * 14;
                 m.body.velocity.y += 9;
                 m.score += 25;
                 sfx.playBumper();
                 spawnParticles(m.mesh.position, 0xff2e93, 14, 9, 0.6);
-                flashLabelBadge(m, '💥 팡팡 바운스! +25P');
+                flashLabelBadge(m, '팡팡 바운스 +25P');
               } else {
                 m.score += 50;
                 spawnParticles(m.mesh.position, 0x2ee59d, 16, 10, 0.7);
-                flashLabelBadge(m, '🍀 럭키 +50P!');
+                flashLabelBadge(m, '럭키 보너스 +50P');
               }
             } else if (msg.kind === 'boost') {
               m.body.velocity.z += 9;
               m.score += 15;
               sfx.playBoost();
               spawnParticles(m.mesh.position, 0x00f0ff, 10, 8, 0.5);
-              flashLabelBadge(m, '⚡ 부스트! +15P');
+              flashLabelBadge(m, '부스트 +15P');
             } else if (msg.kind === 'jump') {
               m.body.velocity.y = 13;
               m.body.velocity.z += 4;
               m.score += 20;
               sfx.playJumpPad();
               spawnParticles(m.mesh.position, 0x2ee59d, 10, 8, 0.5);
-              flashLabelBadge(m, '🦘 점프! +20P');
+              flashLabelBadge(m, '점프 +20P');
             } else if (msg.kind === 'cheer') {
               m.score += 5;
-              flashLabelBadge(m, `${msg.emoji || '🔥'} +5P`);
+              flashLabelBadge(m, `${msg.emoji || '응원'} +5P`);
             }
           });
           updateLeaderboard();
