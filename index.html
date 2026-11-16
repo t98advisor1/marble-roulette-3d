@@ -1161,6 +1161,7 @@
     <button class="quick-start-btn" id="quick-start-btn">🚀 바로 레이스 시작!</button>
     <button class="arcade-btn" id="quick-shuffle-btn">🔀 섞기</button>
     <button class="arcade-btn" id="quick-qr-btn">📱 QR 참여</button>
+    <button class="arcade-btn" id="quick-manual-btn" style="border-color: rgba(255, 209, 102, 0.55); color: var(--accent-3);">📖 매뉴얼</button>
     <button class="arcade-btn" id="fast-forward-btn">⏩ 2x 배속</button>
     <span class="speed-indicator">속도: <strong id="speed-val">1.0x</strong></span>
     <span class="speed-indicator">⏱️ <strong id="race-timer">0.0s</strong></span>
@@ -1251,6 +1252,15 @@
               <li>레이스 시작 후 스마트폰의 <strong>랜덤 럭키박스 / 대시 / 점프 / 응원</strong> 버튼으로 직접 캐릭터를 조종·지원하세요!</li>
             </ol>
           </div>
+        </div>
+        <div class="manual-role-box" style="margin-top:10px;">
+          <h4>⚡ QR 접속자가 동시에 누를 수 있는 4가지 실시간 액션</h4>
+          <ul>
+            <li><strong>🎲 랜덤 럭키박스 뽑기!</strong> (쿨타임 3.5초): 대박 터보(+40P) / 슈퍼 점프(+30P) / 팡팡 바운스(+25P) / 럭키(+50P) 중 1개 즉시 발동</li>
+            <li><strong>⚡ 대시 부스트!</strong> (쿨타임 3.0초): 내 3D 동물 전방 급가속 + <strong>+15P</strong></li>
+            <li><strong>🦘 슈퍼 점프!</strong> (쿨타임 2.5초): 장애물 뛰어넘는 점프 + <strong>+20P</strong></li>
+            <li><strong>📣 실시간 응원 (🔥 💖 ⚡ 👑)</strong> (무제한 연타): 캐릭터 이름표 응원 팝업 + 회당 <strong>+5P</strong></li>
+          </ul>
         </div>
       </div>
 
@@ -3154,6 +3164,9 @@
 
     const manualModal = document.getElementById('manual-modal');
     document.getElementById('open-manual-btn').addEventListener('click', () => {
+      manualModal.classList.add('open');
+    });
+    document.getElementById('quick-manual-btn').addEventListener('click', () => {
       manualModal.classList.add('open');
     });
     document.getElementById('manual-close-btn').addEventListener('click', () => {
