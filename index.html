@@ -140,30 +140,30 @@
       color: var(--accent);
     }
 
-    /* Left Settings Panel */
+    /* Right Collapsible Settings Drawer */
     .settings-panel {
       position: fixed;
       top: 76px;
-      left: 16px;
-      bottom: 16px;
+      right: 16px;
+      max-height: calc(100vh - 168px);
       width: 340px;
       max-width: calc(100vw - 32px);
-      z-index: 20;
+      z-index: 30;
       background: var(--panel);
       backdrop-filter: blur(18px);
       border: 1px solid var(--panel-border);
       border-radius: 18px;
-      padding: 16px;
+      padding: 14px 16px;
       display: flex;
       flex-direction: column;
-      gap: 12px;
+      gap: 10px;
       overflow-y: auto;
       box-shadow: 0 18px 45px rgba(0, 0, 0, 0.55);
       transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.25s ease;
     }
 
     .settings-panel.collapsed {
-      transform: translateX(-380px);
+      transform: translateX(380px);
       opacity: 0;
       pointer-events: none;
     }
@@ -174,6 +174,55 @@
     .settings-panel::-webkit-scrollbar-thumb {
       background: rgba(255, 255, 255, 0.14);
       border-radius: 999px;
+    }
+
+    details.settings-acc {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(130, 160, 255, 0.22);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    details.settings-acc summary {
+      list-style: none;
+      padding: 9px 12px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--text);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      background: rgba(255, 255, 255, 0.04);
+    }
+
+    details.settings-acc summary::-webkit-details-marker {
+      display: none;
+    }
+
+    details.settings-acc summary::after {
+      content: '펼치기 +';
+      font-size: 0.7rem;
+      font-weight: 800;
+      color: var(--accent);
+      background: rgba(0, 240, 255, 0.12);
+      padding: 2px 8px;
+      border-radius: 999px;
+    }
+
+    details.settings-acc[open] summary::after {
+      content: '접기 -';
+      color: var(--muted);
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .settings-acc-body {
+      padding: 10px 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
     }
 
     .section-label {
@@ -201,7 +250,7 @@
 
     textarea#participants-input {
       width: 100%;
-      min-height: 108px;
+      min-height: 74px;
       resize: vertical;
       background: rgba(6, 9, 20, 0.75);
       border: 1px solid rgba(130, 160, 255, 0.22);
@@ -383,23 +432,28 @@
       border-color: rgba(255, 255, 255, 0.3);
     }
 
-    /* Right Live Leaderboard */
+    /* Left Live Leaderboard */
     .leaderboard-panel {
       position: fixed;
       top: 76px;
-      right: 16px;
-      width: 255px;
-      max-height: calc(100vh - 150px);
+      left: 16px;
+      width: 248px;
+      max-height: calc(100vh - 170px);
       z-index: 20;
       background: var(--panel);
       backdrop-filter: blur(16px);
       border: 1px solid var(--panel-border);
       border-radius: 16px;
-      padding: 12px 14px;
+      padding: 11px 13px;
       display: flex;
       flex-direction: column;
       gap: 8px;
       box-shadow: 0 14px 36px rgba(0, 0, 0, 0.45);
+    }
+
+    .leaderboard-panel.minimized .leaderboard-list,
+    .leaderboard-panel.minimized .progress-bar-wrap {
+      display: none;
     }
 
     .progress-bar-wrap {
@@ -452,6 +506,13 @@
 
     .lb-item.finished {
       background: rgba(46, 229, 157, 0.1);
+    }
+
+    .lb-item.lb-item-flash {
+      background: linear-gradient(90deg, rgba(0, 240, 255, 0.28), rgba(255, 46, 147, 0.22));
+      border-color: var(--accent);
+      box-shadow: 0 0 14px rgba(0, 240, 255, 0.45);
+      transform: scale(1.02);
     }
 
     .lb-rank {
@@ -562,6 +623,35 @@
     .arcade-btn:hover {
       border-color: var(--accent);
       background: rgba(0, 240, 255, 0.16);
+    }
+
+    .arcade-btn.rec-armed {
+      border-color: rgba(239, 68, 68, 0.55);
+      color: #fca5a5;
+    }
+
+    .arcade-btn.rec-active {
+      background: linear-gradient(135deg, #ef4444, #dc2626);
+      border-color: #fecaca;
+      color: #ffffff;
+      animation: pulse 0.9s infinite;
+    }
+
+    .arcade-btn.download-ready {
+      background: rgba(46, 229, 157, 0.22);
+      border-color: var(--success);
+      color: var(--success);
+    }
+
+    .arcade-btn.fever-tap-btn {
+      background: linear-gradient(135deg, rgba(255, 209, 102, 0.25), rgba(255, 46, 147, 0.25));
+      border-color: var(--accent-3);
+      color: #ffd166;
+      font-weight: 900;
+    }
+
+    .arcade-btn.fever-tap-btn:active {
+      transform: scale(0.94);
     }
 
     .speed-indicator {
@@ -1301,11 +1391,13 @@
     }
 
     .mc-skill-btn {
+      position: relative;
+      overflow: hidden;
       width: 100%;
       border: none;
       border-radius: 16px;
-      padding: 16px 14px;
-      font-size: 1.05rem;
+      padding: 18px 16px;
+      font-size: 1.12rem;
       font-weight: 900;
       color: #fff;
       cursor: pointer;
@@ -1314,15 +1406,37 @@
       align-items: center;
       justify-content: space-between;
       box-shadow: 0 8px 22px rgba(0, 0, 0, 0.35);
-      transition: transform 0.12s, opacity 0.2s;
+      transition: transform 0.12s, opacity 0.2s, box-shadow 0.2s;
+    }
+
+    .mc-skill-btn > span:not(.mc-cd-bar) {
+      position: relative;
+      z-index: 2;
+    }
+
+    .mc-cd-bar {
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 0%;
+      background: rgba(255, 255, 255, 0.28);
+      z-index: 1;
+      pointer-events: none;
+      transition: width 0.18s linear;
+    }
+
+    .mc-skill-btn.fired {
+      box-shadow: 0 0 28px rgba(0, 240, 255, 0.85), 0 0 0 2px #ffffff;
+      transform: scale(0.96);
     }
 
     .mc-skill-btn:active:not(:disabled) {
-      transform: scale(0.97);
+      transform: scale(0.95);
     }
 
     .mc-skill-btn:disabled {
-      opacity: 0.48;
+      opacity: 0.62;
       cursor: not-allowed;
     }
 
@@ -1333,29 +1447,189 @@
     }
 
     .mc-cheer-btn {
+      position: relative;
       background: rgba(255, 255, 255, 0.08);
       border: 1px solid rgba(255, 255, 255, 0.22);
       border-radius: 12px;
-      padding: 11px 4px;
-      font-size: 0.9rem;
+      padding: 14px 6px;
+      font-size: 0.98rem;
       font-weight: 800;
       color: #ffffff;
       font-family: inherit;
       cursor: pointer;
+      transition: transform 0.1s, background 0.15s, box-shadow 0.15s;
+    }
+
+    /* Giant Mobile Rapid-Tap Fever Boost Button */
+    .mc-mega-tap-wrap {
+      background: linear-gradient(145deg, rgba(255, 209, 102, 0.14), rgba(255, 46, 147, 0.14));
+      border: 1.5px solid rgba(255, 209, 102, 0.55);
+      border-radius: 18px;
+      padding: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 9px;
+    }
+
+    .mc-fever-bar {
+      width: 100%;
+      height: 10px;
+      background: rgba(255, 255, 255, 0.12);
+      border-radius: 999px;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+    }
+
+    .mc-fever-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #00f0ff, #ffd166, #ff2e93);
+      box-shadow: 0 0 12px rgba(255, 209, 102, 0.85);
+      transition: width 0.12s ease;
+    }
+
+    .mc-mega-tap-btn {
+      width: 100%;
+      min-height: 108px;
+      border: 2px solid rgba(255, 255, 255, 0.45);
+      border-radius: 18px;
+      padding: 16px 14px;
+      background: linear-gradient(135deg, #ff6b35, #ff2e93 52%, #f59e0b);
+      color: #ffffff;
+      cursor: pointer;
+      font-family: inherit;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      text-align: center;
+      box-shadow: 0 10px 30px rgba(255, 46, 147, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.35);
+      transition: transform 0.08s ease, box-shadow 0.15s ease;
+    }
+
+    .mc-mega-tap-btn:active {
+      transform: scale(0.94);
+      box-shadow: 0 4px 16px rgba(255, 209, 102, 0.85);
+    }
+
+    .mc-mega-title {
+      font-size: 1.3rem;
+      font-weight: 900;
+      letter-spacing: 0.01em;
+    }
+
+    .mc-mega-sub {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: rgba(255, 255, 255, 0.92);
+    }
+
+    .mc-cheer-btn:active {
+      transform: scale(0.92);
+      background: rgba(0, 240, 255, 0.3);
+      box-shadow: 0 0 14px rgba(0, 240, 255, 0.65);
+    }
+
+    @keyframes mcFloatUp {
+      0% { opacity: 1; transform: translate(-50%, 0) scale(0.85); }
+      25% { opacity: 1; transform: translate(-50%, -14px) scale(1.1); }
+      100% { opacity: 0; transform: translate(-50%, -44px) scale(0.95); }
+    }
+
+    .mc-float-pop {
+      position: fixed;
+      z-index: 150;
+      pointer-events: none;
+      font-size: 0.92rem;
+      font-weight: 900;
+      padding: 4px 12px;
+      border-radius: 999px;
+      color: #030916;
+      background: #00f0ff;
+      box-shadow: 0 4px 16px rgba(0, 240, 255, 0.65);
+      animation: mcFloatUp 0.85s ease-out forwards;
+      white-space: nowrap;
+    }
+
+    @keyframes popBounce {
+      0% { opacity: 0; transform: translate(-50%, 8px) scale(0.6); }
+      60% { opacity: 1; transform: translate(-50%, -4px) scale(1.12); }
+      100% { opacity: 1; transform: translate(-50%, 0) scale(1); }
     }
 
     .marble-label .cheer-pop {
-      margin-left: 5px;
-      color: var(--accent-3);
+      position: absolute;
+      bottom: calc(100% + 7px);
+      left: 50%;
+      transform: translateX(-50%);
+      background: linear-gradient(135deg, #ffd166, #00f0ff);
+      color: #030916;
+      font-size: 13px;
+      font-weight: 900;
+      padding: 4px 11px;
+      border-radius: 999px;
+      border: 1.5px solid #ffffff;
+      box-shadow: 0 4px 18px rgba(0, 240, 255, 0.72);
+      white-space: nowrap;
+      text-shadow: none;
+      animation: popBounce 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    /* Top-Center Live Action Broadcast Overlay */
+    .skill-feed-overlay {
+      position: fixed;
+      top: 76px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 35;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 7px;
+      pointer-events: none;
+      width: max-content;
+      max-width: calc(100vw - 32px);
+    }
+
+    @keyframes bannerSlideIn {
+      0% { opacity: 0; transform: translateY(-14px) scale(0.9); }
+      18% { opacity: 1; transform: translateY(0) scale(1.03); }
+      85% { opacity: 1; transform: translateY(0) scale(1); }
+      100% { opacity: 0; transform: translateY(-8px) scale(0.96); }
+    }
+
+    .skill-feed-banner {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      background: rgba(10, 15, 34, 0.92);
+      border: 1.5px solid var(--accent);
+      box-shadow: 0 8px 26px rgba(0, 240, 255, 0.38);
+      border-radius: 999px;
+      padding: 7px 16px 7px 10px;
+      color: #ffffff;
+      font-size: 0.88rem;
+      font-weight: 800;
+      animation: bannerSlideIn 2.3s ease forwards;
+    }
+
+    .skill-feed-pts {
+      background: rgba(255, 209, 102, 0.22);
+      color: #ffd166;
+      border: 1px solid rgba(255, 209, 102, 0.5);
+      border-radius: 999px;
+      padding: 2px 8px;
+      font-size: 0.78rem;
       font-weight: 900;
     }
 
-    /* Live Voice & Text Chat Panel (Host Bottom-Left) */
+    /* Live Voice & Text Chat Panel (Host Bottom-Right, Compact by Default) */
     .live-chat-panel {
       position: fixed;
-      left: 16px;
+      right: 16px;
       bottom: 84px;
-      width: 310px;
+      width: 295px;
       max-width: calc(100vw - 32px);
       z-index: 18;
       background: var(--panel);
@@ -1502,6 +1776,7 @@
   <div id="labels-layer"></div>
 
   <div class="slowmo-banner" id="slowmo-banner">⚡ PHOTO FINISH SLOW-MOTION ⚡</div>
+  <div class="skill-feed-overlay" id="skill-feed-overlay"></div>
 
   <header class="top-bar">
     <div class="brand">
@@ -1520,37 +1795,20 @@
   </header>
 
   <aside class="settings-panel collapsed" id="settings-panel">
-    <div>
-      <div class="section-label">
-        <span>참여자 목록 (기존 서식 호환)</span>
-        <span class="badge" id="marble-count-badge">0명 / 0개</span>
-      </div>
-      <textarea id="participants-input" spellcheck="false" placeholder="이름을 쉼표(,) 또는 줄바꿈으로 입력하세요.&#10;가중치는 이름*숫자 (예: 홍길동*3)"></textarea>
-      <div class="hint-text">
-        기존 마블 룰렛 문법 지원: <code>이름*가중치</code>, 쉼표(<code>,</code>) 또는 줄바꿈 구분
-      </div>
+    <div style="display:flex; align-items:center; justify-content:space-between; border-bottom:1px solid rgba(255,255,255,0.1); padding-bottom:6px;">
+      <span style="font-weight:900; font-size:0.92rem; color:var(--accent);">명단 · 코스 설정</span>
+      <button type="button" class="chat-small-btn" id="settings-close-btn">닫기</button>
     </div>
 
-    <div class="import-box" id="import-dropzone">
-      <div class="section-label" style="margin-bottom: 2px;">
-        <span>참여자 서식 불러오기 / 구글 시트 연동</span>
+    <div>
+      <div class="section-label">
+        <span>참여자 명단 (기존 서식 호환)</span>
+        <span class="badge" id="marble-count-badge">0명 / 0개</span>
       </div>
-      <div class="hint-text" style="margin-top: 0;">
-        <code>.txt</code>, <code>.csv</code>, <code>.json</code> 파일을 드래그하거나 구글 시트 공유 링크를 붙여넣으세요.
+      <textarea id="participants-input" rows="3" spellcheck="false" placeholder="예: 짱구*2, 철수*1, 유리*3 (쉼표 또는 줄바꿈)"></textarea>
+      <div class="hint-text">
+        <code>이름*숫자</code>로 가중치 지정 가능
       </div>
-      <div class="btn-row">
-        <button class="mini-btn" id="import-file-btn">파일 불러오기</button>
-        <button class="mini-btn" id="export-txt-btn">서식 저장(.txt)</button>
-      </div>
-      <div class="btn-row">
-        <button class="mini-btn" id="template-csv-btn">CSV 양식 받기</button>
-        <button class="mini-btn" id="sample-preset-btn">샘플 채우기</button>
-      </div>
-      <div class="gsheet-row">
-        <input type="text" id="gsheet-url-input" class="gsheet-input" placeholder="구글 시트 공유 링크 붙여넣기" />
-        <button class="mini-btn" id="import-gsheet-btn" style="flex: 0 0 auto; min-width: auto; padding: 7px 11px;">시트 불러오기</button>
-      </div>
-      <input type="file" id="file-input" accept=".txt,.csv,.json,.tsv" hidden />
     </div>
 
     <div>
@@ -1567,54 +1825,80 @@
 
     <div>
       <div class="section-label">
-        <span>추첨 방식 (Win Mode)</span>
+        <span>추첨 방식 &amp; 당첨 순위</span>
         <span class="badge" id="win-mode-badge">골인 순위</span>
       </div>
-      <div class="winner-group">
+      <div class="winner-group" style="margin-bottom:6px;">
         <button class="seg-btn active" data-win-mode="finish">골인 순위</button>
         <button class="seg-btn" data-win-mode="score">바운스 점수</button>
       </div>
-      <div class="hint-text">
-        점수 모드: 핀·범퍼 충돌(+10~25P), 점프(+30P), 부스트(+20P) + 골인 보너스 합산
-      </div>
-    </div>
-
-    <div>
-      <div class="section-label">
-        <span>당첨 순위 (The Winner Is)</span>
+      <div class="section-label" style="margin-top:4px;">
+        <span>목표 당첨 등수</span>
         <span class="badge" id="target-rank-badge">1등</span>
       </div>
       <div class="winner-group">
-        <button class="seg-btn active" data-rank-mode="first">First (1등)</button>
-        <button class="seg-btn" data-rank-mode="last">Last (꼴찌)</button>
+        <button class="seg-btn active" data-rank-mode="first">1등</button>
+        <button class="seg-btn" data-rank-mode="last">꼴찌</button>
         <button class="seg-btn" data-rank-mode="custom">지정</button>
         <button class="seg-btn" data-rank-mode="random">Random</button>
       </div>
-      <div id="custom-rank-wrap" style="display: none; margin-top: 8px;">
+      <div id="custom-rank-wrap" style="display: none; margin-top: 6px;">
         <input type="number" id="custom-rank-input" min="1" value="1" placeholder="당첨 순위 번호 입력" />
       </div>
     </div>
 
-    <div class="btn-row">
-      <button class="mini-btn active" id="labels-toggle-btn">이름표 표시 켜짐/꺼짐</button>
-    </div>
+    <details class="settings-acc">
+      <summary>파일 · 구글 시트 불러오기 및 다운로드</summary>
+      <div class="settings-acc-body">
+        <div class="import-box" id="import-dropzone" style="padding:8px;">
+          <div class="btn-row">
+            <button class="mini-btn" id="import-file-btn">파일 불러오기</button>
+            <button class="mini-btn" id="export-txt-btn">서식 저장(.txt)</button>
+          </div>
+          <div class="btn-row">
+            <button class="mini-btn" id="template-csv-btn">CSV 양식 받기</button>
+            <button class="mini-btn" id="sample-preset-btn">샘플 채우기</button>
+          </div>
+          <div class="gsheet-row">
+            <input type="text" id="gsheet-url-input" class="gsheet-input" placeholder="구글 시트 공유 링크 붙여넣기" />
+            <button class="mini-btn" id="import-gsheet-btn" style="flex: 0 0 auto; min-width: auto; padding: 7px 10px;">시트 불러오기</button>
+          </div>
+          <input type="file" id="file-input" accept=".txt,.csv,.json,.tsv" hidden />
+        </div>
+        <div class="hint-text" style="margin-top:0;">
+          • <strong>파일 불러오기</strong>: <code>.txt</code>, <code>.csv</code>, <code>.json</code> 명단 파일 적용 (드래그 지원)<br />
+          • <strong>서식 저장(.txt)</strong>: 현재 참여자 명단을 텍스트 파일로 백업 다운로드<br />
+          • <strong>CSV 양식 받기</strong>: 엑셀 편집용 <code>이름,가중치</code> 샘플 양식 다운로드<br />
+          • <strong>시트 불러오기</strong>: 구글 시트 [공유 → 뷰어] 링크에서 명단 자동 가져오기
+        </div>
+      </div>
+    </details>
 
-    <div class="action-grid">
-      <button class="btn-secondary" id="shuffle-btn">순서 섞기 (Shuffle)</button>
-      <button class="btn-secondary" id="reset-btn">초기화 (Reset)</button>
-      <button class="btn-primary" id="start-btn">레이스 출발 (START)</button>
-    </div>
+    <details class="settings-acc">
+      <summary>화면 표시 및 명단 초기화</summary>
+      <div class="settings-acc-body">
+        <button class="mini-btn active" id="labels-toggle-btn">이름표 표시 켜짐/꺼짐</button>
+        <div class="btn-row">
+          <button class="btn-secondary" id="shuffle-btn" style="flex:1; padding:8px;">순서 섞기</button>
+          <button class="btn-secondary" id="reset-btn" style="flex:1; padding:8px;">초기화</button>
+        </div>
+      </div>
+    </details>
 
-    <div class="hint-text" style="border-top: 1px solid rgba(255,255,255,0.08); padding-top: 8px; margin-top: 2px; font-size: 0.72rem; line-height: 1.5;">
-      <div>© 2026 <strong>math-tong</strong> · 3D Marble Roulette</div>
-      <div>참고자료 · 원작: <a href="https://lazygyu.github.io/roulette/" target="_blank" rel="noopener noreferrer" style="color: var(--accent); text-decoration: none;">lazygyu / Marble Roulette</a></div>
+    <button class="btn-primary" id="start-btn" style="padding:11px;">레이스 출발 (START)</button>
+
+    <div class="hint-text" style="border-top: 1px solid rgba(255,255,255,0.08); padding-top: 6px; margin-top: 0; font-size: 0.7rem; line-height: 1.45;">
+      <div>© 2026 <strong>math-tong</strong> · 원작: <a href="https://lazygyu.github.io/roulette/" target="_blank" rel="noopener noreferrer" style="color: var(--accent); text-decoration: none;">lazygyu / Marble Roulette</a></div>
     </div>
   </aside>
 
-  <aside class="leaderboard-panel">
+  <aside class="leaderboard-panel" id="leaderboard-panel">
     <div class="section-label" style="margin-bottom: 2px;">
       <span>실시간 순위</span>
-      <span class="badge" id="race-progress-badge">대기 중</span>
+      <div style="display:flex; align-items:center; gap:5px;">
+        <span class="badge" id="race-progress-badge">대기 중</span>
+        <button type="button" class="chat-small-btn" id="lb-collapse-btn" style="padding:2px 7px; font-size:0.7rem;">접기</button>
+      </div>
     </div>
     <div class="progress-bar-wrap">
       <div class="progress-bar-fill" id="race-progress-fill"></div>
@@ -1626,19 +1910,22 @@
     <button class="quick-start-btn" id="quick-start-btn">레이스 시작 (START)</button>
     <button class="arcade-btn" id="quick-shuffle-btn">순서 섞기</button>
     <button class="arcade-btn" id="quick-qr-btn">QR 참여</button>
+    <button class="arcade-btn fever-tap-btn" id="host-tap-boost-btn" title="누를 때마다 가속, 10번 누르면 전체 피버 부스트 발동">연타 부스트 0/10</button>
+    <button class="arcade-btn rec-armed" id="record-btn" title="레이스 시작 시 자동으로 경기 영상을 녹화합니다">● 시작 시 녹화 ON</button>
+    <a class="arcade-btn download-ready" id="download-video-btn" style="display:none; text-decoration:none;" download="marble-roulette-race.webm">영상 저장 (.webm)</a>
     <button class="arcade-btn" id="quick-manual-btn" style="border-color: rgba(255, 209, 102, 0.55); color: var(--accent-3);">사용 매뉴얼</button>
     <button class="arcade-btn" id="fast-forward-btn">2배속</button>
     <span class="speed-indicator">속도: <strong id="speed-val">1.0x</strong></span>
     <span class="speed-indicator">경과: <strong id="race-timer">0.0s</strong></span>
   </div>
 
-  <!-- Host Live Voice & Text Chat Panel -->
-  <aside class="live-chat-panel" id="live-chat-panel">
+  <!-- Host Live Voice & Text Chat Panel (Bottom-Right, Minimized by Default) -->
+  <aside class="live-chat-panel minimized" id="live-chat-panel">
     <div class="section-label" style="margin-bottom: 0;">
-      <span>실시간 음성·채팅 응원</span>
+      <span>음성·채팅 응원</span>
       <div style="display:flex; align-items:center; gap:6px;">
         <span class="badge" id="chat-count-badge">0건</span>
-        <button type="button" class="chat-small-btn" id="chat-collapse-btn" style="padding:2px 7px; font-size:0.7rem;">접기</button>
+        <button type="button" class="chat-small-btn" id="chat-collapse-btn" style="padding:2px 7px; font-size:0.7rem;">펼치기</button>
       </div>
     </div>
     <div class="live-chat-list" id="live-chat-list">
@@ -1658,7 +1945,11 @@
       <div class="winner-animal-avatar" id="winner-animal-avatar"></div>
       <div class="winner-name" id="winner-name-display">-</div>
       <div class="winner-meta" id="winner-meta-display">축하합니다!</div>
-      <div id="winner-summary-box" style="background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.12); border-radius:12px; padding:10px 12px; margin-bottom:18px; text-align:left; font-size:0.8rem; line-height:1.55;"></div>
+      <div id="winner-summary-box" style="background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.12); border-radius:12px; padding:10px 12px; margin-bottom:12px; text-align:left; font-size:0.8rem; line-height:1.55;"></div>
+      <div class="btn-row" style="margin-bottom:10px;">
+        <a class="mini-btn" id="modal-download-video-btn" style="display:none; text-decoration:none; color:var(--success); border-color:var(--success);" download="marble-roulette-race.webm">녹화 영상 다운로드 (.webm)</a>
+        <button type="button" class="mini-btn" id="modal-download-csv-btn">결과 순위표 저장 (.csv)</button>
+      </div>
       <div class="btn-row">
         <button class="btn-secondary" id="modal-close-btn" style="flex: 1;">닫기</button>
         <button class="btn-primary" id="modal-replay-btn" style="flex: 1; grid-column: auto; padding: 11px;">다시 추첨하기</button>
@@ -1727,9 +2018,9 @@
             <div class="mm-figure"><img src="./assets/manual-main.png" alt="메인 화면 스크린샷" /></div>
             <div class="manual-section">
               <ul>
-                <li><strong>상단 메뉴바</strong>: 사용 매뉴얼, QR 참여방, 명단·코스 설정, 시점 전환, 사운드 제어가 위치합니다.</li>
-                <li><strong>하단 메인 컨트롤 바</strong>: <strong>[레이스 시작 (START)]</strong> 버튼만 누르면 약 30초 경주가 즉시 시작됩니다. (<code>Space</code> 키로 2배속 가능)</li>
-                <li><strong>우측 실시간 순위표</strong>: 현재 1~20위 동물의 풀컬러 캐릭터 아이콘과 점수를 실시간으로 보여줍니다.</li>
+                <li><strong>상단 메뉴바</strong>: 사용 매뉴얼, QR 참여방, 명단·코스 설정(우측 열기), 시점 전환, 사운드 제어가 위치합니다.</li>
+                <li><strong>좌측 실시간 순위표</strong>: 현재 1~20위 동물의 풀컬러 캐릭터 아이콘과 점수를 실시간으로 보여주며 <code>접기</code> 버튼으로 숨길 수 있습니다.</li>
+                <li><strong>하단 메인 컨트롤 바</strong>: <strong>[레이스 시작 (START)]</strong> 시 자동 녹화가 켜지며(<code>● 시작 시 녹화 ON</code>), <code>연타 부스트 0/10</code>, 완료 후 <code>영상 저장 (.webm)</code>을 이용할 수 있습니다. (<code>Space</code> 키로 2배속 가능)</li>
               </ul>
             </div>
           </div>
@@ -1764,34 +2055,35 @@
           <!-- Step 4 -->
           <div class="mm-pane" data-mm-pane="4">
             <div class="manual-eyebrow">STEP 04 · PARTICIPANT CONTROLLER</div>
-            <h2 class="manual-title">QR 동시 접속 및 실시간 조작 (참여자)</h2>
+            <h2 class="manual-title">QR 동시 접속 및 목적지에 더 빨리 도달하는 전략</h2>
+            <div class="mm-figure"><img src="./assets/manual-mobile.png" alt="QR 스마트폰 컨트롤러 화면" /></div>
             <div class="manual-grid" style="margin-bottom:12px;">
               <div class="manual-role-box">
-                <h3>1. 스마트폰 입장 순서</h3>
+                <h3>1. 스마트폰 조작 구성</h3>
                 <ol>
-                  <li>카메라로 화면의 <strong>QR 코드 스캔</strong></li>
-                  <li><strong>닉네임</strong> 입력 및 <strong>동물 16종</strong> 선택</li>
-                  <li><strong>[레이스 입장하기]</strong> 클릭 후 대기</li>
+                  <li>QR 스캔 → <strong>닉네임·동물</strong> 선택 → 입장 대기</li>
+                  <li>진행자 출발 후 대형 <strong>[연타 부스트]</strong>를 빠르게 두드려 가속 및 <strong>10연타 피버(+60P)</strong> 발동</li>
+                  <li>스킬 3종 · 응원 버튼 · 마이크 음성 응원(+5P) 동시 활용</li>
                 </ol>
               </div>
               <div class="manual-role-box">
-                <h3>2. 경기 시작 후 조작</h3>
+                <h3>2. 화면을 보며 빨리 도착하는 전략</h3>
                 <ol>
-                  <li>진행자가 시작하면 상태 배지 자동 전환</li>
-                  <li>아래 4가지 버튼을 <strong>동시에 연타</strong>해 개입</li>
-                  <li>실시간 속도 상승 및 보너스 점수 적립</li>
+                  <li><strong>출발 직후·직선 구간</strong>: 대형 연타 버튼을 집중 연타해 피버 게이지(10/10) 돌파</li>
+                  <li><strong>회전 풍차·장애물 앞</strong>: 메인 화면을 보고 장애물 직전에 <strong>[슈퍼 점프]</strong>로 뛰어넘기</li>
+                  <li><strong>충돌 감속 후</strong>: 속도가 줄자마자 <strong>[대시 부스트]</strong>로 즉시 재가속</li>
                 </ol>
               </div>
             </div>
             <details class="manual-acc">
-              <summary>QR 접속자용 4가지 실시간 액션 상세 표 (럭키박스 · 부스트 · 점프 · 응원)</summary>
+              <summary>QR 접속자용 실시간 액션 상세 표 (연타 피버 · 럭키박스 · 부스트 · 점프 · 응원)</summary>
               <div class="manual-acc-body">
                 <ul>
+                  <li><strong>대형 연타 부스트 / 10연타 피버</strong> (쿨타임 없음): 누를 때마다 전진 가속 + <strong>+8P</strong>, 10연타 달성 시 피버 하이퍼 부스트 + <strong>+60P</strong></li>
                   <li><strong>랜덤 럭키박스</strong> (3.5초): 대박 터보(+40P) / 슈퍼 점프(+30P) / 팡팡 바운스(+25P) / 럭키(+50P) 중 1개 무작위 발동</li>
                   <li><strong>대시 부스트</strong> (3.0초): 내 3D 동물 전방 급가속 + <strong>+15P</strong></li>
                   <li><strong>슈퍼 점프</strong> (2.5초): 장애물 도약 + <strong>+20P</strong></li>
-                  <li><strong>실시간 응원</strong> (제한 없음): 이름표 옆 응원 표시 + 회당 <strong>+5P</strong></li>
-                  <li><strong>마이크 음성·채팅 응원</strong>: 마이크 음성 인식(한국어) 또는 텍스트 채팅 전송 시 좌측 응원창 및 캐릭터 머리 위 말풍선 표시 + <strong>+5P</strong></li>
+                  <li><strong>실시간 응원 · 마이크 음성/채팅</strong> (제한 없음): 이름표 말풍선 및 좌측 응원창 표시 + 회당 <strong>+5P</strong></li>
                 </ul>
               </div>
             </details>
@@ -1847,15 +2139,30 @@
           <span class="badge" id="mc-status-badge" style="text-align:right;">진행자 시작 대기 중</span>
         </div>
 
+        <div class="mc-mega-tap-wrap">
+          <div style="display:flex; align-items:center; justify-content:space-between; font-size:0.8rem; font-weight:800; color:#e2e8f0;">
+            <span>연타 피버 게이지 (10연타 시 하이퍼 부스트 발동)</span>
+            <span id="mc-fever-count" style="color:var(--accent-3); font-weight:900;">0 / 10</span>
+          </div>
+          <div class="mc-fever-bar"><div class="mc-fever-fill" id="mc-fever-fill"></div></div>
+          <button type="button" class="mc-mega-tap-btn" id="mc-mega-tap-btn">
+            <span class="mc-mega-title">연타 부스트! (TAP! TAP!)</span>
+            <span class="mc-mega-sub">빠르게 두드릴수록 전진 가속 +8P! 10연타마다 피버 하이퍼 (+60P)!</span>
+          </button>
+        </div>
+
         <button class="mc-skill-btn" id="mc-btn-random" style="background:linear-gradient(135deg,#ff2e93,#ff8a00);">
+          <span class="mc-cd-bar"></span>
           <span>랜덤 럭키박스 뽑기</span>
           <span class="mc-cd" style="font-size:0.82rem;">READY</span>
         </button>
         <button class="mc-skill-btn" id="mc-btn-boost" style="background:linear-gradient(135deg,#00c6ff,#0072ff);">
+          <span class="mc-cd-bar"></span>
           <span>대시 부스트 (+15P)</span>
           <span class="mc-cd" style="font-size:0.82rem;">READY</span>
         </button>
         <button class="mc-skill-btn" id="mc-btn-jump" style="background:linear-gradient(135deg,#11998e,#38ef7d); color:#041614;">
+          <span class="mc-cd-bar"></span>
           <span>슈퍼 점프 (+20P)</span>
           <span class="mc-cd" style="font-size:0.82rem;">READY</span>
         </button>
@@ -2026,6 +2333,46 @@
           gain.connect(this.ctx.destination);
           osc.start(t);
           osc.stop(t + 0.58);
+        });
+      }
+
+      playTapCombo(combo = 1) {
+        if (!this.enabled || !this.ctx) return;
+        const now = this.ctx.currentTime;
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+        osc.type = combo >= 10 ? 'sawtooth' : 'triangle';
+        const baseFreq = 320 + Math.min(10, combo) * 42;
+        osc.frequency.setValueAtTime(baseFreq, now);
+        osc.frequency.exponentialRampToValueAtTime(baseFreq * 1.45, now + 0.11);
+        gain.gain.setValueAtTime(combo >= 10 ? 0.15 : 0.09, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.14);
+        osc.connect(gain);
+        gain.connect(this.ctx.destination);
+        osc.start(now);
+        osc.stop(now + 0.16);
+      }
+
+      playSkillActivate(kind) {
+        if (!this.enabled || !this.ctx) return;
+        const now = this.ctx.currentTime;
+        const freqs = kind === 'fever'
+          ? [523.25, 659.25, 783.99, 1046.5, 1318.5]
+          : kind === 'random'
+            ? [440, 587.33, 880]
+            : [392, 523.25, 783.99];
+        freqs.forEach((freq, idx) => {
+          const osc = this.ctx.createOscillator();
+          const gain = this.ctx.createGain();
+          osc.type = 'triangle';
+          const t = now + idx * 0.045;
+          osc.frequency.setValueAtTime(freq, t);
+          gain.gain.setValueAtTime(0.14, t);
+          gain.gain.exponentialRampToValueAtTime(0.001, t + 0.28);
+          osc.connect(gain);
+          gain.connect(this.ctx.destination);
+          osc.start(t);
+          osc.stop(t + 0.3);
         });
       }
     }
@@ -2256,6 +2603,106 @@
           p.mesh.rotation.y += 8 * dt;
         }
         p.mesh.material.opacity = Math.max(0, p.life / p.maxLife);
+      }
+    }
+
+    const activeEffects = [];
+
+    function showSkillBroadcast(marble, actionLabel, ptsText, accentCss = '#00f0ff') {
+      const feed = document.getElementById('skill-feed-overlay');
+      if (!feed) return;
+      const banner = document.createElement('div');
+      banner.className = 'skill-feed-banner';
+      banner.style.borderColor = accentCss;
+      banner.style.boxShadow = `0 8px 26px ${accentCss}66`;
+      banner.innerHTML = `
+        <span style="display:inline-flex; align-items:center;">${getAnimalSvg(marble.animal || '🐶', 22)}</span>
+        <span><strong>${escapeHtml(marble.name)}</strong> · ${escapeHtml(actionLabel)}</span>
+        ${ptsText ? `<span class="skill-feed-pts">${escapeHtml(ptsText)}</span>` : ''}
+      `;
+      feed.appendChild(banner);
+      while (feed.children.length > 3) feed.removeChild(feed.firstChild);
+      setTimeout(() => {
+        if (banner.parentNode) banner.parentNode.removeChild(banner);
+      }, 2350);
+    }
+
+    function trigger3DSkillEffect(marble, kind, bannerLabel, ptsText, accentHex = 0x00f0ff) {
+      if (!marble) return;
+      const isFever = kind === 'fever_boost';
+      const nowMs = performance.now();
+      marble.lastActionTime = nowMs;
+      marble.skillBoostTimer = isFever ? 1.15 : kind === 'tap_boost' ? 0.45 : 0.78;
+      marble.skillScale = isFever ? 2.3 : kind === 'tap_boost' ? 1.72 : 1.98;
+
+      const pos = marble.mesh.position.clone();
+      const ringGeo = new THREE.RingGeometry(0.9, isFever ? 1.95 : 1.5, 32);
+      const ringMat = new THREE.MeshBasicMaterial({
+        color: accentHex,
+        transparent: true,
+        opacity: 0.95,
+        side: THREE.DoubleSide
+      });
+      const ring = new THREE.Mesh(ringGeo, ringMat);
+      ring.position.set(pos.x, pos.y - 0.35, pos.z);
+      ring.rotation.x = -Math.PI * 0.5;
+      scene.add(ring);
+
+      const pillarH = isFever ? 18 : kind === 'tap_boost' ? 8 : 13;
+      const beamGeo = new THREE.CylinderGeometry(isFever ? 1.15 : 0.65, isFever ? 2.1 : 1.25, pillarH, 16, 1, true);
+      const beamMat = new THREE.MeshBasicMaterial({
+        color: accentHex,
+        transparent: true,
+        opacity: isFever ? 0.58 : 0.42,
+        side: THREE.DoubleSide
+      });
+      const beam = new THREE.Mesh(beamGeo, beamMat);
+      beam.position.set(pos.x, pos.y + pillarH * 0.42, pos.z);
+      scene.add(beam);
+
+      activeEffects.push({
+        ring,
+        beam,
+        followMarble: marble,
+        life: isFever ? 1.05 : 0.72,
+        maxLife: isFever ? 1.05 : 0.72,
+        maxScale: isFever ? 5.6 : kind === 'tap_boost' ? 2.8 : 4.2
+      });
+
+      spawnParticles(pos, accentHex, isFever ? 28 : 14, isFever ? 14 : 9, isFever ? 0.85 : 0.55);
+      if (bannerLabel) {
+        const accentCss = `#${accentHex.toString(16).padStart(6, '0')}`;
+        showSkillBroadcast(marble, bannerLabel, ptsText, accentCss);
+      }
+    }
+
+    function updateEffects(dt) {
+      for (let i = activeEffects.length - 1; i >= 0; i--) {
+        const fx = activeEffects[i];
+        fx.life -= dt;
+        if (fx.life <= 0) {
+          scene.remove(fx.ring);
+          scene.remove(fx.beam);
+          fx.ring.geometry.dispose();
+          fx.ring.material.dispose();
+          fx.beam.geometry.dispose();
+          fx.beam.material.dispose();
+          activeEffects.splice(i, 1);
+          continue;
+        }
+        const t = 1 - fx.life / fx.maxLife;
+        const scale = 1 + t * fx.maxScale;
+        if (fx.followMarble && fx.followMarble.mesh) {
+          const p = fx.followMarble.mesh.position;
+          fx.ring.position.set(p.x, p.y - 0.35, p.z);
+          fx.beam.position.x = p.x;
+          fx.beam.position.z = p.z;
+          fx.beam.position.y = p.y + 5;
+        }
+        fx.ring.scale.setScalar(scale);
+        fx.ring.material.opacity = Math.max(0, (1 - t) * 0.95);
+        fx.beam.scale.set(1 + t * 0.7, 1 + t * 0.25, 1 + t * 0.7);
+        fx.beam.material.opacity = Math.max(0, (1 - t) * 0.52);
       }
     }
 
@@ -3053,6 +3500,12 @@
     let fastForward = false;
     let slowMoActive = false;
     let raceElapsed = 0;
+    let recordArmed = true;
+    let isRecording = false;
+    let mediaRecorder = null;
+    let recordedChunks = [];
+    let lastRecordedUrl = null;
+    let hostTapCombo = 0;
 
     const participantsInput = document.getElementById('participants-input');
     const marbleCountBadge = document.getElementById('marble-count-badge');
@@ -3086,6 +3539,15 @@
         if (m.labelEl && m.labelEl.parentNode) m.labelEl.parentNode.removeChild(m.labelEl);
       }
       marbles = [];
+      for (const fx of activeEffects) {
+        scene.remove(fx.ring);
+        scene.remove(fx.beam);
+        fx.ring.geometry.dispose();
+        fx.ring.material.dispose();
+        fx.beam.geometry.dispose();
+        fx.beam.material.dispose();
+      }
+      activeEffects.length = 0;
     }
 
     function computeTargetRank(totalMarbles) {
@@ -3179,7 +3641,10 @@
           score: 0,
           bounces: 0,
           stuckTimer: 0,
-          padCooldown: 0
+          padCooldown: 0,
+          skillBoostTimer: 0,
+          skillScale: 1.98,
+          lastActionTime: 0
         };
 
         body.addEventListener('collide', (e) => {
@@ -3247,15 +3712,17 @@
         raceProgressFill.style.width = `${pct.toFixed(1)}%`;
       }
 
+      const nowMs = performance.now();
       leaderboardList.innerHTML = sorted.slice(0, 20).map((m, idx) => {
         const rankNum = (winMode === 'finish' && m.finished) ? m.finishRank : idx + 1;
         const isTarget = rankNum === targetRank;
         const hex = `#${m.colorHex.toString(16).padStart(6, '0')}`;
+        const isFlashing = nowMs - (m.lastActionTime || 0) < 1500;
         const rightText = winMode === 'score'
           ? `${m.score}P${m.finished ? ' (도착)' : ''}`
           : `${m.score}P ${m.finished ? '도착' : isTarget ? '[목표]' : ''}`;
         return `
-          <div class="lb-item ${m.finished ? 'finished' : ''} ${isTarget ? 'target-winner' : ''}">
+          <div class="lb-item ${m.finished ? 'finished' : ''} ${isTarget ? 'target-winner' : ''} ${isFlashing ? 'lb-item-flash' : ''}">
             <span class="lb-rank">${rankNum}</span>
             <span class="lb-avatar" style="border-color:${hex}; box-shadow:0 0 8px ${hex}">${getAnimalSvg(m.animal, 20)}</span>
             <span class="lb-name">${escapeHtml(m.name)}</span>
@@ -3284,6 +3751,21 @@
         raceProgressBadge.textContent = `목표: ${targetRank}등`;
       }
 
+      // Auto-collapse right settings panel so the 3D track stays unobstructed
+      const settingsPanelEl = document.getElementById('settings-panel');
+      if (settingsPanelEl) settingsPanelEl.classList.add('collapsed');
+      const toggleSettingsBtnEl = document.getElementById('toggle-settings-btn');
+      if (toggleSettingsBtnEl) toggleSettingsBtnEl.classList.remove('active');
+
+      // Reset host tap combo on race start
+      hostTapCombo = 0;
+      const hostTapBtn = document.getElementById('host-tap-boost-btn');
+      if (hostTapBtn) hostTapBtn.textContent = '연타 부스트 0/10';
+
+      if (recordArmed) {
+        startRecording();
+      }
+
       raceState = 'running';
       setStartButtonsDisabled(true);
       if (hostRoomChannel) {
@@ -3300,6 +3782,7 @@
       raceState = 'finished';
       slowMoActive = false;
       slowmoBanner.classList.remove('active');
+      stopRecordingIfActive();
       sfx.playWinFanfare();
       spawnConfetti(winnerMarble.mesh.position);
       if (hostRoomChannel) {
@@ -3397,6 +3880,13 @@
           }
           if (m.mesh.userData.tail) {
             m.mesh.userData.tail.rotation.y = Math.sin(now * 0.022 + m.id) * 0.42;
+          }
+          if (m.skillBoostTimer > 0) {
+            m.skillBoostTimer = Math.max(0, m.skillBoostTimer - rawDt);
+            const boostRatio = Math.min(1, m.skillBoostTimer / 0.72);
+            m.mesh.scale.setScalar(1.32 + (m.skillScale - 1.32) * boostRatio);
+          } else if (Math.abs(m.mesh.scale.x - 1.32) > 0.01) {
+            m.mesh.scale.setScalar(1.32);
           }
           if (m.padCooldown > 0) m.padCooldown -= simDt;
 
@@ -3544,6 +4034,7 @@
 
       controls.update();
       updateParticles(rawDt);
+      updateEffects(rawDt);
 
       // Update 2D projected marble labels
       if (showLabels) {
@@ -3750,6 +4241,188 @@
       startRace();
     });
 
+    function getSupportedRecorderMime() {
+      if (typeof MediaRecorder === 'undefined' || typeof MediaRecorder.isTypeSupported !== 'function') return '';
+      const types = ['video/webm;codecs=vp9', 'video/webm;codecs=vp8', 'video/webm'];
+      return types.find(t => MediaRecorder.isTypeSupported(t)) || '';
+    }
+
+    function updateRecordBtnUI() {
+      const recBtn = document.getElementById('record-btn');
+      if (!recBtn) return;
+      recBtn.classList.remove('rec-active', 'rec-armed');
+      if (isRecording) {
+        recBtn.classList.add('rec-active');
+        recBtn.textContent = '● 녹화 중 (중지)';
+      } else if (recordArmed) {
+        recBtn.classList.add('rec-armed');
+        recBtn.textContent = '● 시작 시 녹화 ON';
+      } else {
+        recBtn.textContent = '○ 자동 녹화 OFF';
+      }
+    }
+
+    function startRecording() {
+      if (isRecording) return;
+      if (typeof renderer?.domElement?.captureStream !== 'function' || typeof MediaRecorder === 'undefined') {
+        return;
+      }
+      try {
+        if (lastRecordedUrl) {
+          URL.revokeObjectURL(lastRecordedUrl);
+          lastRecordedUrl = null;
+        }
+        const dlBtn = document.getElementById('download-video-btn');
+        const modalDlBtn = document.getElementById('modal-download-video-btn');
+        if (dlBtn) dlBtn.style.display = 'none';
+        if (modalDlBtn) modalDlBtn.style.display = 'none';
+
+        recordedChunks = [];
+        const stream = renderer.domElement.captureStream(30);
+        const mimeType = getSupportedRecorderMime();
+        mediaRecorder = mimeType ? new MediaRecorder(stream, { mimeType }) : new MediaRecorder(stream);
+        mediaRecorder.ondataavailable = (e) => {
+          if (e.data && e.data.size > 0) recordedChunks.push(e.data);
+        };
+        mediaRecorder.onstop = () => {
+          isRecording = false;
+          updateRecordBtnUI();
+          if (recordedChunks.length > 0) {
+            const blob = new Blob(recordedChunks, { type: mediaRecorder.mimeType || 'video/webm' });
+            lastRecordedUrl = URL.createObjectURL(blob);
+            if (dlBtn) {
+              dlBtn.href = lastRecordedUrl;
+              dlBtn.style.display = 'inline-flex';
+            }
+            if (modalDlBtn) {
+              modalDlBtn.href = lastRecordedUrl;
+              modalDlBtn.style.display = 'inline-flex';
+            }
+            showToast('경기 영상 녹화가 완료되어 다운로드할 수 있습니다!');
+          }
+        };
+        mediaRecorder.start(400);
+        isRecording = true;
+        updateRecordBtnUI();
+      } catch (_) {
+        isRecording = false;
+        updateRecordBtnUI();
+      }
+    }
+
+    function stopRecordingIfActive() {
+      if (mediaRecorder && mediaRecorder.state !== 'inactive') {
+        try {
+          mediaRecorder.stop();
+        } catch (_) {
+          isRecording = false;
+          updateRecordBtnUI();
+        }
+      } else {
+        isRecording = false;
+        updateRecordBtnUI();
+      }
+    }
+
+    function downloadRaceResultsCsv() {
+      if (marbles.length === 0) {
+        showToast('저장할 레이스 결과가 없습니다.');
+        return;
+      }
+      const sorted = [...marbles].sort((a, b) => {
+        if (winMode === 'score') return b.score - a.score;
+        if (a.finished && b.finished) return a.finishRank - b.finishRank;
+        if (a.finished) return -1;
+        if (b.finished) return 1;
+        return b.score - a.score;
+      });
+      const rows = ['순위,참가자,동물,결승등수,점수(P),바운스횟수,상태'];
+      sorted.forEach((m, idx) => {
+        const rank = (winMode === 'finish' && m.finished) ? m.finishRank : idx + 1;
+        const finStr = m.finishRank ? `${m.finishRank}등` : '-';
+        const stateStr = m.finished ? '도착' : '주행중';
+        rows.push(`${rank},"${String(m.name).replace(/"/g, '""')}",${m.animal},${finStr},${m.score},${m.bounces},${stateStr}`);
+      });
+      const blob = new Blob(['\uFEFF' + rows.join('\n')], { type: 'text/csv;charset=utf-8' });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = 'marble-roulette-results.csv';
+      a.click();
+      showToast('최종 순위표(.csv)를 다운로드했습니다.');
+    }
+
+    const recordBtnEl = document.getElementById('record-btn');
+    if (recordBtnEl) {
+      recordBtnEl.addEventListener('click', () => {
+        if (isRecording) {
+          stopRecordingIfActive();
+          showToast('녹화를 중지하고 영상을 저장할 수 있습니다.');
+        } else if (raceState === 'running') {
+          startRecording();
+          showToast('경기 녹화를 시작했습니다.');
+        } else {
+          recordArmed = !recordArmed;
+          updateRecordBtnUI();
+          showToast(recordArmed ? '레이스 시작 시 자동으로 녹화됩니다.' : '자동 녹화가 비활성화되었습니다.');
+        }
+      });
+    }
+
+    const modalCsvBtn = document.getElementById('modal-download-csv-btn');
+    if (modalCsvBtn) {
+      modalCsvBtn.addEventListener('click', downloadRaceResultsCsv);
+    }
+
+    const lbCollapseBtn = document.getElementById('lb-collapse-btn');
+    if (lbCollapseBtn) {
+      lbCollapseBtn.addEventListener('click', () => {
+        const lbPanel = document.getElementById('leaderboard-panel');
+        const minimized = lbPanel.classList.toggle('minimized');
+        lbCollapseBtn.textContent = minimized ? '펼치기' : '접기';
+      });
+    }
+
+    const hostTapBoostBtn = document.getElementById('host-tap-boost-btn');
+    if (hostTapBoostBtn) {
+      hostTapBoostBtn.addEventListener('click', () => {
+        if (raceState !== 'running') {
+          showToast('레이스 시작 후 연타 부스트를 누를 수 있습니다!');
+          return;
+        }
+        const active = marbles.filter(m => !m.finished);
+        if (active.length === 0) return;
+        sfx.init();
+        hostTapCombo = (hostTapCombo % 10) + 1;
+        const isFever = hostTapCombo === 10;
+        sfx.playTapCombo(hostTapCombo);
+
+        active.sort((a, b) => b.body.position.z - a.body.position.z);
+        const targetMarble = active[0];
+        if (isFever) {
+          active.forEach(m => {
+            m.body.velocity.z += 11;
+            m.body.velocity.y += 5.5;
+            m.score += 35;
+          });
+          trigger3DSkillEffect(targetMarble, 'fever_boost', '진행자 10연타 전체 피버!', '+35P', 0xffd166);
+          flashLabelBadge(targetMarble, '전체 피버 부스트!');
+          hostTapBoostBtn.textContent = '10/10 FEVER!';
+          setTimeout(() => {
+            hostTapCombo = 0;
+            if (raceState === 'running') hostTapBoostBtn.textContent = '연타 부스트 0/10';
+          }, 650);
+        } else {
+          active.forEach(m => {
+            m.body.velocity.z += 3.8;
+            m.score += 5;
+          });
+          trigger3DSkillEffect(targetMarble, 'tap_boost', `진행자 연타 (${hostTapCombo}/10)`, '+5P', 0x00f0ff);
+          hostTapBoostBtn.textContent = `연타 부스트 ${hostTapCombo}/10`;
+        }
+        updateLeaderboard();
+      });
+    }
+
     const manualModal = document.getElementById('manual-modal');
     let mmStep = 1;
     function setManualModalStep(n) {
@@ -3788,6 +4461,14 @@
       panel.classList.toggle('collapsed');
       e.currentTarget.classList.toggle('active', !panel.classList.contains('collapsed'));
     });
+
+    const settingsCloseBtn = document.getElementById('settings-close-btn');
+    if (settingsCloseBtn) {
+      settingsCloseBtn.addEventListener('click', () => {
+        document.getElementById('settings-panel').classList.add('collapsed');
+        document.getElementById('toggle-settings-btn').classList.remove('active');
+      });
+    }
 
     const camBtn = document.getElementById('cam-mode-btn');
     camBtn.addEventListener('click', () => {
@@ -3935,6 +4616,13 @@
       listEl.appendChild(row);
       while (listEl.children.length > 40) listEl.removeChild(listEl.firstChild);
       listEl.scrollTop = listEl.scrollHeight;
+
+      const chatPanelEl = document.getElementById('live-chat-panel');
+      if (chatPanelEl && chatPanelEl.classList.contains('minimized')) {
+        chatPanelEl.classList.remove('minimized');
+        const cBtn = document.getElementById('chat-collapse-btn');
+        if (cBtn) cBtn.textContent = '접기';
+      }
     }
 
     const chatCollapseBtn = document.getElementById('chat-collapse-btn');
@@ -4062,26 +4750,51 @@
         showToast('입장 완료! 진행자(PC)가 시작하면 버튼을 눌러보세요!');
       });
 
+      function spawnMobileFloatingText(anchorEl, text, bg = '#00f0ff') {
+        if (!anchorEl) return;
+        const rect = anchorEl.getBoundingClientRect();
+        const pop = document.createElement('div');
+        pop.className = 'mc-float-pop';
+        pop.textContent = text;
+        pop.style.background = bg;
+        pop.style.left = `${rect.left + rect.width * 0.5}px`;
+        pop.style.top = `${Math.max(24, rect.top - 6)}px`;
+        document.body.appendChild(pop);
+        setTimeout(() => {
+          if (pop.parentNode) pop.parentNode.removeChild(pop);
+        }, 900);
+      }
+
       function bindSkillBtn(btnId, kind, cooldownSec, label) {
         const btn = document.getElementById(btnId);
         const cdSpan = btn.querySelector('.mc-cd');
+        const cdBar = btn.querySelector('.mc-cd-bar');
         btn.addEventListener('click', () => {
           if (!myNick || btn.disabled) return;
+          sfx.init();
+          sfx.playSkillActivate(kind === 'random_box' ? 'random' : kind);
           channel.send({ type: 'action', name: myNick, kind });
           feedbackEl.textContent = `"${label}" 발동 전송됨 (+점수 반영)`;
+          btn.classList.add('fired');
+          setTimeout(() => btn.classList.remove('fired'), 420);
+          spawnMobileFloatingText(btn, `${label} 발동!`, '#ffd166');
+
           btn.disabled = true;
           let left = cooldownSec;
           cdSpan.textContent = `${left.toFixed(1)}s`;
+          if (cdBar) cdBar.style.width = '100%';
           const timer = setInterval(() => {
-            left -= 0.2;
+            left -= 0.15;
             if (left <= 0) {
               clearInterval(timer);
               btn.disabled = false;
               cdSpan.textContent = 'READY';
+              if (cdBar) cdBar.style.width = '0%';
             } else {
               cdSpan.textContent = `${left.toFixed(1)}s`;
+              if (cdBar) cdBar.style.width = `${Math.max(0, (left / cooldownSec) * 100).toFixed(1)}%`;
             }
-          }, 200);
+          }, 150);
         });
       }
 
@@ -4089,12 +4802,46 @@
       bindSkillBtn('mc-btn-boost', 'boost', 3.0, '대시 부스트');
       bindSkillBtn('mc-btn-jump', 'jump', 2.5, '슈퍼 점프');
 
+      let mcTapCombo = 0;
+      const mcMegaTapBtn = document.getElementById('mc-mega-tap-btn');
+      const mcFeverFill = document.getElementById('mc-fever-fill');
+      const mcFeverCount = document.getElementById('mc-fever-count');
+      if (mcMegaTapBtn) {
+        mcMegaTapBtn.addEventListener('click', () => {
+          if (!myNick) return;
+          sfx.init();
+          mcTapCombo = (mcTapCombo % 10) + 1;
+          const isFever = mcTapCombo === 10;
+          sfx.playTapCombo(mcTapCombo);
+          if (mcFeverFill) mcFeverFill.style.width = `${mcTapCombo * 10}%`;
+          if (mcFeverCount) mcFeverCount.textContent = isFever ? '10 / 10 FEVER!' : `${mcTapCombo} / 10`;
+
+          if (isFever) {
+            channel.send({ type: 'action', name: myNick, kind: 'fever_boost' });
+            feedbackEl.textContent = '10연타 피버 하이퍼 부스트 발동! (+60P)';
+            spawnMobileFloatingText(mcMegaTapBtn, '피버 하이퍼 +60P!', '#ffd166');
+            setTimeout(() => {
+              mcTapCombo = 0;
+              if (mcFeverFill) mcFeverFill.style.width = '0%';
+              if (mcFeverCount) mcFeverCount.textContent = '0 / 10';
+            }, 520);
+          } else {
+            channel.send({ type: 'action', name: myNick, kind: 'tap_boost' });
+            feedbackEl.textContent = `연타 부스트! (${mcTapCombo}/10 · 10연타 시 피버 발동!)`;
+            spawnMobileFloatingText(mcMegaTapBtn, `연타 가속 ${mcTapCombo}/10 (+8P)`, '#00f0ff');
+          }
+        });
+      }
+
       document.querySelectorAll('[data-cheer]').forEach(btn => {
         btn.addEventListener('click', () => {
           if (!myNick) return;
+          sfx.init();
+          sfx.playTapCombo(2);
           const emoji = btn.dataset.cheer;
           channel.send({ type: 'action', name: myNick, kind: 'cheer', emoji });
           feedbackEl.textContent = `"${emoji}" 응원 전송 (+5P)`;
+          spawnMobileFloatingText(btn, `${emoji} +5P`, '#2ee59d');
         });
       });
 
@@ -4192,45 +4939,64 @@
           targets.forEach(m => {
             if (msg.kind === 'random_box') {
               const roll = Math.floor(Math.random() * 4);
+              sfx.playSkillActivate('random');
               if (roll === 0) {
-                m.body.velocity.z += 12;
+                m.body.velocity.z += 12.5;
                 m.score += 40;
-                spawnParticles(m.mesh.position, 0x00f0ff, 14, 9, 0.6);
+                trigger3DSkillEffect(m, 'random', '럭키 대박 터보!', '+40P', 0x00f0ff);
                 flashLabelBadge(m, '대박 터보 +40P');
               } else if (roll === 1) {
-                m.body.velocity.y = 14;
-                m.body.velocity.z += 5;
+                m.body.velocity.y = 14.5;
+                m.body.velocity.z += 5.5;
                 m.score += 30;
                 sfx.playJumpPad();
-                spawnParticles(m.mesh.position, 0xffd166, 14, 9, 0.6);
+                trigger3DSkillEffect(m, 'random', '럭키 슈퍼 점프!', '+30P', 0xffd166);
                 flashLabelBadge(m, '슈퍼 점프 +30P');
               } else if (roll === 2) {
                 m.body.velocity.x += (Math.random() - 0.5) * 14;
-                m.body.velocity.y += 9;
+                m.body.velocity.y += 9.5;
                 m.score += 25;
                 sfx.playBumper();
-                spawnParticles(m.mesh.position, 0xff2e93, 14, 9, 0.6);
+                trigger3DSkillEffect(m, 'random', '럭키 팡팡 바운스!', '+25P', 0xff2e93);
                 flashLabelBadge(m, '팡팡 바운스 +25P');
               } else {
                 m.score += 50;
-                spawnParticles(m.mesh.position, 0x2ee59d, 16, 10, 0.7);
+                trigger3DSkillEffect(m, 'random', '럭키 골드 보너스!', '+50P', 0x2ee59d);
                 flashLabelBadge(m, '럭키 보너스 +50P');
               }
             } else if (msg.kind === 'boost') {
-              m.body.velocity.z += 9;
+              m.body.velocity.z += 9.5;
               m.score += 15;
               sfx.playBoost();
-              spawnParticles(m.mesh.position, 0x00f0ff, 10, 8, 0.5);
+              sfx.playSkillActivate('boost');
+              trigger3DSkillEffect(m, 'boost', '대시 부스트!', '+15P', 0x00f0ff);
               flashLabelBadge(m, '부스트 +15P');
             } else if (msg.kind === 'jump') {
-              m.body.velocity.y = 13;
-              m.body.velocity.z += 4;
+              m.body.velocity.y = 14.2;
+              m.body.velocity.z += 4.8;
               m.score += 20;
               sfx.playJumpPad();
-              spawnParticles(m.mesh.position, 0x2ee59d, 10, 8, 0.5);
+              sfx.playSkillActivate('jump');
+              trigger3DSkillEffect(m, 'jump', '슈퍼 점프!', '+20P', 0x2ee59d);
               flashLabelBadge(m, '점프 +20P');
+            } else if (msg.kind === 'tap_boost') {
+              m.body.velocity.z += 5.5;
+              m.body.velocity.y += 1.6;
+              m.score += 8;
+              sfx.playTapCombo(5);
+              trigger3DSkillEffect(m, 'tap_boost', '연타 가속!', '+8P', 0xff8a00);
+              flashLabelBadge(m, '연타 +8P');
+            } else if (msg.kind === 'fever_boost') {
+              m.body.velocity.z += 15.0;
+              m.body.velocity.y += 7.0;
+              m.score += 60;
+              sfx.playSkillActivate('fever');
+              trigger3DSkillEffect(m, 'fever_boost', '10연타 피버 하이퍼!', '+60P', 0xffd166);
+              flashLabelBadge(m, '피버 하이퍼 +60P');
             } else if (msg.kind === 'cheer') {
               m.score += 5;
+              sfx.playTapCombo(2);
+              trigger3DSkillEffect(m, 'tap_boost', `${msg.emoji || '응원'} 응원!`, '+5P', 0xa855f7);
               flashLabelBadge(m, `${msg.emoji || '응원'} +5P`);
             }
           });
